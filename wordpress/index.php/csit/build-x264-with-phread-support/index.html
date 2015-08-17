@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>windows下编译支持多线程的x264 | build x264 with phread support under windows | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="如果你跟我一样想研究x264，那么你也和我一样，要先把x264编译通过，这编文章，就是我编译x264的全过程直播:-D，希望能帮到一些人
+如果你只是想下载x264来运行下，那么去这里http://x264.nl/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="windows下编译支持多线程的x264 | build x264 with phread support under windows">
+<meta property="og:url" content="http://yoursite.com/wordpress/index.php/csit/build-x264-with-phread-support/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="如果你跟我一样想研究x264，那么你也和我一样，要先把x264编译通过，这编文章，就是我编译x264的全过程直播:-D，希望能帮到一些人
+如果你只是想下载x264来运行下，那么去这里http://x264.nl/">
+<meta property="og:image" content="http://localhostr.com/file/Hg35SDA/codec.gif">
+<meta property="og:updated_time" content="2015-08-15T02:15:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="windows下编译支持多线程的x264 | build x264 with phread support under windows">
+<meta name="twitter:description" content="如果你跟我一样想研究x264，那么你也和我一样，要先把x264编译通过，这编文章，就是我编译x264的全过程直播:-D，希望能帮到一些人
+如果你只是想下载x264来运行下，那么去这里http://x264.nl/">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-build-x264-with-phread-support" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/wordpress/index.php/csit/build-x264-with-phread-support/" class="article-date">
+  <time datetime="2011-06-29T05:59:45.000Z" itemprop="datePublished">2011-06-29</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/wordpress/">wordpress</a>►<a class="article-category-link" href="/categories/wordpress/index.php/">index.php</a>►<a class="article-category-link" href="/categories/wordpress/index.php/csit/">csit</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      windows下编译支持多线程的x264 | build x264 with phread support under windows
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://localhostr.com/file/Hg35SDA/codec.gif" alt="" title="Codec"></p>
+<p>如果你跟我一样想研究x264，那么你也和我一样，要先把x264编译通过，这编文章，就是我编译x264的全过程直播:-D，希望能帮到一些人</p>
+<p>如果你只是想下载x264来运行下，那么去这里<a href="http://x264.nl/" target="_blank" rel="external">http://x264.nl/</a></p>
+<a id="more"></a>
+<p>可以先看一下扫盲贴<a href="http://bbs.chinavideo.org/viewthread.php?tid=6945&amp;highlight=VS2008" target="_blank" rel="external">http://bbs.chinavideo.org/viewthread.php?tid=6945&amp;highlight=VS2008</a>，这是关于编译x264-snapshot-20090216-2245版本的</p>
+<p>本文使用的版本为x264-snapshot-20091006-2245版本（最后一个包含vs工程的版本），以下是编译时遇到的所有错误和解决办法（按时间顺序）：</p>
+<p><span style="color: #ff0000;">以下错误如没有用红色字说明，则都是由于数据声明没有放在代码块的开头造成的，修改一下即可。</span></p>
+<p><span style="color: #3366ff;">先build libx264工程</span></p>
+<ul>
+<li>1&gt;d:\x264-snapshot-20091006-2245\common\common.h(170) :<br>error C2143: syntax error : missing ‘;’ before ‘type’</li>
+<li>1&gt;....\encoder\analyse.c(2950) : error C2059: syntax<br>error : ‘[‘<br><span style="color: #ff0000;">static const uint8_t check_mv_lists[X264_MBTYPE_MAX] =</span><br><span style="color: #ff0000;">{[P_L0]=1, [B_L0_L0]=1, [B_L1_L1]=2};</span></li>
+</ul>
+<p><span style="color: #ff0000;">改为</span></p>
+<p><span style="color: #ff0000;">static const uint8_t check_mv_lists[X264_MBTYPE_MAX] =</span><br><span style="color: #ff0000;">{0,0,0,0,1,0,0,0,1,0,0,0,2,0,0,0,0,0,0};</span></p>
+<ul>
+<li>1&gt;d:\x264-snapshot-20091006-2245\encoder\slicetype.c(663)<br>: error C2143: syntax error : missing ‘;’ before ‘type’ 后续7行</li>
+<li>1&gt;d:\x264-snapshot-20091006-2245\encoder\slicetype.c(752)<br>: error C2143: syntax error : missing ‘;’ before ‘type’ 后续6行</li>
+<li>1&gt;....\encoder\ratecontrol.c(1382) : error C2143: syntax<br>error : missing ‘;’ before ‘type’ 后续4行</li>
+<li>1&gt;....\common\macroblock.c(742) : error C2143: syntax<br>error : missing ‘;’ before ‘type’ 后续5行</li>
+<li>1&gt;....\encoder\ratecontrol.c(1514) : error C2143: syntax<br>error : missing ‘;’ before ‘type’ 后续2行</li>
+<li>1&gt;....\encoder\me.c(455) : error C2143: syntax error : missing<br>‘;’ before ‘const’ 后续2行</li>
+<li>1&gt;....\encoder\encoder.c(469) : error C2143: syntax error<br>: missing ‘;’ before ‘type’</li>
+<li>1&gt;....\encoder\encoder.c(1040) : error C2275: ‘uint8_t’ :<br>illegal use of this type as an expression</li>
+<li>1&gt;....\encoder\encoder.c(1413) : error C2143: syntax<br>error : missing ‘;’ before ‘type’ 后续2行</li>
+<li>1&gt;....\encoder\encoder.c(1602) : error C2143: syntax<br>error : missing ‘;’ before ‘type’后续2行</li>
+<li>1&gt;....\encoder\encoder.c(1823) : error C2143: syntax<br>error : missing ‘;’ before ‘type’</li>
+<li><p>1&gt;....\encoder\encoder.c(2245) : error C2275: ‘int64_t’ :<br>illegal use of this type as an expression 后续2行<br><span style="color: #3366ff;">再build x264工程</span></p>
+</li>
+<li><p>1&gt;....\muxers.c(299) : error C2146: syntax error :<br>missing ‘)’ before identifier ‘PRIx32’<br><span style="color: #ff0000;">fprintf( stderr, “Bad header magic (%”PRIx32” &lt;=&gt; %s)\n”, <em>((uint32_t</em>)header), header );</span></p>
+</li>
+</ul>
+<p><span style="color: #ff0000;">改为</span></p>
+<p><span style="color: #ff0000;">fprintf( stderr, “Bad header magic (%ld &lt;=&gt;%s)\n”, <em>((uint32_t</em>)header), header );</span></p>
+<p><span style="color: #ff0000;">参考<a href="http://blog.csdn.net/cdjogh/archive/2010/10/24/5961665.aspx" target="_blank" rel="external">http://blog.csdn.net/cdjogh/archive/2010/10/24/5961665.aspx</a></span></p>
+<ul>
+<li>1&gt;....\muxers.c(350) : error C2275: ‘AVISTREAMINFOA’ :<br>illegal use of this type as an expression 后续2行</li>
+<li>1&gt;libx264.lib(encoder.obj) : error LNK2019: unresolved<br>external symbol _x264_lookahead_init referenced in function<br>_x264_encoder_open_76</li>
+</ul>
+<p>1&gt;libx264.lib(encoder.obj) : error LNK2019: unresolved<br>external symbol _x264_lookahead_is_empty referenced in function<br>_x264_encoder_encode</p>
+<p>1&gt;libx264.lib(encoder.obj) : error LNK2019: unresolved<br>external symbol _x264_lookahead_get_frames referenced in function<br>_x264_encoder_encode</p>
+<p>1&gt;libx264.lib(encoder.obj) : error LNK2019: unresolved<br>external symbol _x264_lookahead_put_frame referenced in function<br>_x264_encoder_encode</p>
+<p>1&gt;libx264.lib(encoder.obj) : error LNK2019: unresolved<br>external symbol _x264_lookahead_delete referenced in function<br>_x264_encoder_close</p>
+<p>1&gt;libx264.lib(analyse.obj) : error LNK2019: unresolved<br>external symbol _log2f referenced in function _x264_analyse_init_costs</p>
+<p>1&gt;bin/x264.exe : fatal error LNK1120: 6 unresolved<br>externals</p>
+<p><span style="color: #ff0000;">这是由于libx264工程没有添加lookahead.c文件，从而缺少几个函数的定义造成的，添加lookahead.c进工程，参考<a href="http://www.chinavideo.org/viewthread.php?tid=6914" target="_blank" rel="external">http://www.chinavideo.org/viewthread.php?tid=6914</a></span></p>
+<p><span style="color: #3366ff;">再次Build libx264工程，修改以下几个错误</span></p>
+<ul>
+<li>1&gt;....\encoder\lookahead.c(135) : error C2143: syntax<br>error : missing ‘;’ before ‘type’</li>
+<li>1&gt;....\encoder\lookahead.c(154) : error C2275: ‘x264_t’ :<br>illegal use of this type as an expression</li>
+<li><p>1&gt;....\encoder\lookahead.c(259) : error C2143: syntax error<br>: missing ‘;’ before ‘type’<br><span style="color: #3366ff;">再次Build x264工程</span></p>
+</li>
+<li><p>1&gt;libx264.lib(analyse.obj) : error LNK2019: unresolved<br>external symbol _log2f referenced in function _x264_analyse_init_costs<br><span style="color: #ff0000;">这是因为没有定义log2f函数，添加#define</span><br><span style="color: #ff0000;">log2f(x) (logf(x)*1.4426950408889634f)到osdep.h中，参考<a href="http://www.chinavideo.org/viewthread.php?tid=9715" target="_blank" rel="external">http://www.chinavideo.org/viewthread.php?tid=9715</a></span></p>
+</li>
+</ul>
+<p><span style="color: #3366ff;">再次Rebuild两个工程，大功告成</span></p>
+<p>不过这个时候编译出来的x264是不支持多线程的，如果使用—threads选项，会提示x264<br>[warning]: not compiled with pthread support!</p>
+<p><span style="color: #3366ff;">不过别灰心，总是会有解决办法的（你要始终相信这一点）</span></p>
+<p>因为x264的线程用的是pthread，而windows是不支持pthread的，所以需要POSIX Threads (pthreads) for Win32</p>
+<p>这是下载地址<a href="ftp://sourceware.org/pub/pthreads-win32" target="_blank" rel="external">ftp://sourceware.org/pub/pthreads-win32</a>，选择最新的pthreads-w32-2-8-0-release.exe</p>
+<p>解压出来后，把Pre-built.2目录下的include和lib加到VS的搜索目录中</p>
+<p>在libx264.lib项目属性 -&gt; “C/C++” -&gt; Preprocessor中加入HAVE_PTHREAD和SYS_MINGW宏，在osdep.h中，#ifdef USE_REAL_PTHREAD之后加入一行：#pragma<br>comment(lib, “pthreadVC2.lib”)，build成功</p>
+<p>X264类似，添加HAVE_PTHREAD和SYS_MINGW宏，便可build成功，运行时可能会报缺少DLL，去Pre-built.2\lib下面找找吧</p>
+<p><span style="color: #3366ff;">现在算是真的编出来了一个支持多线程的x264了，开始慢慢研究吧</span></p>
+<p>多线程部分参考<a href="http://jmvc.blog.sohu.com/145356341.html" target="_blank" rel="external">http://jmvc.blog.sohu.com/145356341.html</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/wordpress/index.php/csit/build-x264-with-phread-support/" data-id="cidfq2ul800natgh5v1elo32t" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/H.264-AVC/">H.264/AVC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/codec/">codec</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/x264/">x264</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/wordpress/index.php/thought/law-of-attraction/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          吸引力法则（吸引定律） | Law of Attraction
+        
+      </div>
+    </a>
+  
+  
+    <a href="/wordpress/index.php/about/about-ubuntu/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">关于Ubuntu | About Ubuntu</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/">wordpress</a><span class="category-list-count">285</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/">index.php</a><span class="category-list-count">285</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/about/">about</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/csit/">csit</a><span class="category-list-count">168</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/default/">default</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/lmy/">lmy</a><span class="category-list-count">109</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/thought/">thought</a><span class="category-list-count">3</span></li></ul></li></ul></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/8051/">8051</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/A/">A</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/">Algorithm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BIKE/">BIKE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Book/">Book</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSAPP/">CSAPP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DASH/">DASH</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Diary/">Diary</a><span class="tag-list-count">104</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/">Django</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ELF/">ELF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GIMP/">GIMP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google/">Google</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google-App-Engine/">Google App Engine</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/H.264-AVC/">H.264/AVC</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JM/">JM</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Law-of-Attraction/">Law of Attraction</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LightOJ/">LightOJ</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Music/">Music</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Notes/">Notes</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/People/">People</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Podinns/">Podinns</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Quotes/">Quotes</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Research/">Research</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Status/">Status</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/The-Baader-Meinhof-Phenomenon/">The Baader-Meinhof Phenomenon</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tools/">Tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Topcoder/">Topcoder</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/USACO/">USACO</a><span class="tag-list-count">68</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/">Ubuntu</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VLC/">VLC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VirtualBox/">VirtualBox</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/code-blocks/">code::blocks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/codec/">codec</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heroku/">heroku</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lsharemy/">lsharemy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nVidia/">nVidia</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/">socket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/x264/">x264</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/8051/" style="font-size: 18.46px;">8051</a> <a href="/tags/A/" style="font-size: 10px;">A</a> <a href="/tags/Algorithm/" style="font-size: 10.77px;">Algorithm</a> <a href="/tags/Android/" style="font-size: 17.69px;">Android</a> <a href="/tags/BIKE/" style="font-size: 10px;">BIKE</a> <a href="/tags/Book/" style="font-size: 10px;">Book</a> <a href="/tags/C/" style="font-size: 15.38px;">C</a> <a href="/tags/CSAPP/" style="font-size: 10px;">CSAPP</a> <a href="/tags/DASH/" style="font-size: 10px;">DASH</a> <a href="/tags/Diary/" style="font-size: 20px;">Diary</a> <a href="/tags/Django/" style="font-size: 10.77px;">Django</a> <a href="/tags/ELF/" style="font-size: 10.77px;">ELF</a> <a href="/tags/GIMP/" style="font-size: 10px;">GIMP</a> <a href="/tags/Google/" style="font-size: 10.77px;">Google</a> <a href="/tags/Google-App-Engine/" style="font-size: 10px;">Google App Engine</a> <a href="/tags/H.264-AVC/" style="font-size: 14.62px;">H.264/AVC</a> <a href="/tags/JM/" style="font-size: 13.85px;">JM</a> <a href="/tags/Law-of-Attraction/" style="font-size: 10px;">Law of Attraction</a> <a href="/tags/LightOJ/" style="font-size: 16.92px;">LightOJ</a> <a href="/tags/Linux/" style="font-size: 13.85px;">Linux</a> <a href="/tags/Music/" style="font-size: 11.54px;">Music</a> <a href="/tags/Notes/" style="font-size: 10.77px;">Notes</a> <a href="/tags/People/" style="font-size: 10px;">People</a> <a href="/tags/Podinns/" style="font-size: 10px;">Podinns</a> <a href="/tags/Python/" style="font-size: 13.08px;">Python</a> <a href="/tags/Quotes/" style="font-size: 10px;">Quotes</a> <a href="/tags/Research/" style="font-size: 10px;">Research</a> <a href="/tags/Status/" style="font-size: 10px;">Status</a> <a href="/tags/The-Baader-Meinhof-Phenomenon/" style="font-size: 10px;">The Baader-Meinhof Phenomenon</a> <a href="/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/tags/Topcoder/" style="font-size: 10.77px;">Topcoder</a> <a href="/tags/USACO/" style="font-size: 19.23px;">USACO</a> <a href="/tags/Ubuntu/" style="font-size: 16.15px;">Ubuntu</a> <a href="/tags/VLC/" style="font-size: 10px;">VLC</a> <a href="/tags/VirtualBox/" style="font-size: 10px;">VirtualBox</a> <a href="/tags/code-blocks/" style="font-size: 10px;">code::blocks</a> <a href="/tags/codec/" style="font-size: 14.62px;">codec</a> <a href="/tags/heroku/" style="font-size: 13.08px;">heroku</a> <a href="/tags/lsharemy/" style="font-size: 10px;">lsharemy</a> <a href="/tags/nVidia/" style="font-size: 10px;">nVidia</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/vim/" style="font-size: 12.31px;">vim</a> <a href="/tags/x264/" style="font-size: 10.77px;">x264</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">September 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">November 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">October 2012</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">August 2012</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/07/">July 2012</a><span class="archive-list-count">69</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">April 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">March 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">February 2012</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">January 2012</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/12/">December 2011</a><span class="archive-list-count">56</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">November 2011</a><span class="archive-list-count">48</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/10/">October 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">September 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08/">August 2011</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/07/">July 2011</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/06/">June 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/05/">May 2011</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/uncategorized/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/lmy/20121102-20130908/">2012年11月02日 – 2013年09月08日 快一年没更新了</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/csit/macro-definition/">宏定义（#define）总结</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/csit/extern-function/">extern修饰的函数</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/csit/variable-storage-location/">变量存储位置</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>

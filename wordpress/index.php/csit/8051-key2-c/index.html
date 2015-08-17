@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>8051 矩阵键盘程序 c | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="矩阵键盘的接线如上图所示。无任何按键的情况下，对应的列线输出为高电平，如果有按键按下，对应的交叉点的列线和行线短接，列线的输出依赖于与此列连接的行线的电平状态。由此可以实现矩阵键盘的编">
+<meta property="og:type" content="article">
+<meta property="og:title" content="8051 矩阵键盘程序 c">
+<meta property="og:url" content="http://yoursite.com/wordpress/index.php/csit/8051-key2-c/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="矩阵键盘的接线如上图所示。无任何按键的情况下，对应的列线输出为高电平，如果有按键按下，对应的交叉点的列线和行线短接，列线的输出依赖于与此列连接的行线的电平状态。由此可以实现矩阵键盘的编">
+<meta property="og:image" content="http://i.minus.com/iUiG09KxNWovb.jpg">
+<meta property="og:updated_time" content="2015-08-15T02:15:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="8051 矩阵键盘程序 c">
+<meta name="twitter:description" content="矩阵键盘的接线如上图所示。无任何按键的情况下，对应的列线输出为高电平，如果有按键按下，对应的交叉点的列线和行线短接，列线的输出依赖于与此列连接的行线的电平状态。由此可以实现矩阵键盘的编">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-8051-key2-c" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/wordpress/index.php/csit/8051-key2-c/" class="article-date">
+  <time datetime="2011-12-17T09:38:00.000Z" itemprop="datePublished">2011-12-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/wordpress/">wordpress</a>►<a class="article-category-link" href="/categories/wordpress/index.php/">index.php</a>►<a class="article-category-link" href="/categories/wordpress/index.php/csit/">csit</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      8051 矩阵键盘程序 c
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="http://i.minus.com/iUiG09KxNWovb.jpg" alt="" title="topit"></p>
+<p>矩阵键盘的接线如上图所示。无任何按键的情况下，对应的列线输出为高电平，如果有按键按下，对应的交叉点的列线和行线短接，列线的输出依赖于与此列连接的行线的电平状态。由此可以实现矩阵键盘的编<a id="more"></a>码处理。</p>
+<p><span style="color: #ff0000;">行列逐级扫描法：</span></p>
+<p>[c]<br>/<em>————————————————<br>按键扫描函数，返回扫描键值<br>————————————————</em>/<br>unsigned char KeyScan(void)   //键盘扫描函数，使用行列逐级扫描法<br>{<br>    unsigned char Val;<br>    KeyPort=0xf0;             //高四位置高，低四位拉低<br>    if(KeyPort!=0xf0)         //表示有按键按下<br>    {<br>        DelayMs(10);          //去抖<br>        if(KeyPort!=0xf0)<br>        {                     //表示有按键按下<br>            KeyPort=0xfe;     //检测第一行<br>            if(KeyPort!=0xfe)<br>            {<br>                Val=KeyPort&amp;0xf0;<br>                Val+=0x0e;<br>                while(KeyPort!=0xfe);<br>                DelayMs(10); //去抖<br>                while(KeyPort!=0xfe);<br>                return Val;<br>            }<br>            KeyPort=0xfd;     //检测第二行<br>            if(KeyPort!=0xfd)<br>            {<br>                Val=KeyPort&amp;0xf0;<br>                Val+=0x0d;<br>                while(KeyPort!=0xfd);<br>                DelayMs(10); //去抖<br>                while(KeyPort!=0xfd);<br>                return Val;<br>            }<br>            KeyPort=0xfb;     //检测第三行<br>            if(KeyPort!=0xfb)<br>            {<br>                Val=KeyPort&amp;0xf0;<br>                Val+=0x0b;<br>                while(KeyPort!=0xfb);<br>                DelayMs(10); //去抖<br>                while(KeyPort!=0xfb);<br>                return Val;<br>            }<br>            KeyPort=0xf7;     //检测第四行<br>            if(KeyPort!=0xf7)<br>              {<br>                Val=KeyPort&amp;0xf0;<br>                Val+=0x07;<br>                while(KeyPort!=0xf7);<br>                DelayMs(10); //去抖<br>                while(KeyPort!=0xf7);<br>                return Val;<br>            }<br>        }<br>    }<br>    return 0xff;<br>}<br>[/c]</p>
+<p><span style="color: #ff0000;">行列反转扫描法：</span></p>
+<p>[c]<br>/<em>————————————————<br>          按键扫描函数，返回扫描键值<br>————————————————</em>/<br>unsigned char KeyScan2(void)       //键盘扫描函数，使用行列反转扫描法<br>{<br>    unsigned char cord_h,cord_l;  //行列值中间变量<br>    KeyPort=0x0f;                 //行线输出全为0<br>    cord_h=KeyPort&amp;0x0f;          //读入列线值<br>    if(cord_h!=0x0f)              //先检测有无按键按下<br>    {<br>        DelayMs(10);              //去抖<br>        if((KeyPort&amp;0x0f)!=0x0f)<br>        {<br>            cord_h=KeyPort&amp;0x0f;  //读入列线值<br>            KeyPort=cord_h|0xf0;  //输出当前列线值<br>            cord_l=KeyPort&amp;0xf0;  //读入行线值</p>
+<pre><code>        <span class="keyword">while</span>((KeyPort&amp;amp;<span class="number">0xf0</span>)!=<span class="number">0xf0</span>);<span class="comment">//等待松开并输出</span>
+
+        <span class="keyword">return</span>(cord_h+cord_l);<span class="comment">//键盘最后组合码值</span>
+    }
+}
+<span class="keyword">return</span>(<span class="number">0xff</span>);                 <span class="comment">//返回该值</span>
+</code></pre><p>}<br>[/c]</p>
+<p>为了提高CPU工作效率，一般采用中断的方式来获得按键信息。也就是只有在键盘上有键按下的时候，才发出中断请求，在中断服务程序中，进行按键扫描（可以采用上面两种方法的一种），获得按键信息。一下是一个完整的程序：</p>
+<p>[c]<br>/*———————————————–<br>矩阵键盘依次输入控制 使用行列逐级扫描或行列反转扫描法 中断方式</p>
+<p>中断方式可以有效提供cpu工作效率，在有按键动作时才扫描，平时不进行扫描工作</p>
+<p>P1接矩阵键盘数<br>P0接数码管数据端口<br>P2.2接数码管段码锁存<br>P2.3接数码管位码锁存<br>P3.2接矩阵键盘中断<br>————————————————*/</p>
+<p>#include&lt;reg52.h&gt; //包含头文件，一般情况不需要改动，头文件包含特殊功能寄存器的定义</p>
+<p>#define DataPort P0 //定义数据端口 程序中遇到DataPort 则用P0 替换</p>
+<p>#define KeyPort  P1</p>
+<p>sbit LATCH1=P2^2;//定义锁存使能端口 段锁存<br>sbit LATCH2=P2^3;//                 位锁存</p>
+<p>bit KeyPressFlag;//定义按键标志位</p>
+<p>unsigned char code dofly_DuanMa[]={0x3f,0x06,0x5b,0x4f,0x66,0x6d,0x7d,0x07,0x7f,0x6f,<br>                                       0x77,0x7c,0x39,0x5e,0x79,0x71};// 显示段码值0~F<br>unsigned char code dofly_WeiMa[]={0xfe,0xfd,0xfb,0xf7,0xef,0xdf,0xbf,0x7f};//分别对应相应的数码管点亮,即位码<br>unsigned char TempData[8]; //存储显示值的全局变量</p>
+<p>void DelayUs2x(unsigned char t);//us级延时函数声明<br>void DelayMs(unsigned char t); //ms级延时<br>void Display(unsigned char FirstBit,unsigned char Num);//数码管显示函数<br>unsigned char KeyScan(void);//键盘扫描<br>unsigned char KeyPro(void);<br>void Init_Timer0(void);//定时器初始化<br>void Init_INT0(void);  //外部中断0初始化和<br>/<em>————————————————<br>                    主函数<br>————————————————</em>/<br>void main (void)<br>{<br>    unsigned char num,i,j;<br>    unsigned char temp[8];<br>    Init_Timer0();<br>    Init_INT0();<br>    while (1)          //主循环<br>    {<br>        KeyPort=0xf0;  // 赋值用于中断检测<br>        if(KeyPressFlag==1)<br>        {<br>            KeyPressFlag=0;  //按键标志清零，以便下次检测<br>            num=KeyPro();<br>            if(num!=0xff)<br>            {<br>                if(i&lt;8)<br>                {<br>                    temp[i]=dofly_DuanMa[num];<br>                    for(j=0;j&lt;=i;j++)<br>                        TempData[7-i+j]=temp[j];<br>                }<br>                i++;<br>                if(i==9)//多出一个按键输入为了清屏 原本应该为8<br>                {<br>                    i=0;<br>                    for(j=0;j&lt;8;j++)//清屏<br>                        TempData[j]=0;<br>                }<br>            }<br>        }<br>    }<br>}<br>/<em>————————————————<br> uS延时函数，含有输入参数 unsigned char t，无返回值<br> unsigned char 是定义无符号字符变量，其值的范围是<br> 0~255 这里使用晶振12M，精确延时请使用汇编,大致延时<br> 长度如下 T=tx2+5 uS<br>————————————————</em>/<br>void DelayUs2x(unsigned char t)<br>{<br>    while(–t);<br>}<br>/<em>————————————————<br> mS延时函数，含有输入参数 unsigned char t，无返回值<br> unsigned char 是定义无符号字符变量，其值的范围是<br> 0~255 这里使用晶振12M，精确延时请使用汇编<br>————————————————</em>/<br>void DelayMs(unsigned char t)<br>{<br>    while(t–)<br>    {<br>        //大致延时1mS<br>        DelayUs2x(245);<br>        DelayUs2x(245);<br>    }<br>}<br>/<em>————————————————<br> 显示函数，用于动态扫描数码管<br> 输入参数 FirstBit 表示需要显示的第一位，如赋值2表示从第三个数码管开始显示<br> 如输入0表示从第一个显示。<br> Num表示需要显示的位数，如需要显示99两位数值则该值输入2<br>————————————————</em>/<br>void Display(unsigned char FirstBit,unsigned char Num)<br>{<br>    static unsigned char i=0;</p>
+<pre><code>DataPort=<span class="number">0</span>;   <span class="comment">//清空数据，防止有交替重影</span>
+LATCH1=<span class="number">1</span>;     <span class="comment">//段锁存</span>
+LATCH1=<span class="number">0</span>;
+
+DataPort=dofly_WeiMa[i+FirstBit]; <span class="comment">//取位码</span>
+LATCH2=<span class="number">1</span>;     <span class="comment">//位锁存</span>
+LATCH2=<span class="number">0</span>;
+
+DataPort=TempData[i]; <span class="comment">//取显示数据，段码</span>
+LATCH1=<span class="number">1</span>;     <span class="comment">//段锁存</span>
+LATCH1=<span class="number">0</span>;
+
+i++;
+<span class="keyword">if</span>(i==Num)
+    i=<span class="number">0</span>;
+</code></pre><p>}<br>/<em>————————————————<br>                    定时器初始化子程序<br>————————————————</em>/<br>void Init_Timer0(void)<br>{<br>    TMOD |= 0x01;     //使用模式1，16位定时器，使用&quot;|&quot;符号可以在使用多个定时器时不受影响<br>    //TH0=0x00;       //给定初值<br>    //TL0=0x00;<br>    EA=1;             //总中断打开<br>    ET0=1;            //定时器中断打开<br>    TR0=1;            //定时器开关打开<br>}<br>/<em>————————————————<br>                 定时器中断子程序<br>————————————————</em>/<br>void Timer0_isr(void) interrupt 1<br>{<br>    TH0=(65536-2000)/256; //重新赋值 2ms<br>    TL0=(65536-2000)%256;</p>
+<pre><code>Display(<span class="number">0</span>,<span class="number">8</span>);         <span class="comment">// 调用数码管扫描</span>
+</code></pre><p>}<br>/<em>————————————————<br>按键扫描函数，返回扫描键值<br>————————————————</em>/<br>unsigned char KeyScan(void)   //键盘扫描函数<br>{<br>    // 上面两种方法任选一种代替这里的代码<br>｝<br>/<em>————————————————<br>按键值处理函数，返回扫键值<br>————————————————</em>/<br>unsigned char KeyPro(void)<br>{<br>    switch(KeyScan())<br>    {<br>        case 0x7e:return 0;break; //s1 按下相应的键显示相对应的码值<br>        case 0xbe:return 1;break; //s2<br>        case 0xde:return 2;break; //s3<br>        case 0xee:return 3;break; //s4<br>        case 0x7d:return 4;break; //s5<br>        case 0xbd:return 5;break; //s6<br>        case 0xdd:return 6;break; //s7<br>        case 0xed:return 7;break; //s8<br>        case 0x7b:return 8;break; //s9<br>        case 0xbb:return 9;break; //s10<br>        case 0xdb:return 10;break;//s11<br>        case 0xeb:return 11;break;//s12<br>        case 0x77:return 12;break;//s13<br>        case 0xb7:return 13;break;//s14<br>        case 0xd7:return 14;break;//s15<br>        case 0xe7:return 15;break;//s16<br>        default:return 0xff;break;<br>    }<br>}<br>/<em>————————————————<br>           外部中断0初始化<br>————————————————</em>/<br>void Init_INT0(void)<br>{<br>    EA=1;          //全局中断开<br>    EX0=1;         //外部中断0开<br>    IT0=1;         //边沿触发<br>}<br>/<em>————————————————<br>                 外部中断0程序<br>————————————————</em>/<br>void ISR_INT0(void) interrupt 0<br>{<br>    KeyPressFlag=1;   //表明按键有动作，可以进行按键扫描<br>}<br>[/c]</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/wordpress/index.php/csit/8051-key2-c/" data-id="cidfq2uqs00r6tgh539kcva58" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/8051/">8051</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/wordpress/index.php/csit/8051-speaker-c/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          8051 喇叭程序 c
+        
+      </div>
+    </a>
+  
+  
+    <a href="/wordpress/index.php/lmy/20111216/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">2011年12月16日 听预答辩+DASHEncoder</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/">wordpress</a><span class="category-list-count">285</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/">index.php</a><span class="category-list-count">285</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/about/">about</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/csit/">csit</a><span class="category-list-count">168</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/default/">default</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/lmy/">lmy</a><span class="category-list-count">109</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/thought/">thought</a><span class="category-list-count">3</span></li></ul></li></ul></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/8051/">8051</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/A/">A</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/">Algorithm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BIKE/">BIKE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Book/">Book</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSAPP/">CSAPP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DASH/">DASH</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Diary/">Diary</a><span class="tag-list-count">104</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/">Django</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ELF/">ELF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GIMP/">GIMP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google/">Google</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google-App-Engine/">Google App Engine</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/H.264-AVC/">H.264/AVC</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JM/">JM</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Law-of-Attraction/">Law of Attraction</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LightOJ/">LightOJ</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Music/">Music</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Notes/">Notes</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/People/">People</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Podinns/">Podinns</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Quotes/">Quotes</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Research/">Research</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Status/">Status</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/The-Baader-Meinhof-Phenomenon/">The Baader-Meinhof Phenomenon</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tools/">Tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Topcoder/">Topcoder</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/USACO/">USACO</a><span class="tag-list-count">68</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/">Ubuntu</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VLC/">VLC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VirtualBox/">VirtualBox</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/code-blocks/">code::blocks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/codec/">codec</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heroku/">heroku</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lsharemy/">lsharemy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nVidia/">nVidia</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/">socket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/x264/">x264</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/8051/" style="font-size: 18.46px;">8051</a> <a href="/tags/A/" style="font-size: 10px;">A</a> <a href="/tags/Algorithm/" style="font-size: 10.77px;">Algorithm</a> <a href="/tags/Android/" style="font-size: 17.69px;">Android</a> <a href="/tags/BIKE/" style="font-size: 10px;">BIKE</a> <a href="/tags/Book/" style="font-size: 10px;">Book</a> <a href="/tags/C/" style="font-size: 15.38px;">C</a> <a href="/tags/CSAPP/" style="font-size: 10px;">CSAPP</a> <a href="/tags/DASH/" style="font-size: 10px;">DASH</a> <a href="/tags/Diary/" style="font-size: 20px;">Diary</a> <a href="/tags/Django/" style="font-size: 10.77px;">Django</a> <a href="/tags/ELF/" style="font-size: 10.77px;">ELF</a> <a href="/tags/GIMP/" style="font-size: 10px;">GIMP</a> <a href="/tags/Google/" style="font-size: 10.77px;">Google</a> <a href="/tags/Google-App-Engine/" style="font-size: 10px;">Google App Engine</a> <a href="/tags/H.264-AVC/" style="font-size: 14.62px;">H.264/AVC</a> <a href="/tags/JM/" style="font-size: 13.85px;">JM</a> <a href="/tags/Law-of-Attraction/" style="font-size: 10px;">Law of Attraction</a> <a href="/tags/LightOJ/" style="font-size: 16.92px;">LightOJ</a> <a href="/tags/Linux/" style="font-size: 13.85px;">Linux</a> <a href="/tags/Music/" style="font-size: 11.54px;">Music</a> <a href="/tags/Notes/" style="font-size: 10.77px;">Notes</a> <a href="/tags/People/" style="font-size: 10px;">People</a> <a href="/tags/Podinns/" style="font-size: 10px;">Podinns</a> <a href="/tags/Python/" style="font-size: 13.08px;">Python</a> <a href="/tags/Quotes/" style="font-size: 10px;">Quotes</a> <a href="/tags/Research/" style="font-size: 10px;">Research</a> <a href="/tags/Status/" style="font-size: 10px;">Status</a> <a href="/tags/The-Baader-Meinhof-Phenomenon/" style="font-size: 10px;">The Baader-Meinhof Phenomenon</a> <a href="/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/tags/Topcoder/" style="font-size: 10.77px;">Topcoder</a> <a href="/tags/USACO/" style="font-size: 19.23px;">USACO</a> <a href="/tags/Ubuntu/" style="font-size: 16.15px;">Ubuntu</a> <a href="/tags/VLC/" style="font-size: 10px;">VLC</a> <a href="/tags/VirtualBox/" style="font-size: 10px;">VirtualBox</a> <a href="/tags/code-blocks/" style="font-size: 10px;">code::blocks</a> <a href="/tags/codec/" style="font-size: 14.62px;">codec</a> <a href="/tags/heroku/" style="font-size: 13.08px;">heroku</a> <a href="/tags/lsharemy/" style="font-size: 10px;">lsharemy</a> <a href="/tags/nVidia/" style="font-size: 10px;">nVidia</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/vim/" style="font-size: 12.31px;">vim</a> <a href="/tags/x264/" style="font-size: 10.77px;">x264</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">September 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">November 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">October 2012</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">August 2012</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/07/">July 2012</a><span class="archive-list-count">69</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">April 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">March 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">February 2012</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">January 2012</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/12/">December 2011</a><span class="archive-list-count">56</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">November 2011</a><span class="archive-list-count">48</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/10/">October 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">September 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08/">August 2011</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/07/">July 2011</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/06/">June 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/05/">May 2011</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/uncategorized/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/lmy/20121102-20130908/">2012年11月02日 – 2013年09月08日 快一年没更新了</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/csit/macro-definition/">宏定义（#define）总结</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/csit/extern-function/">extern修饰的函数</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/csit/variable-storage-location/">变量存储位置</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>

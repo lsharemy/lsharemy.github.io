@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>8051 I2C EEPROM c | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="终于又接触到I2C总线了，记得研一的时候去nVidia面试的时候就被问到有没写过I2C的驱动程序，当时只能说木有。后来在上嵌入式课的时候也有讲到这个，只是这个课后来几乎都跷掉了。没想到学8051的时候又碰到了。而且这次">
+<meta property="og:type" content="article">
+<meta property="og:title" content="8051 I2C EEPROM c">
+<meta property="og:url" content="http://yoursite.com/wordpress/index.php/csit/8051-i2c-eeprom-c/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="终于又接触到I2C总线了，记得研一的时候去nVidia面试的时候就被问到有没写过I2C的驱动程序，当时只能说木有。后来在上嵌入式课的时候也有讲到这个，只是这个课后来几乎都跷掉了。没想到学8051的时候又碰到了。而且这次">
+<meta property="og:updated_time" content="2015-08-15T02:15:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="8051 I2C EEPROM c">
+<meta name="twitter:description" content="终于又接触到I2C总线了，记得研一的时候去nVidia面试的时候就被问到有没写过I2C的驱动程序，当时只能说木有。后来在上嵌入式课的时候也有讲到这个，只是这个课后来几乎都跷掉了。没想到学8051的时候又碰到了。而且这次">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-8051-i2c-eeprom-c" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/wordpress/index.php/csit/8051-i2c-eeprom-c/" class="article-date">
+  <time datetime="2011-12-25T08:41:30.000Z" itemprop="datePublished">2011-12-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/wordpress/">wordpress</a>►<a class="article-category-link" href="/categories/wordpress/index.php/">index.php</a>►<a class="article-category-link" href="/categories/wordpress/index.php/csit/">csit</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      8051 I2C EEPROM c
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>终于又接触到I2C总线了，记得研一的时候去nVidia面试的时候就被问到有没写过I2C的驱动程序，当时只能说木有。后来在上嵌入式课的时候也有讲到这个，只是这个课后来几乎都跷掉了。没想到学8051的时候又碰到了。而且这次<a id="more"></a>有程序啦。下次面试再被问到就不怕啦，忽忽。</p>
+<p>EEPROM因为掉电不消失，所以用来存一些需要掉电保存的信息。下面这个程序就是8051通过I2C总线与EEPROM交互的过程：</p>
+<p>[c]<br>/<em>———————————————–<br>  IIC协议 EEPROM24c02 存数读取数据<br>  这里用8个LED显示数据<br>  函数是采用软件延时的方法产生SCL脉冲,固对高晶振频率要作一定的修改<br>  (本例是1us机器周期,即晶振频率要小于12MHZ)<br>————————————————</em>/</p>
+<p>#include &lt;reg52.h&gt;          //头文件的包含</p>
+<p>#include &lt;intrins.h&gt;</p>
+<p>#define  _Nop()  <em>nop</em>()        //定义空指令</p>
+<p>// 常,变量定义区</p>
+<p>sbit SDA=P2^1;            //模拟I2C数据传送位<br>sbit SCL=P2^0;            //模拟I2C时钟控制位</p>
+<p>bit ack;                  //应答标志位</p>
+<p>void DelayUs2x(unsigned char t);//函数声明<br>void DelayMs(unsigned char t);</p>
+<p>/<em>————————————————<br> uS延时函数，含有输入参数 unsigned char t，无返回值<br> unsigned char 是定义无符号字符变量，其值的范围是<br> 0~255 这里使用晶振12M，精确延时请使用汇编,大致延时<br> 长度如下 T=tx2+5 uS<br>————————————————</em>/<br>void DelayUs2x(unsigned char t)<br>{<br>    while(–t);<br>}<br>/<em>————————————————<br> mS延时函数，含有输入参数 unsigned char t，无返回值<br> unsigned char 是定义无符号字符变量，其值的范围是<br> 0~255 这里使用晶振12M，精确延时请使用汇编<br>————————————————</em>/<br>void DelayMs(unsigned char t)<br>{</p>
+<pre><code><span class="keyword">while</span><span class="comment">(t--)</span>
+{
+    <span class="comment">//大致延时1mS</span>
+    DelayUs<span class="number">2</span>x<span class="comment">(245)</span>;
+    DelayUs<span class="number">2</span>x<span class="comment">(245)</span>;
+}
+</code></pre><p>}<br>/<em>————————————————<br>                    启动总线<br>————————————————</em>/<br>void Start_I2c()<br>{<br>     SDA=1;   //发送起始条件的数据信号<br>     _Nop();<br>     SCL=1;<br>     _Nop();    //起始条件建立时间大于4.7us,延时<br>     _Nop();<br>     _Nop();<br>     _Nop();<br>     _Nop();<br>     SDA=0;     //发送起始信号<br>     _Nop();    //起始条件锁定时间大于4μ<br>     _Nop();<br>     _Nop();<br>     _Nop();<br>     _Nop();<br>     SCL=0;    //钳住I2C总线，准备发送或接收数据<br>     _Nop();<br>     _Nop();<br>}<br>/<em>————————————————<br>                    结束总线<br>————————————————</em>/<br>void Stop_I2c()<br>{<br>    SDA=0;    //发送结束条件的数据信号<br>    _Nop();   //发送结束条件的时钟信号<br>    SCL=1;    //结束条件建立时间大于4μ<br>    _Nop();<br>    _Nop();<br>    _Nop();<br>    _Nop();<br>    _Nop();<br>    SDA=1;    //发送I2C总线结束信号<br>    _Nop();<br>    _Nop();<br>    _Nop();<br>    _Nop();<br>}<br>/<em>—————————————————————-<br>                 字节数据传送函数<br>函数原型: void  SendByte(unsigned char c);<br>功能:  将数据c发送出去,可以是地址,也可以是数据,发完后等待应答,并对<br>     此状态位进行操作.(不应答或非应答都使ack=0 假)<br>     发送数据正常，ack=1; ack=0表示被控器无应答或损坏。<br>——————————————————————</em>/<br>void  SendByte(unsigned char c)<br>{<br>    unsigned char BitCnt;</p>
+<pre><code><span class="keyword">for</span><span class="params">(BitCnt=<span class="number">0</span>;BitCnt&amp;lt;<span class="number">8</span>;BitCnt++)</span>  <span class="comment">//要传送的数据长度为8位</span>
+{
+    <span class="keyword">if</span><span class="params">(<span class="params">(c&amp;lt;&amp;lt;BitCnt)</span>&amp;amp;<span class="number">0</span>x80)</span>SDA=<span class="number">1</span>;   <span class="comment">//判断发送位</span>
+    <span class="keyword">else</span>  SDA=<span class="number">0</span>;
+    _Nop<span class="params">()</span>;
+    SCL=<span class="number">1</span>;               <span class="comment">//置时钟线为高，通知被控器开始接收数据位</span>
+    _Nop<span class="params">()</span>;
+    _Nop<span class="params">()</span>;             <span class="comment">//保证时钟高电平周期大于4μ</span>
+    _Nop<span class="params">()</span>;
+    _Nop<span class="params">()</span>;
+    _Nop<span class="params">()</span>;
+    SCL=<span class="number">0</span>;
+}
+
+_Nop<span class="params">()</span>;
+_Nop<span class="params">()</span>;
+SDA=<span class="number">1</span>;               <span class="comment">//8位发送完后释放数据线，准备接收应答位</span>
+_Nop<span class="params">()</span>;
+_Nop<span class="params">()</span>;
+SCL=<span class="number">1</span>;
+_Nop<span class="params">()</span>;
+_Nop<span class="params">()</span>;
+_Nop<span class="params">()</span>;
+<span class="keyword">if</span><span class="params">(SDA==<span class="number">1</span>)</span> ack=<span class="number">0</span>;
+<span class="keyword">else</span> ack=<span class="number">1</span>;        <span class="comment">//判断是否接收到应答信号</span>
+SCL=<span class="number">0</span>;
+_Nop<span class="params">()</span>;
+_Nop<span class="params">()</span>;
+</code></pre><p>}<br>/<em>—————————————————————-<br>                 字节数据传送函数<br>函数原型: unsigned char  RcvByte();<br>功能:  用来接收从器件传来的数据,并判断总线错误(不发应答信号)，<br>     发完后请用应答函数。<br>——————————————————————</em>/<br>unsigned char  RcvByte()<br>{<br>    unsigned char retc;<br>    unsigned char BitCnt;</p>
+<pre><code>retc=<span class="number">0</span>;
+SDA=<span class="number">1</span>;             <span class="comment">//置数据线为输入方式</span>
+<span class="keyword">for</span><span class="params">(BitCnt=<span class="number">0</span>;BitCnt&amp;lt;<span class="number">8</span>;BitCnt++)</span>
+{
+    _Nop<span class="params">()</span>;
+    SCL=<span class="number">0</span>;       <span class="comment">//置时钟线为低，准备接收数据位</span>
+    _Nop<span class="params">()</span>;
+    _Nop<span class="params">()</span>;      <span class="comment">//时钟低电平周期大于4.7us</span>
+    _Nop<span class="params">()</span>;
+    _Nop<span class="params">()</span>;
+    _Nop<span class="params">()</span>;
+    SCL=<span class="number">1</span>;       <span class="comment">//置时钟线为高使数据线上数据有效</span>
+    _Nop<span class="params">()</span>;
+    _Nop<span class="params">()</span>;
+    retc=retc&amp;lt;&amp;lt;<span class="number">1</span>;
+    <span class="keyword">if</span><span class="params">(SDA==<span class="number">1</span>)</span>retc=retc+<span class="number">1</span>; <span class="comment">//读数据位,接收的数据位放入retc中</span>
+    _Nop<span class="params">()</span>;
+    _Nop<span class="params">()</span>;
+}
+SCL=<span class="number">0</span>;
+_Nop<span class="params">()</span>;
+_Nop<span class="params">()</span>;
+return<span class="params">(retc)</span>;
+</code></pre><p>}<br>/<em>—————————————————————-<br>                     应答子函数<br>原型:  void Ack_I2c(void);<br>—————————————————————-</em>/<br>void Ack_I2c(void)<br>{<br>    SDA=0;<br>    _Nop();<br>    _Nop();<br>    _Nop();<br>    SCL=1;<br>    _Nop();<br>    _Nop();              //时钟低电平周期大于4μ<br>    _Nop();<br>    _Nop();<br>    _Nop();<br>    SCL=0;               //清时钟线，钳住I2C总线以便继续接收<br>    _Nop();<br>    _Nop();<br>}<br>/<em>—————————————————————-<br>                     非应答子函数<br>原型:  void NoAck_I2c(void);<br>—————————————————————-</em>/<br>void NoAck_I2c(void)<br>{<br>    SDA=1;<br>    _Nop();<br>    _Nop();<br>    _Nop();<br>    SCL=1;<br>    _Nop();<br>    _Nop();              //时钟低电平周期大于4μ<br>    _Nop();<br>    _Nop();<br>    _Nop();<br>    SCL=0;                //清时钟线，钳住I2C总线以便继续接收<br>    _Nop();<br>    _Nop();<br>}<br>/<em>—————————————————————-<br>                    向有子地址器件发送多字节数据函数<br>函数原型: bit  ISendStr(unsigned char sla,unsigned char suba,ucahr </em>s,unsigned char no);<br>功能:     从启动总线到发送地址，子地址,数据，结束总线的全过程,从器件<br>          地址sla，子地址suba，发送内容是s指向的内容，发送no个字节。<br>           如果返回1表示操作成功，否则操作有误。<br>注意：    使用前必须已结束总线。<br>—————————————————————-<em>/<br>bit ISendStr(unsigned char sla,unsigned char suba,unsigned char </em>s,unsigned char no)<br>{<br>    unsigned char i;</p>
+<pre><code>Start_I2c<span class="params">()</span>;               <span class="comment">//启动总线</span>
+SendByte<span class="params">(sla)</span>;             <span class="comment">//发送器件地址</span>
+<span class="keyword">if</span><span class="params">(ack==<span class="number">0</span>)</span> return<span class="params">(<span class="number">0</span>)</span>;
+SendByte<span class="params">(suba)</span>;            <span class="comment">//发送器件子地址</span>
+<span class="keyword">if</span><span class="params">(ack==<span class="number">0</span>)</span> return<span class="params">(<span class="number">0</span>)</span>;
+
+<span class="keyword">for</span><span class="params">(i=<span class="number">0</span>;i&amp;lt;no;i++)</span>
+{
+    SendByte<span class="params">(*s)</span>;          <span class="comment">//发送数据</span>
+    <span class="keyword">if</span><span class="params">(ack==<span class="number">0</span>)</span>return<span class="params">(<span class="number">0</span>)</span>;
+    s++;
+}
+Stop_I2c<span class="params">()</span>;                <span class="comment">//结束总线</span>
+return<span class="params">(<span class="number">1</span>)</span>;
+</code></pre><p>}<br>/<em>—————————————————————-<br>                    向有子地址器件读取多字节数据函数<br>函数原型: bit  ISendStr(unsigned char sla,unsigned char suba,ucahr </em>s,unsigned char no);<br>功能:     从启动总线到发送地址，子地址,读数据，结束总线的全过程,从器件<br>          地址sla，子地址suba，读出的内容放入s指向的存储区，读no个字节。<br>           如果返回1表示操作成功，否则操作有误。<br>注意：    使用前必须已结束总线。<br>—————————————————————-<em>/<br>bit IRcvStr(unsigned char sla,unsigned char suba,unsigned char </em>s,unsigned char no)<br>{<br>    unsigned char i;</p>
+<pre><code>Start_I2c<span class="params">()</span>;               <span class="comment">//启动总线</span>
+SendByte<span class="params">(sla)</span>;             <span class="comment">//发送器件地址</span>
+<span class="keyword">if</span><span class="params">(ack==<span class="number">0</span>)</span>return<span class="params">(<span class="number">0</span>)</span>;
+SendByte<span class="params">(suba)</span>;            <span class="comment">//发送器件子地址</span>
+<span class="keyword">if</span><span class="params">(ack==<span class="number">0</span>)</span>return<span class="params">(<span class="number">0</span>)</span>;
+
+Start_I2c<span class="params">()</span>;
+SendByte<span class="params">(sla+<span class="number">1</span>)</span>;
+    <span class="keyword">if</span><span class="params">(ack==<span class="number">0</span>)</span>return<span class="params">(<span class="number">0</span>)</span>;
+
+<span class="keyword">for</span><span class="params">(i=<span class="number">0</span>;i&amp;lt;no-<span class="number">1</span>;i++)</span>
+{
+    <span class="built_in">*</span>s=RcvByte<span class="params">()</span>;             <span class="comment">//发送数据</span>
+    Ack_I2c<span class="params">()</span>;                <span class="comment">//发送就答位</span>
+    s++;
+}
+<span class="built_in">*</span>s=RcvByte<span class="params">()</span>;
+NoAck_I2c<span class="params">()</span>;                  <span class="comment">//发送非应位</span>
+Stop_I2c<span class="params">()</span>;                   <span class="comment">//结束总线</span>
+return<span class="params">(<span class="number">1</span>)</span>;
+</code></pre><p>}<br>/<em>————————————————<br>                    主函数<br>————————————————</em>/<br>void main()<br>{<br>    unsigned char lmy;       // 定义临时变量<br>    unsigned char i;</p>
+<pre><code>IRcvStr(<span class="number">0xae</span>,<span class="number">4</span>,&amp;amp;lmy,<span class="number">1</span>);  <span class="comment">//调用存储数据</span>
+
+<span class="keyword">while</span>(<span class="number">1</span>)
+{
+    P1=lmy;              <span class="comment">//数值用二进制显示，直接用8个LED表示</span>
+    <span class="keyword">for</span>(i=<span class="number">0</span>;i&amp;lt;<span class="number">5</span>;i++)
+        DelayMs(<span class="number">200</span>);
+    lmy++;               <span class="comment">//1s钟变量自加1，改变值后存储到24c02</span>
+                         <span class="comment">//下次开机时将显示当前数值</span>
+ISendStr(<span class="number">0xae</span>,<span class="number">4</span>,&amp;amp;lmy,<span class="number">1</span>); <span class="comment">//写入24c02</span>
+}
+</code></pre><p>}<br>[/c]</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/wordpress/index.php/csit/8051-i2c-eeprom-c/" data-id="cidfq2urh00rltgh5k800dluk" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/8051/">8051</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/wordpress/index.php/csit/8051-rtc/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          8051 实时时钟 木有程序
+        
+      </div>
+    </a>
+  
+  
+    <a href="/wordpress/index.php/csit/8051-1602-led-c/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">8051 1602字符液晶模块 C</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/">wordpress</a><span class="category-list-count">285</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/">index.php</a><span class="category-list-count">285</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/about/">about</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/csit/">csit</a><span class="category-list-count">168</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/default/">default</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/lmy/">lmy</a><span class="category-list-count">109</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/thought/">thought</a><span class="category-list-count">3</span></li></ul></li></ul></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/8051/">8051</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/A/">A</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/">Algorithm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BIKE/">BIKE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Book/">Book</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSAPP/">CSAPP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DASH/">DASH</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Diary/">Diary</a><span class="tag-list-count">104</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/">Django</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ELF/">ELF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GIMP/">GIMP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google/">Google</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google-App-Engine/">Google App Engine</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/H.264-AVC/">H.264/AVC</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JM/">JM</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Law-of-Attraction/">Law of Attraction</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LightOJ/">LightOJ</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Music/">Music</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Notes/">Notes</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/People/">People</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Podinns/">Podinns</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Quotes/">Quotes</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Research/">Research</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Status/">Status</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/The-Baader-Meinhof-Phenomenon/">The Baader-Meinhof Phenomenon</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tools/">Tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Topcoder/">Topcoder</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/USACO/">USACO</a><span class="tag-list-count">68</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/">Ubuntu</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VLC/">VLC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VirtualBox/">VirtualBox</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/code-blocks/">code::blocks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/codec/">codec</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heroku/">heroku</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lsharemy/">lsharemy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nVidia/">nVidia</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/">socket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/x264/">x264</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/8051/" style="font-size: 18.46px;">8051</a> <a href="/tags/A/" style="font-size: 10px;">A</a> <a href="/tags/Algorithm/" style="font-size: 10.77px;">Algorithm</a> <a href="/tags/Android/" style="font-size: 17.69px;">Android</a> <a href="/tags/BIKE/" style="font-size: 10px;">BIKE</a> <a href="/tags/Book/" style="font-size: 10px;">Book</a> <a href="/tags/C/" style="font-size: 15.38px;">C</a> <a href="/tags/CSAPP/" style="font-size: 10px;">CSAPP</a> <a href="/tags/DASH/" style="font-size: 10px;">DASH</a> <a href="/tags/Diary/" style="font-size: 20px;">Diary</a> <a href="/tags/Django/" style="font-size: 10.77px;">Django</a> <a href="/tags/ELF/" style="font-size: 10.77px;">ELF</a> <a href="/tags/GIMP/" style="font-size: 10px;">GIMP</a> <a href="/tags/Google/" style="font-size: 10.77px;">Google</a> <a href="/tags/Google-App-Engine/" style="font-size: 10px;">Google App Engine</a> <a href="/tags/H.264-AVC/" style="font-size: 14.62px;">H.264/AVC</a> <a href="/tags/JM/" style="font-size: 13.85px;">JM</a> <a href="/tags/Law-of-Attraction/" style="font-size: 10px;">Law of Attraction</a> <a href="/tags/LightOJ/" style="font-size: 16.92px;">LightOJ</a> <a href="/tags/Linux/" style="font-size: 13.85px;">Linux</a> <a href="/tags/Music/" style="font-size: 11.54px;">Music</a> <a href="/tags/Notes/" style="font-size: 10.77px;">Notes</a> <a href="/tags/People/" style="font-size: 10px;">People</a> <a href="/tags/Podinns/" style="font-size: 10px;">Podinns</a> <a href="/tags/Python/" style="font-size: 13.08px;">Python</a> <a href="/tags/Quotes/" style="font-size: 10px;">Quotes</a> <a href="/tags/Research/" style="font-size: 10px;">Research</a> <a href="/tags/Status/" style="font-size: 10px;">Status</a> <a href="/tags/The-Baader-Meinhof-Phenomenon/" style="font-size: 10px;">The Baader-Meinhof Phenomenon</a> <a href="/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/tags/Topcoder/" style="font-size: 10.77px;">Topcoder</a> <a href="/tags/USACO/" style="font-size: 19.23px;">USACO</a> <a href="/tags/Ubuntu/" style="font-size: 16.15px;">Ubuntu</a> <a href="/tags/VLC/" style="font-size: 10px;">VLC</a> <a href="/tags/VirtualBox/" style="font-size: 10px;">VirtualBox</a> <a href="/tags/code-blocks/" style="font-size: 10px;">code::blocks</a> <a href="/tags/codec/" style="font-size: 14.62px;">codec</a> <a href="/tags/heroku/" style="font-size: 13.08px;">heroku</a> <a href="/tags/lsharemy/" style="font-size: 10px;">lsharemy</a> <a href="/tags/nVidia/" style="font-size: 10px;">nVidia</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/vim/" style="font-size: 12.31px;">vim</a> <a href="/tags/x264/" style="font-size: 10.77px;">x264</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">September 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">November 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">October 2012</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">August 2012</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/07/">July 2012</a><span class="archive-list-count">69</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">April 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">March 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">February 2012</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">January 2012</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/12/">December 2011</a><span class="archive-list-count">56</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">November 2011</a><span class="archive-list-count">48</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/10/">October 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">September 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08/">August 2011</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/07/">July 2011</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/06/">June 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/05/">May 2011</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/uncategorized/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/lmy/20121102-20130908/">2012年11月02日 – 2013年09月08日 快一年没更新了</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/csit/macro-definition/">宏定义（#define）总结</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/csit/extern-function/">extern修饰的函数</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/csit/variable-storage-location/">变量存储位置</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>

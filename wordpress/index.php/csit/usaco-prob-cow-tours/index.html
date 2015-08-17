@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>USACO - PROB Cow Tours | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="第一次看到这个题的时候，感觉好麻烦噢，不过把思路理清之后还好啦。这次使用了之前TEXT Winning Solutions中提到的先写注释再敲代码的方法，好像还真有点用，忽忽。
+代码：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="USACO - PROB Cow Tours">
+<meta property="og:url" content="http://yoursite.com/wordpress/index.php/csit/usaco-prob-cow-tours/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="第一次看到这个题的时候，感觉好麻烦噢，不过把思路理清之后还好啦。这次使用了之前TEXT Winning Solutions中提到的先写注释再敲代码的方法，好像还真有点用，忽忽。
+代码：">
+<meta property="og:updated_time" content="2015-08-15T02:15:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="USACO - PROB Cow Tours">
+<meta name="twitter:description" content="第一次看到这个题的时候，感觉好麻烦噢，不过把思路理清之后还好啦。这次使用了之前TEXT Winning Solutions中提到的先写注释再敲代码的方法，好像还真有点用，忽忽。
+代码：">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-usaco-prob-cow-tours" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/wordpress/index.php/csit/usaco-prob-cow-tours/" class="article-date">
+  <time datetime="2012-07-21T12:23:56.000Z" itemprop="datePublished">2012-07-21</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/wordpress/">wordpress</a>►<a class="article-category-link" href="/categories/wordpress/index.php/">index.php</a>►<a class="article-category-link" href="/categories/wordpress/index.php/csit/">csit</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      USACO - PROB Cow Tours
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>第一次看到这个题的时候，感觉好麻烦噢，不过把思路理清之后还好啦。这次使用了之前TEXT Winning Solutions中提到的先写注释再敲代码的方法，好像还真有点用，忽忽。</p>
+<p>代码：<a id="more"></a></p>
+<p>[c]<br>/<em><br>ID: lmy0525<br>PROG: cowtour<br>LANG: C++
+</em>/</p>
+<p>#include &lt;iostream&gt;</p>
+<p>#include &lt;fstream&gt;</p>
+<p>#include &lt;string&gt;</p>
+<p>#include &lt;algorithm&gt;</p>
+<p>#include &lt;cmath&gt;</p>
+<p>#include &lt;vector&gt;</p>
+<p>#include &lt;cstring&gt;</p>
+<p>#include &lt;iomanip&gt;</p>
+<p>using namespace std;</p>
+<p>ofstream fout;<br>ifstream fin;</p>
+<p>#define INF 1e9</p>
+<p>typedef struct Points<br>{<br>    int x;<br>    int y;<br>}Points;</p>
+<p>int N;<br>Points pts[150];<br>string matrix[150];<br>double dist[150][150];<br>int color[150];<br>double farest[150];<br>double diam[150];</p>
+<p>double getdist(Points p1, Points p2)<br>{<br>    return sqrt((p1.x-p2.x)<em>(p1.x-p2.x) + (p1.y-p2.y)</em>(p1.y-p2.y));<br>}</p>
+<p>void mark(int n, int c)<br>{<br>    color[n] = c;<br>    for (int i = 0; i &lt; N; i++)<br>    {<br>        if (dist[n][i] != INF &amp;&amp; color[i] == 0) mark(i, c);<br>    }<br>}</p>
+<p>int main()<br>{<br>    fout.open(&quot;cowtour.out&quot;);<br>    fin.open(&quot;cowtour.in&quot;);<br>    // input<br>    fin &gt;&gt; N;<br>    for (int i = 0; i &lt; N; i++)<br>    {<br>        fin &gt;&gt; pts[i].x &gt;&gt; pts[i].y;<br>    }<br>    for (int i = 0; i &lt; N; i++)<br>    {<br>        fin &gt;&gt; matrix[i];<br>    }<br>    // precalc<br>    for (int i = 0; i &lt; N; i++)<br>    {<br>        for (int j = 0; j &lt; N; j++)<br>        {<br>            if (i == j)<br>            {<br>                dist[i][j] = 0;<br>            }<br>            else if (matrix[i][j] == ‘0’)<br>            {<br>                dist[i][j] = INF;<br>            }<br>            else if (matrix[i][j] == ‘1’)<br>            {<br>                dist[i][j] = getdist(pts[i], pts[j]);<br>            }<br>        }<br>    }<br>    // floyd<br>    for (int k = 0; k &lt; N; k++)<br>    for (int i = 0; i &lt; N; i++)<br>    for (int j = 0; j &lt; N; j++)<br>    {<br>        if (dist[i][k] + dist[k][j] &lt; dist[i][j])<br>            dist[i][j] = dist[i][k] + dist[k][j];<br>    }<br>    // mark<br>    int cur = 1;<br>    for (int i = 0; i &lt; N; i++)<br>    {<br>        if (color[i] == 0) mark(i, cur++);<br>    }<br>    // diam &amp; farest<br>    for (int i = 0; i &lt; N; i++)<br>    {<br>        for (int j = 0; j &lt; N; j++)<br>        {<br>             if (i == j) continue;<br>             if (dist[i][j] != INF)<br>             {<br>                 farest[i] = max(farest[i], dist[i][j]);<br>                 diam[color[i]] = max(diam[color[i]], dist[i][j]);<br>             }<br>        }<br>    }<br>    double res = 1e9;<br>    // connect<br>    for (int i = 0; i &lt; N; i++)<br>    {<br>        for (int j = 0; j &lt; N; j++)<br>        {<br>            if (color[i] != color[j])<br>            {<br>                double newdiam = max(farest[i]+farest[j]+getdist(pts[i], pts[j]), max(diam[color[i]], diam[color[j]]));<br>                res = min(res, newdiam);<br>            }<br>        }<br>    }<br>    fout &lt;&lt; setprecision(6) &lt;&lt; fixed &lt;&lt; res &lt;&lt; endl;<br>    return 0;<br>}<br>[/c]</p>
+<p>标程：<br>[c]</p>
+<p>#include &lt;stdio.h&gt;</p>
+<p>#include &lt;stdlib.h&gt;</p>
+<p>#include &lt;string.h&gt;</p>
+<p>#include &lt;assert.h&gt;</p>
+<p>#include &lt;math.h&gt;</p>
+<p>#define INF    (1e40)</p>
+<p>typedef struct Point Point;<br>struct Point {<br>    int x, y;<br>};</p>
+<p>#define MAXPASTURE 150</p>
+<p>int n;<br>double dist[MAXPASTURE][MAXPASTURE];<br>double diam[MAXPASTURE];<br>double fielddiam[MAXPASTURE];<br>Point pt[MAXPASTURE];<br>int field[MAXPASTURE];<br>int nfield;</p>
+<p>double<br>ptdist(Point a, Point b)<br>{<br>    return sqrt((double)(b.x-a.x)<em>(b.x-a.x)+(double)(b.y-a.y)</em>(b.y-a.y));<br>}</p>
+<p>/<em> mark the field containing pasture i with number m </em>/<br>void<br>mark(int i, int m)<br>{<br>    int j;<br>    if(field[i] != -1) {<br>        assert(field[i] == m);<br>        return;<br>    }</p>
+<pre><code>field[i] = <span class="keyword">m</span>;
+<span class="keyword">for</span>(j=0; j&amp;lt;<span class="keyword">n</span>; j++)
+    <span class="keyword">if</span>(dist[i][j] &amp;lt; <span class="keyword">INF</span>/2)
+        <span class="keyword">mark</span>(j, <span class="keyword">m</span>);
+</code></pre><p>}</p>
+<p>void<br>main(void)<br>{<br>    FILE <em>fin, </em>fout;<br>    int i, j, k, c;<br>    double newdiam, d;</p>
+<pre><code>fin = fopen(&amp;quot;cowtour.<span class="keyword">in</span>&amp;quot;, &amp;quot;r&amp;quot;);
+fout = fopen(&amp;quot;cowtour.<span class="keyword">out</span>&amp;quot;, &amp;quot;w&amp;quot;);
+<span class="keyword">assert</span>(fin != NULL &amp;amp;&amp;amp; fout != NULL);
+
+fscanf(fin, &amp;quot;%<span class="keyword">d</span>\<span class="keyword">n</span>&amp;quot;, &amp;amp;<span class="keyword">n</span>);
+<span class="keyword">for</span>(i=0; i&amp;lt;<span class="keyword">n</span>; i++)
+    fscanf(fin, &amp;quot;%<span class="keyword">d</span> %<span class="keyword">d</span>\<span class="keyword">n</span>&amp;quot;, &amp;amp;pt[i].x, &amp;amp;pt[i].y);
+
+<span class="keyword">for</span>(i=0; i&amp;lt;<span class="keyword">n</span>; i++) {
+    <span class="keyword">for</span>(j=0; j&amp;lt;<span class="keyword">n</span>; j++) {
+        c = getc(fin);
+        <span class="keyword">if</span>(i == j)
+            dist[i][j] = 0;
+        <span class="keyword">else</span> <span class="keyword">if</span>(c == '0')
+            dist[i][j] = <span class="keyword">INF</span>;        <span class="comment">/* a lot */</span>
+        <span class="keyword">else</span>
+            dist[i][j] = ptdist(pt[i], pt[j]);
+    }
+    <span class="keyword">assert</span>(getc(fin) == '\<span class="keyword">n</span>');
+}
+
+<span class="comment">/* Floyd-Warshall all pairs shortest paths */</span>
+<span class="keyword">for</span>(k=0; k&amp;lt;<span class="keyword">n</span>; k++)
+<span class="keyword">for</span>(i=0; i&amp;lt;<span class="keyword">n</span>; i++)
+<span class="keyword">for</span>(j=0; j&amp;lt;<span class="keyword">n</span>; j++)
+    <span class="keyword">if</span>(dist[i][k]+dist[k][j] &amp;lt; dist[i][j])
+        dist[i][j] = dist[i][k]+dist[k][j];
+
+<span class="comment">/* mark fields */</span>
+<span class="keyword">for</span>(i=0; i&amp;lt;<span class="keyword">n</span>; i++)
+    field[i] = -1;
+<span class="keyword">for</span>(i=0; i&amp;lt;<span class="keyword">n</span>; i++)
+    <span class="keyword">if</span>(field[i] == -1)
+        <span class="keyword">mark</span>(i, nfield++);
+
+<span class="comment">/* find worst diameters involving pasture i, and for whole field */</span>
+<span class="keyword">for</span>(i=0; i&amp;lt;<span class="keyword">n</span>; i++) {
+    <span class="keyword">for</span>(j=0; j&amp;lt;<span class="keyword">n</span>; j++)
+        <span class="keyword">if</span>(diam[i] &amp;lt; dist[i][j] &amp;amp;&amp;amp; dist[i][j] &amp;lt; <span class="keyword">INF</span>/2)
+            diam[i] = dist[i][j];
+    <span class="keyword">if</span>(diam[i] &amp;gt; fielddiam[field[i]])
+        fielddiam[field[i]] = diam[i];
+}
+
+<span class="comment">/* consider a new path between i and j */</span>
+newdiam = <span class="keyword">INF</span>;
+<span class="keyword">for</span>(i=0; i&amp;lt;<span class="keyword">n</span>; i++)
+<span class="keyword">for</span>(j=0; j&amp;lt;<span class="keyword">n</span>; j++) {
+    <span class="keyword">if</span>(field[i] == field[j])
+        <span class="keyword">continue</span>;
+
+    <span class="keyword">d</span> = diam[i]+diam[j]+ptdist(pt[i], pt[j]);
+    <span class="keyword">if</span>(<span class="keyword">d</span> &amp;lt; fielddiam[field[i]])
+        <span class="keyword">d</span> = fielddiam[field[i]];
+    <span class="keyword">if</span>(<span class="keyword">d</span> &amp;lt; fielddiam[field[j]])
+        <span class="keyword">d</span> = fielddiam[field[j]];
+
+    <span class="keyword">if</span>(<span class="keyword">d</span> &amp;lt; newdiam)
+        newdiam = <span class="keyword">d</span>;
+}
+
+fprintf(fout, &amp;quot;%.6lf\<span class="keyword">n</span>&amp;quot;, newdiam);
+<span class="keyword">exit</span>(0);
+</code></pre><p>}<br>[/c]</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/wordpress/index.php/csit/usaco-prob-cow-tours/" data-id="cidfq2u2o009ptgh5ajv3vczu" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/USACO/">USACO</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/wordpress/index.php/csit/usaco-prob-bessie-come-home/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          USACO - PROB Bessie Come Home
+        
+      </div>
+    </a>
+  
+  
+    <a href="/wordpress/index.php/csit/usaco-prob-overfencing/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">USACO - PROB Overfencing</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/">wordpress</a><span class="category-list-count">285</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/">index.php</a><span class="category-list-count">285</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/about/">about</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/csit/">csit</a><span class="category-list-count">168</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/default/">default</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/lmy/">lmy</a><span class="category-list-count">109</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/thought/">thought</a><span class="category-list-count">3</span></li></ul></li></ul></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/8051/">8051</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/A/">A</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/">Algorithm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BIKE/">BIKE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Book/">Book</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSAPP/">CSAPP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DASH/">DASH</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Diary/">Diary</a><span class="tag-list-count">104</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/">Django</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ELF/">ELF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GIMP/">GIMP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google/">Google</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google-App-Engine/">Google App Engine</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/H.264-AVC/">H.264/AVC</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JM/">JM</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Law-of-Attraction/">Law of Attraction</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LightOJ/">LightOJ</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Music/">Music</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Notes/">Notes</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/People/">People</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Podinns/">Podinns</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Quotes/">Quotes</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Research/">Research</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Status/">Status</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/The-Baader-Meinhof-Phenomenon/">The Baader-Meinhof Phenomenon</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tools/">Tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Topcoder/">Topcoder</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/USACO/">USACO</a><span class="tag-list-count">68</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/">Ubuntu</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VLC/">VLC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VirtualBox/">VirtualBox</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/code-blocks/">code::blocks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/codec/">codec</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heroku/">heroku</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lsharemy/">lsharemy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nVidia/">nVidia</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/">socket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/x264/">x264</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/8051/" style="font-size: 18.46px;">8051</a> <a href="/tags/A/" style="font-size: 10px;">A</a> <a href="/tags/Algorithm/" style="font-size: 10.77px;">Algorithm</a> <a href="/tags/Android/" style="font-size: 17.69px;">Android</a> <a href="/tags/BIKE/" style="font-size: 10px;">BIKE</a> <a href="/tags/Book/" style="font-size: 10px;">Book</a> <a href="/tags/C/" style="font-size: 15.38px;">C</a> <a href="/tags/CSAPP/" style="font-size: 10px;">CSAPP</a> <a href="/tags/DASH/" style="font-size: 10px;">DASH</a> <a href="/tags/Diary/" style="font-size: 20px;">Diary</a> <a href="/tags/Django/" style="font-size: 10.77px;">Django</a> <a href="/tags/ELF/" style="font-size: 10.77px;">ELF</a> <a href="/tags/GIMP/" style="font-size: 10px;">GIMP</a> <a href="/tags/Google/" style="font-size: 10.77px;">Google</a> <a href="/tags/Google-App-Engine/" style="font-size: 10px;">Google App Engine</a> <a href="/tags/H.264-AVC/" style="font-size: 14.62px;">H.264/AVC</a> <a href="/tags/JM/" style="font-size: 13.85px;">JM</a> <a href="/tags/Law-of-Attraction/" style="font-size: 10px;">Law of Attraction</a> <a href="/tags/LightOJ/" style="font-size: 16.92px;">LightOJ</a> <a href="/tags/Linux/" style="font-size: 13.85px;">Linux</a> <a href="/tags/Music/" style="font-size: 11.54px;">Music</a> <a href="/tags/Notes/" style="font-size: 10.77px;">Notes</a> <a href="/tags/People/" style="font-size: 10px;">People</a> <a href="/tags/Podinns/" style="font-size: 10px;">Podinns</a> <a href="/tags/Python/" style="font-size: 13.08px;">Python</a> <a href="/tags/Quotes/" style="font-size: 10px;">Quotes</a> <a href="/tags/Research/" style="font-size: 10px;">Research</a> <a href="/tags/Status/" style="font-size: 10px;">Status</a> <a href="/tags/The-Baader-Meinhof-Phenomenon/" style="font-size: 10px;">The Baader-Meinhof Phenomenon</a> <a href="/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/tags/Topcoder/" style="font-size: 10.77px;">Topcoder</a> <a href="/tags/USACO/" style="font-size: 19.23px;">USACO</a> <a href="/tags/Ubuntu/" style="font-size: 16.15px;">Ubuntu</a> <a href="/tags/VLC/" style="font-size: 10px;">VLC</a> <a href="/tags/VirtualBox/" style="font-size: 10px;">VirtualBox</a> <a href="/tags/code-blocks/" style="font-size: 10px;">code::blocks</a> <a href="/tags/codec/" style="font-size: 14.62px;">codec</a> <a href="/tags/heroku/" style="font-size: 13.08px;">heroku</a> <a href="/tags/lsharemy/" style="font-size: 10px;">lsharemy</a> <a href="/tags/nVidia/" style="font-size: 10px;">nVidia</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/vim/" style="font-size: 12.31px;">vim</a> <a href="/tags/x264/" style="font-size: 10.77px;">x264</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">September 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">November 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">October 2012</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">August 2012</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/07/">July 2012</a><span class="archive-list-count">69</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">April 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">March 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">February 2012</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">January 2012</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/12/">December 2011</a><span class="archive-list-count">56</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">November 2011</a><span class="archive-list-count">48</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/10/">October 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">September 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08/">August 2011</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/07/">July 2011</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/06/">June 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/05/">May 2011</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/uncategorized/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/lmy/20121102-20130908/">2012年11月02日 – 2013年09月08日 快一年没更新了</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/csit/macro-definition/">宏定义（#define）总结</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/csit/extern-function/">extern修饰的函数</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/csit/variable-storage-location/">变量存储位置</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>

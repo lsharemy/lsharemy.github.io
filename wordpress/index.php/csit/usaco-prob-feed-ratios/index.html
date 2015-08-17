@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>USACO - PROB Feed Ratios | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="用的暴力，用解方程也可以，但是遵循用最Stupid方法的原则。
+代码：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="USACO - PROB Feed Ratios">
+<meta property="og:url" content="http://yoursite.com/wordpress/index.php/csit/usaco-prob-feed-ratios/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="用的暴力，用解方程也可以，但是遵循用最Stupid方法的原则。
+代码：">
+<meta property="og:updated_time" content="2015-08-15T02:15:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="USACO - PROB Feed Ratios">
+<meta name="twitter:description" content="用的暴力，用解方程也可以，但是遵循用最Stupid方法的原则。
+代码：">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-usaco-prob-feed-ratios" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/wordpress/index.php/csit/usaco-prob-feed-ratios/" class="article-date">
+  <time datetime="2012-07-24T05:27:00.000Z" itemprop="datePublished">2012-07-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/wordpress/">wordpress</a>►<a class="article-category-link" href="/categories/wordpress/index.php/">index.php</a>►<a class="article-category-link" href="/categories/wordpress/index.php/csit/">csit</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      USACO - PROB Feed Ratios
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>用的暴力，用解方程也可以，但是遵循用最Stupid方法的原则。</p>
+<p>代码：<a id="more"></a><br>[c]<br>/<em><br>ID: lmy0525<br>PROG: ratios<br>LANG: C++
+</em>/</p>
+<p>#include &lt;iostream&gt;</p>
+<p>#include &lt;fstream&gt;</p>
+<p>#include &lt;string&gt;</p>
+<p>#include &lt;algorithm&gt;</p>
+<p>#include &lt;cmath&gt;</p>
+<p>#include &lt;vector&gt;</p>
+<p>#include &lt;cstring&gt;</p>
+<p>#include &lt;iomanip&gt;</p>
+<p>#include &lt;queue&gt;</p>
+<p>#include &lt;map&gt;<br>using namespace std;</p>
+<p>ofstream fout;<br>ifstream fin;</p>
+<p>int goal[3];<br>int mixture[3][3];</p>
+<p>int main()<br>{<br>    fout.open(&quot;ratios.out&quot;);<br>    fin.open(&quot;ratios.in&quot;);</p>
+<pre><code><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &amp;lt; <span class="number">3</span>; i++) fin &amp;gt;&amp;gt; goal[i];
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &amp;lt; <span class="number">3</span>; i++)
+<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &amp;lt; <span class="number">3</span>; j++)
+    fin &amp;gt;&amp;gt; mixture[i][j];
+<span class="keyword">if</span> (goal[<span class="number">0</span>] == <span class="number">0</span> &amp;amp;&amp;amp; goal[<span class="number">1</span>] == <span class="number">0</span> &amp;amp;&amp;amp; goal[<span class="number">2</span>] == <span class="number">0</span>)
+{
+    fout &amp;lt;&amp;lt; &amp;quot;<span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span>&amp;quot; &amp;lt;&amp;lt; endl;
+    <span class="keyword">return</span> <span class="number">0</span>;
+}
+<span class="keyword">int</span> i[<span class="number">3</span>];
+<span class="keyword">int</span> minsum = <span class="number">30000</span>;
+<span class="keyword">int</span> threeratio[<span class="number">3</span>];
+<span class="keyword">int</span> goalratio;
+<span class="keyword">bool</span> flag = <span class="literal">false</span>;
+<span class="keyword">for</span> (i[<span class="number">0</span>] = <span class="number">0</span>; i[<span class="number">0</span>] &amp;lt; <span class="number">100</span>; i[<span class="number">0</span>]++)
+<span class="keyword">for</span> (i[<span class="number">1</span>] = <span class="number">0</span>; i[<span class="number">1</span>] &amp;lt; <span class="number">100</span>; i[<span class="number">1</span>]++)
+<span class="keyword">for</span> (i[<span class="number">2</span>] = <span class="number">0</span>; i[<span class="number">2</span>] &amp;lt; <span class="number">100</span>; i[<span class="number">2</span>]++)
+{
+    <span class="keyword">int</span> temp[<span class="number">3</span>] = {<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>};
+    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &amp;lt; <span class="number">3</span>; j++) <span class="comment">// three components</span>
+    {
+        <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &amp;lt; <span class="number">3</span>; k++) <span class="comment">// three mixture</span>
+        {
+            temp[j] += mixture[k][j]*i[k];
+        }
+    }
+    <span class="keyword">int</span> sum = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &amp;lt; <span class="number">3</span>; j++) sum += temp[j];
+    <span class="keyword">if</span> (sum == <span class="number">0</span>) <span class="keyword">continue</span>;
+    <span class="keyword">int</span> goalsum = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &amp;lt; <span class="number">3</span>; j++) goalsum += goal[j];
+    <span class="keyword">if</span> ( sum % goalsum != <span class="number">0</span>) <span class="keyword">continue</span>;
+    <span class="keyword">int</span> ratio = sum / goalsum;
+    <span class="keyword">if</span> (ratio &amp;gt;= <span class="number">100</span>) <span class="keyword">continue</span>;
+    <span class="keyword">if</span> (ratio*goal[<span class="number">0</span>] == temp[<span class="number">0</span>] &amp;amp;&amp;amp; ratio*goal[<span class="number">1</span>] == temp[<span class="number">1</span>] &amp;amp;&amp;amp; ratio*goal[<span class="number">2</span>] == temp[<span class="number">2</span>])
+    {
+        <span class="comment">// cool combine</span>
+        <span class="keyword">if</span> (sum &amp;lt; minsum)
+        {
+            minsum = sum;
+            flag = <span class="literal">true</span>;
+            <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &amp;lt; <span class="number">3</span>; k++) threeratio[k] = i[k];
+            goalratio = ratio;
+        }
+    }
+}
+<span class="keyword">if</span> (flag)
+{
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &amp;lt; <span class="number">3</span>; i++) fout &amp;lt;&amp;lt; threeratio[i] &amp;lt;&amp;lt; &amp;quot; &amp;quot;;
+    fout &amp;lt;&amp;lt; goalratio &amp;lt;&amp;lt; endl;
+}
+<span class="keyword">else</span>
+{
+    fout &amp;lt;&amp;lt; &amp;quot;NONE&amp;quot; &amp;lt;&amp;lt; endl;
+}
+<span class="keyword">return</span> <span class="number">0</span>;
+</code></pre><p>}<br>[/c]</p>
+<p>标程：<br>[c]</p>
+<p>#include &lt;stdio.h&gt;</p>
+<p>/<em> the goal ratio </em>/<br>int goal[3];</p>
+<p>/<em> the ratio of the feeds </em>/<br>int ratios[3][3];</p>
+<p>/<em> the best solution found so far </em>/<br>int min;<br>int mloc[4]; /<em> amounts of ratio 1, 2, and 3, and the amount of ratio 4 prod </em>/</p>
+<p>/<em> the amount of each type of component in the feed </em>/<br>int sum[3];</p>
+<p>int main(int argc, char <em>*argv)<br> {<br>  FILE </em>fout, <em>fin;<br>  int lv, lv2, lv3; /</em> loop variables <em>/<br>  int t, s; /</em> temporary variables <em>/<br>  int gsum; /</em> the sum of the amounts of components in the goal mixture */</p>
+<p>  if ((fin = fopen(&quot;ratios.in&quot;, &quot;r&quot;)) == NULL)<br>   {<br>    perror (&quot;fopen fin&quot;);<br>    exit(1);<br>   }<br>  if ((fout = fopen(&quot;ratios.out&quot;, &quot;w&quot;)) == NULL)<br>   {<br>    perror (&quot;fopen fout&quot;);<br>    exit(1);<br>   }</p>
+<p>  /<em> read in data </em>/<br>  fscanf (fin, &quot;%d %d %d&quot;, &amp;goal[0], &amp;goal[1], &amp;goal[2]);<br>  for (lv = 0; lv &lt; 3; lv++)<br>    fscanf (fin, &quot;%d %d %d&quot;, ratios[lv]+0, ratios[lv]+1, ratios[lv]+2);</p>
+<p>  gsum = goal[0] + goal[1] + goal[2];</p>
+<p>  min = 301; /<em> worst than possible = infinity </em>/</p>
+<p>  /<em> boundary case (this ensures gsum != 0) </em>/<br>  if (gsum == 0)<br>   {<br>    fprintf (fout, &quot;0 0 0 0\n&quot;);<br>    return 0;<br>   }</p>
+<p>  for (lv = 0; lv &lt; 100; lv++)<br>    for (lv2 = 0; lv2 &lt; 100; lv2++)<br>     { /<em> for each amout of the first two types of mixtures </em>/<br>      sum[0] = lv<em>ratios[0][0] + lv2</em>ratios[1][0];<br>      sum[1] = lv<em>ratios[0][1] + lv2</em>ratios[1][1];<br>      sum[2] = lv<em>ratios[0][2] + lv2</em>ratios[1][2];</p>
+<pre><code>  <span class="keyword">if</span> (lv + lv2 &amp;gt; min) <span class="keyword">break</span>;
+
+  <span class="keyword">for</span> (lv3 = <span class="number">0</span>; lv3 &amp;lt; <span class="number">100</span>; lv3++)
+   {
+    s = lv + lv2 + lv3;
+<span class="keyword">if</span> (s &amp;gt;= min) <span class="keyword">break</span>; <span class="comment">/* worse than we've found already */</span>
+
+    <span class="comment">/* calculate a guess at the multiples of the goal we've obtained */</span>
+<span class="comment">/* use gsum so we don't have to worry about divide by zero */</span>
+    t = (sum[<span class="number">0</span>] + sum[<span class="number">1</span>] + sum[<span class="number">2</span>]) / gsum;
+<span class="keyword">if</span> (t != <span class="number">0</span> &amp;amp;&amp;amp; sum[<span class="number">0</span>] == t*goal[<span class="number">0</span>] &amp;amp;&amp;amp; 
+        sum[<span class="number">1</span>] == t*goal[<span class="number">1</span>] &amp;amp;&amp;amp; sum[<span class="number">2</span>] == t*goal[<span class="number">2</span>])
+ { <span class="comment">/* we've found a better solution! */</span>
+  <span class="comment">/* update min */</span>
+  min = s;
+
+  <span class="comment">/* store the solution */</span>
+  mloc[<span class="number">0</span>] = lv;
+  mloc[<span class="number">1</span>] = lv2;
+  mloc[<span class="number">2</span>] = lv3;
+  mloc[<span class="number">3</span>] = t;
+ }
+
+    <span class="comment">/* add another 'bucket' of feed #2 */</span>
+    sum[<span class="number">0</span>] += ratios[<span class="number">2</span>][<span class="number">0</span>];
+    sum[<span class="number">1</span>] += ratios[<span class="number">2</span>][<span class="number">1</span>];
+    sum[<span class="number">2</span>] += ratios[<span class="number">2</span>][<span class="number">2</span>];
+   }
+ }
+</code></pre><p>  if (min == 301) fprintf (fout, &quot;NONE\n&quot;); /<em> no solution found </em>/<br>  else fprintf (fout, &quot;%d %d %d %d\n&quot;, mloc[0], mloc[1], mloc[2], mloc[3]);<br>  return 0;<br> }<br>[/c]</p>
+<p>标程2：<br>[c]<br>// 木有代码，但是解释了如何用矩阵的知识来解<br>[/c]</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/wordpress/index.php/csit/usaco-prob-feed-ratios/" data-id="cidfq2u24009ftgh5o8qopmwl" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/USACO/">USACO</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/wordpress/index.php/csit/usaco-prob-magic-squares/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          USACO - PROB Magic Squares
+        
+      </div>
+    </a>
+  
+  
+    <a href="/wordpress/index.php/csit/usaco-prob-spinning-wheels/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">USACO - PROB Spinning Wheels</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/">wordpress</a><span class="category-list-count">285</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/">index.php</a><span class="category-list-count">285</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/about/">about</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/csit/">csit</a><span class="category-list-count">168</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/default/">default</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/lmy/">lmy</a><span class="category-list-count">109</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/thought/">thought</a><span class="category-list-count">3</span></li></ul></li></ul></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/8051/">8051</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/A/">A</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/">Algorithm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BIKE/">BIKE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Book/">Book</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSAPP/">CSAPP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DASH/">DASH</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Diary/">Diary</a><span class="tag-list-count">104</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/">Django</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ELF/">ELF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GIMP/">GIMP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google/">Google</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google-App-Engine/">Google App Engine</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/H.264-AVC/">H.264/AVC</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JM/">JM</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Law-of-Attraction/">Law of Attraction</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LightOJ/">LightOJ</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Music/">Music</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Notes/">Notes</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/People/">People</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Podinns/">Podinns</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Quotes/">Quotes</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Research/">Research</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Status/">Status</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/The-Baader-Meinhof-Phenomenon/">The Baader-Meinhof Phenomenon</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tools/">Tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Topcoder/">Topcoder</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/USACO/">USACO</a><span class="tag-list-count">68</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/">Ubuntu</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VLC/">VLC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VirtualBox/">VirtualBox</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/code-blocks/">code::blocks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/codec/">codec</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heroku/">heroku</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lsharemy/">lsharemy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nVidia/">nVidia</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/">socket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/x264/">x264</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/8051/" style="font-size: 18.46px;">8051</a> <a href="/tags/A/" style="font-size: 10px;">A</a> <a href="/tags/Algorithm/" style="font-size: 10.77px;">Algorithm</a> <a href="/tags/Android/" style="font-size: 17.69px;">Android</a> <a href="/tags/BIKE/" style="font-size: 10px;">BIKE</a> <a href="/tags/Book/" style="font-size: 10px;">Book</a> <a href="/tags/C/" style="font-size: 15.38px;">C</a> <a href="/tags/CSAPP/" style="font-size: 10px;">CSAPP</a> <a href="/tags/DASH/" style="font-size: 10px;">DASH</a> <a href="/tags/Diary/" style="font-size: 20px;">Diary</a> <a href="/tags/Django/" style="font-size: 10.77px;">Django</a> <a href="/tags/ELF/" style="font-size: 10.77px;">ELF</a> <a href="/tags/GIMP/" style="font-size: 10px;">GIMP</a> <a href="/tags/Google/" style="font-size: 10.77px;">Google</a> <a href="/tags/Google-App-Engine/" style="font-size: 10px;">Google App Engine</a> <a href="/tags/H.264-AVC/" style="font-size: 14.62px;">H.264/AVC</a> <a href="/tags/JM/" style="font-size: 13.85px;">JM</a> <a href="/tags/Law-of-Attraction/" style="font-size: 10px;">Law of Attraction</a> <a href="/tags/LightOJ/" style="font-size: 16.92px;">LightOJ</a> <a href="/tags/Linux/" style="font-size: 13.85px;">Linux</a> <a href="/tags/Music/" style="font-size: 11.54px;">Music</a> <a href="/tags/Notes/" style="font-size: 10.77px;">Notes</a> <a href="/tags/People/" style="font-size: 10px;">People</a> <a href="/tags/Podinns/" style="font-size: 10px;">Podinns</a> <a href="/tags/Python/" style="font-size: 13.08px;">Python</a> <a href="/tags/Quotes/" style="font-size: 10px;">Quotes</a> <a href="/tags/Research/" style="font-size: 10px;">Research</a> <a href="/tags/Status/" style="font-size: 10px;">Status</a> <a href="/tags/The-Baader-Meinhof-Phenomenon/" style="font-size: 10px;">The Baader-Meinhof Phenomenon</a> <a href="/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/tags/Topcoder/" style="font-size: 10.77px;">Topcoder</a> <a href="/tags/USACO/" style="font-size: 19.23px;">USACO</a> <a href="/tags/Ubuntu/" style="font-size: 16.15px;">Ubuntu</a> <a href="/tags/VLC/" style="font-size: 10px;">VLC</a> <a href="/tags/VirtualBox/" style="font-size: 10px;">VirtualBox</a> <a href="/tags/code-blocks/" style="font-size: 10px;">code::blocks</a> <a href="/tags/codec/" style="font-size: 14.62px;">codec</a> <a href="/tags/heroku/" style="font-size: 13.08px;">heroku</a> <a href="/tags/lsharemy/" style="font-size: 10px;">lsharemy</a> <a href="/tags/nVidia/" style="font-size: 10px;">nVidia</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/vim/" style="font-size: 12.31px;">vim</a> <a href="/tags/x264/" style="font-size: 10.77px;">x264</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">September 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">November 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">October 2012</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">August 2012</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/07/">July 2012</a><span class="archive-list-count">69</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">April 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">March 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">February 2012</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">January 2012</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/12/">December 2011</a><span class="archive-list-count">56</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">November 2011</a><span class="archive-list-count">48</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/10/">October 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">September 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08/">August 2011</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/07/">July 2011</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/06/">June 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/05/">May 2011</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/uncategorized/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/lmy/20121102-20130908/">2012年11月02日 – 2013年09月08日 快一年没更新了</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/csit/macro-definition/">宏定义（#define）总结</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/csit/extern-function/">extern修饰的函数</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/csit/variable-storage-location/">变量存储位置</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>

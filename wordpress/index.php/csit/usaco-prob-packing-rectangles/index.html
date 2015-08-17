@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>USACO - PROB Packing Rectangles | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="我的：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="USACO - PROB Packing Rectangles">
+<meta property="og:url" content="http://yoursite.com/wordpress/index.php/csit/usaco-prob-packing-rectangles/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="我的：">
+<meta property="og:updated_time" content="2015-08-15T02:15:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="USACO - PROB Packing Rectangles">
+<meta name="twitter:description" content="我的：">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-usaco-prob-packing-rectangles" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/wordpress/index.php/csit/usaco-prob-packing-rectangles/" class="article-date">
+  <time datetime="2012-07-14T11:36:09.000Z" itemprop="datePublished">2012-07-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/wordpress/">wordpress</a>►<a class="article-category-link" href="/categories/wordpress/index.php/">index.php</a>►<a class="article-category-link" href="/categories/wordpress/index.php/csit/">csit</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      USACO - PROB Packing Rectangles
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>我的：<a id="more"></a></p>
+<p>[c]<br>/<em><br>ID: packrec<br>PROG: test<br>LANG: C++
+</em>/</p>
+<p>#include &lt;iostream&gt;</p>
+<p>#include &lt;fstream&gt;</p>
+<p>#include &lt;string&gt;</p>
+<p>#include &lt;set&gt;</p>
+<p>using namespace std;</p>
+<p>struct Rect<br>{<br>    int w;<br>    int h;<br>}rect[4];</p>
+<p>set &lt;int&gt; bestRects;<br>int best = 0;</p>
+<p>void record(Rect r)<br>{<br>    if (r.w<em>r.h &lt; best || best == 0)<br>    {<br>        best = r.w</em>r.h;<br>        bestRects.clear();<br>    }<br>    if (r.w*r.h == best) bestRects.insert(min(r.w, r.h));<br>}</p>
+<p>void check(Rect* r)<br>{<br>    Rect out;</p>
+<pre><code><span class="comment">// 1</span>
+<span class="keyword">out</span>.w = 0;
+<span class="keyword">out</span>.<span class="keyword">h</span> = 0;
+<span class="keyword">for</span> (int i = 0; i &amp;lt; 4; i++)
+{
+    <span class="keyword">out</span>.w += r[i].w;
+    <span class="keyword">out</span>.<span class="keyword">h</span> = <span class="literal">max</span>(<span class="keyword">out</span>.<span class="keyword">h</span>, r[i].<span class="keyword">h</span>);
+}
+record(<span class="keyword">out</span>);
+
+<span class="comment">// 2</span>
+<span class="keyword">out</span>.w = 0;
+<span class="keyword">out</span>.<span class="keyword">h</span> = 0;
+<span class="keyword">for</span> (int i = 0; i &amp;lt; 3; i++)
+{
+    <span class="keyword">out</span>.w += r[i].w;
+    <span class="keyword">out</span>.<span class="keyword">h</span> = <span class="literal">max</span>(<span class="keyword">out</span>.<span class="keyword">h</span>, r[i].<span class="keyword">h</span>);
+}
+<span class="keyword">out</span>.<span class="keyword">h</span> += r[3].<span class="keyword">h</span>;
+<span class="keyword">out</span>.w = <span class="literal">max</span>(<span class="keyword">out</span>.w, r[3].w);
+record(<span class="keyword">out</span>);
+
+<span class="comment">// 3</span>
+<span class="keyword">out</span>.w = r[0].w + r[1].w;
+<span class="keyword">out</span>.<span class="keyword">h</span> = <span class="literal">max</span>(r[0].<span class="keyword">h</span>, r[1].<span class="keyword">h</span>);
+<span class="keyword">out</span>.<span class="keyword">h</span> += r[2].<span class="keyword">h</span>;
+<span class="keyword">out</span>.w = <span class="literal">max</span>(<span class="keyword">out</span>.w, r[2].w);
+<span class="keyword">out</span>.w += r[3].w;
+<span class="keyword">out</span>.<span class="keyword">h</span> = <span class="literal">max</span>(<span class="keyword">out</span>.<span class="keyword">h</span>, r[3].<span class="keyword">h</span>);
+record(<span class="keyword">out</span>);
+
+<span class="comment">// 4 &amp;amp; 5</span>
+<span class="keyword">out</span>.w = r[0].w + r[1].w;
+<span class="keyword">out</span>.<span class="keyword">h</span> = <span class="literal">max</span>(r[0].<span class="keyword">h</span>, r[1].<span class="keyword">h</span>);
+<span class="keyword">out</span>.w += <span class="literal">max</span>(r[2].w, r[3].w);
+<span class="keyword">out</span>.<span class="keyword">h</span> = <span class="literal">max</span>(<span class="keyword">out</span>.<span class="keyword">h</span>, r[2].<span class="keyword">h</span>+r[3].<span class="keyword">h</span>);
+record(<span class="keyword">out</span>);
+
+<span class="comment">// 6</span>
+<span class="keyword">out</span>.<span class="keyword">h</span> = <span class="literal">max</span>(r[0].<span class="keyword">h</span>+r[2].<span class="keyword">h</span>, r[1].<span class="keyword">h</span>+r[3].<span class="keyword">h</span>);
+<span class="keyword">out</span>.w = r[0].w+r[1].w;
+
+<span class="keyword">if</span> (r[0].<span class="keyword">h</span> &amp;lt; r[1].<span class="keyword">h</span>)
+    <span class="keyword">out</span>.w = <span class="literal">max</span>(<span class="keyword">out</span>.w, r[2].w+r[1].w);
+<span class="keyword">if</span> (r[0].<span class="keyword">h</span>+r[2].<span class="keyword">h</span> &amp;gt; r[1].<span class="keyword">h</span>)
+    <span class="keyword">out</span>.w = <span class="literal">max</span>(<span class="keyword">out</span>.w, r[2].w+r[3].w);
+<span class="keyword">if</span> (r[0].<span class="keyword">h</span> &amp;gt; r[1].<span class="keyword">h</span>)
+    <span class="keyword">out</span>.w = <span class="literal">max</span>(<span class="keyword">out</span>.w, r[0].w+r[3].w);
+
+<span class="keyword">out</span>.w = <span class="literal">max</span>(<span class="keyword">out</span>.w, r[3].w);
+<span class="keyword">out</span>.w = <span class="literal">max</span>(<span class="keyword">out</span>.w, r[2].w);
+record(<span class="keyword">out</span>);
+</code></pre><p>}</p>
+<p>Rect rotate(Rect r)<br>{<br>    Rect temp;<br>    temp.w = r.h;<br>    temp.h = r.w;<br>    return temp;<br>}</p>
+<p>void checkrotate(Rect* r, int n)<br>{<br>    if (n == 4)<br>    {<br>        check(r);<br>        return;<br>    }</p>
+<pre><code>checkrotate(r, <span class="keyword">n</span>+1);
+r[<span class="keyword">n</span>] = <span class="keyword">rotate</span>(r[<span class="keyword">n</span>]);
+checkrotate(r, <span class="keyword">n</span>+1);
+r[<span class="keyword">n</span>] = <span class="keyword">rotate</span>(r[<span class="keyword">n</span>]);
+</code></pre><p>}</p>
+<p>void checkpermute(Rect* r, int n) // check all premutation<br>{<br>    if (n == 4)<br>    {<br>        checkrotate(r, 0);<br>        return;<br>    }</p>
+<pre><code>for (int i = n; i &amp;lt; 4; i++)
+{
+    Rect t;
+    t = r<span class="comment">[n]</span>, r<span class="comment">[n]</span> = r<span class="comment">[i]</span>, r<span class="comment">[i]</span> = t;
+    checkpermute(r, n+1);
+    t = r<span class="comment">[n]</span>, r<span class="comment">[n]</span> = r<span class="comment">[i]</span>, r<span class="comment">[i]</span> = t;
+}
+</code></pre><p>}</p>
+<p>int main() {<br>    ofstream fout (&quot;packrec.out&quot;);<br>    ifstream fin (&quot;packrec.in&quot;);<br>    for (int i = 0; i &lt; 4; i++)<br>    {<br>        fin &gt;&gt; rect[i].w &gt;&gt; rect[i].h;<br>    }<br>    checkpermute(rect, 0);<br>    fout &lt;&lt; best &lt;&lt; endl;<br>    for (set&lt; int &gt;::iterator it = bestRects.begin(); it != bestRects.end(); it++)<br>    {<br>        int temp = *it;<br>        fout &lt;&lt; temp &lt;&lt; &quot; &quot; &lt;&lt; best/temp &lt;&lt; endl;<br>    }<br>    return 0;<br>}<br>[/c]</p>
+<p>标程：</p>
+<p>[c]</p>
+<p>#include &lt;stdio.h&gt;</p>
+<p>#include &lt;stdlib.h&gt;</p>
+<p>#include &lt;string.h&gt;</p>
+<p>#include &lt;assert.h&gt;</p>
+<p>typedef struct Rect Rect;<br>struct Rect {<br>    int wid;<br>    int ht;<br>};</p>
+<p>Rect<br>rotate(Rect r)<br>{<br>    Rect nr;</p>
+<pre><code>nr.wid = r.ht<span class="comment">;</span>
+nr.ht = r.wid<span class="comment">;</span>
+return nr<span class="comment">;</span>
+</code></pre><p>}</p>
+<p>int<br>max(int a, int b)<br>{<br>    return a &gt; b ? a : b;<br>}</p>
+<p>int<br>min(int a, int b)<br>{<br>    return a &lt; b ? a : b;<br>}</p>
+<p>int tot;<br>int bestarea;<br>int bestht[101];</p>
+<p>void<br>record(Rect r)<br>{<br>    int i;</p>
+<pre><code><span class="keyword">if</span>(r.wid*r.ht &amp;lt; tot)
+    *(<span class="keyword">long</span>*)<span class="number">0</span>=<span class="number">0</span>;
+
+<span class="keyword">if</span>(r.wid*r.ht &amp;lt; bestarea || bestarea == <span class="number">0</span>) {
+    bestarea = r.wid*r.ht;
+    <span class="keyword">for</span>(i=<span class="number">0</span>; i&amp;lt;=<span class="number">100</span>; i++)
+        bestht[i] = <span class="number">0</span>;
+}
+<span class="keyword">if</span>(r.wid*r.ht == bestarea)
+    bestht[min(r.wid, r.ht)] = <span class="number">1</span>;
+</code></pre><p>}</p>
+<p>void<br>check(Rect *r)<br>{<br>    Rect big;<br>    int i;</p>
+<pre><code><span class="comment">/* schema 1: all lined up next to each other */</span>
+big.wid = <span class="number">0</span>;
+big.ht = <span class="number">0</span>;
+<span class="keyword">for</span>(i=<span class="number">0</span>; i&amp;lt;<span class="number">4</span>; i++) {
+    big.wid += r[i].wid;
+    big.ht = max(big.ht, r[i].ht);
+}
+record(big);
+
+<span class="comment">/* schema 2: first three lined up, fourth on bottom */</span>
+big.wid = <span class="number">0</span>;
+big.ht = <span class="number">0</span>;
+<span class="keyword">for</span>(i=<span class="number">0</span>; i&amp;lt;<span class="number">3</span>; i++) {
+    big.wid += r[i].wid;
+    big.ht = max(big.ht, r[i].ht);
+}
+big.ht += r[<span class="number">3</span>].ht;
+big.wid = max(big.wid, r[<span class="number">3</span>].wid);
+record(big);
+
+<span class="comment">/* schema 3: first two lined up, third under them, fourth to side */</span>
+big.wid = r[<span class="number">0</span>].wid + r[<span class="number">1</span>].wid;
+big.ht = max(r[<span class="number">0</span>].ht, r[<span class="number">1</span>].ht);
+big.ht += r[<span class="number">2</span>].ht;
+big.wid = max(big.wid, r[<span class="number">2</span>].wid);
+big.wid += r[<span class="number">3</span>].wid;
+big.ht = max(big.ht, r[<span class="number">3</span>].ht);
+record(big);
+
+<span class="comment">/* schema 4, 5: first two rectangles lined up, next two stacked */</span>
+big.wid = r[<span class="number">0</span>].wid + r[<span class="number">1</span>].wid;
+big.ht = max(r[<span class="number">0</span>].ht, r[<span class="number">1</span>].ht);
+big.wid += max(r[<span class="number">2</span>].wid, r[<span class="number">3</span>].wid);
+big.ht = max(big.ht, r[<span class="number">2</span>].ht+r[<span class="number">3</span>].ht);
+record(big);
+
+<span class="comment">/*
+ * schema 6: first two pressed next to each other, next two on top, like:
+ * 2 3
+ * 0 1
+ */</span>
+big.ht = max(r[<span class="number">0</span>].ht+r[<span class="number">2</span>].ht, r[<span class="number">1</span>].ht+r[<span class="number">3</span>].ht);
+big.wid = r[<span class="number">0</span>].wid + r[<span class="number">1</span>].wid;
+
+<span class="comment">/* do 2 and 1 touch? */</span>
+<span class="keyword">if</span>(r[<span class="number">0</span>].ht &amp;lt; r[<span class="number">1</span>].ht)
+    big.wid = max(big.wid, r[<span class="number">2</span>].wid+r[<span class="number">1</span>].wid);
+<span class="comment">/* do 2 and 3 touch? */</span>
+<span class="keyword">if</span>(r[<span class="number">0</span>].ht+r[<span class="number">2</span>].ht &amp;gt; r[<span class="number">1</span>].ht)
+    big.wid = max(big.wid, r[<span class="number">2</span>].wid+r[<span class="number">3</span>].wid);
+<span class="comment">/* do 0 and 3 touch? */</span>
+<span class="keyword">if</span>(r[<span class="number">1</span>].ht &amp;lt; r[<span class="number">0</span>].ht)
+    big.wid = max(big.wid, r[<span class="number">0</span>].wid+r[<span class="number">3</span>].wid);
+
+<span class="comment">/* maybe 2 or 3 sits by itself */</span>
+big.wid = max(big.wid, r[<span class="number">2</span>].wid);
+big.wid = max(big.wid, r[<span class="number">3</span>].wid);
+record(big);
+</code></pre><p>}</p>
+<p>void<br>checkrotate(Rect *r, int n)<br>{<br>    if(n == 4) {<br>        check(r);<br>        return;<br>    }</p>
+<pre><code>checkrotate(r, <span class="keyword">n</span>+1);
+r[<span class="keyword">n</span>] = <span class="keyword">rotate</span>(r[<span class="keyword">n</span>]);
+checkrotate(r, <span class="keyword">n</span>+1);
+r[<span class="keyword">n</span>] = <span class="keyword">rotate</span>(r[<span class="keyword">n</span>]);
+</code></pre><p>}</p>
+<p>void<br>checkpermute(Rect *r, int n)<br>{<br>    Rect t;<br>    int i;</p>
+<pre><code>if(n == 4)
+    checkrotate(r, 0);
+
+for(i=n; i&amp;lt;4; i++) {
+    t = r<span class="comment">[n]</span>, r<span class="comment">[n]</span> = r<span class="comment">[i]</span>, r<span class="comment">[i]</span> = t;    /* swap r<span class="comment">[i]</span>, r<span class="comment">[n]</span> */
+    checkpermute(r, n+1);
+    t = r<span class="comment">[n]</span>, r<span class="comment">[n]</span> = r<span class="comment">[i]</span>, r<span class="comment">[i]</span> = t;    /* swap r<span class="comment">[i]</span>, r<span class="comment">[n]</span> */
+}
+</code></pre><p>}</p>
+<p>void<br>main(void)<br>{<br>    FILE <em>fin, </em>fout;<br>    Rect r[4];<br>    int i;</p>
+<pre><code>fin = fopen(&amp;quot;packrec.in&amp;quot;, &amp;quot;r&amp;quot;);
+fout = fopen(&amp;quot;packrec.out&amp;quot;, &amp;quot;w&amp;quot;);
+assert(fin != <span class="literal">NULL</span> &amp;amp;&amp;amp; fout != <span class="literal">NULL</span>);
+
+<span class="keyword">for</span>(i=<span class="number">0</span>; i&amp;lt;<span class="number">4</span>; i++)
+    <span class="built_in">fscanf</span>(fin, &amp;quot;%d %d&amp;quot;, &amp;amp;r[i].wid, &amp;amp;r[i].ht);
+
+tot=(r[<span class="number">0</span>].wid*r[<span class="number">0</span>].ht+r[<span class="number">1</span>].wid*r[<span class="number">1</span>].ht+r[<span class="number">2</span>].wid*r[<span class="number">2</span>].ht+r[<span class="number">3</span>].wid*r[<span class="number">3</span>].ht);
+
+checkpermute(r, <span class="number">0</span>);
+<span class="built_in">fprintf</span>(fout, &amp;quot;%d\n&amp;quot;, bestarea);
+<span class="keyword">for</span>(i=<span class="number">0</span>; i&amp;lt;=<span class="number">100</span>; i++)
+    <span class="keyword">if</span>(bestht[i])
+        <span class="built_in">fprintf</span>(fout, &amp;quot;%d %d\n&amp;quot;, i, bestarea/i);
+<span class="built_in">exit</span>(<span class="number">0</span>);
+</code></pre><p>}</p>
+<p>[/c]</p>
+<p>好吧，又偷瞄了标程，不过学到了很多东西，这个题考察的应该是DFS，一个是DFS产生24种排列，还有就是DFS产生4个矩形旋转产生16种可能的结果，然后6种放置方法就要一种一种考虑了。代码少敲了一个+号，于是又学vimgdb学了好久。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/wordpress/index.php/csit/usaco-prob-packing-rectangles/" data-id="cidfq2tz60077tgh5vhhzrbr4" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/USACO/">USACO</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/wordpress/index.php/csit/usaco-prob-the-clocks/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          USACO - PROB The Clocks
+        
+      </div>
+    </a>
+  
+  
+    <a href="/wordpress/index.php/csit/vim-vimgdb/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">vim + vimgdb</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/">wordpress</a><span class="category-list-count">285</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/">index.php</a><span class="category-list-count">285</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/about/">about</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/csit/">csit</a><span class="category-list-count">168</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/default/">default</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/lmy/">lmy</a><span class="category-list-count">109</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/thought/">thought</a><span class="category-list-count">3</span></li></ul></li></ul></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/8051/">8051</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/A/">A</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/">Algorithm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BIKE/">BIKE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Book/">Book</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSAPP/">CSAPP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DASH/">DASH</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Diary/">Diary</a><span class="tag-list-count">104</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/">Django</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ELF/">ELF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GIMP/">GIMP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google/">Google</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google-App-Engine/">Google App Engine</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/H.264-AVC/">H.264/AVC</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JM/">JM</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Law-of-Attraction/">Law of Attraction</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LightOJ/">LightOJ</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Music/">Music</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Notes/">Notes</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/People/">People</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Podinns/">Podinns</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Quotes/">Quotes</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Research/">Research</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Status/">Status</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/The-Baader-Meinhof-Phenomenon/">The Baader-Meinhof Phenomenon</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tools/">Tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Topcoder/">Topcoder</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/USACO/">USACO</a><span class="tag-list-count">68</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/">Ubuntu</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VLC/">VLC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VirtualBox/">VirtualBox</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/code-blocks/">code::blocks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/codec/">codec</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heroku/">heroku</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lsharemy/">lsharemy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nVidia/">nVidia</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/">socket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/x264/">x264</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/8051/" style="font-size: 18.46px;">8051</a> <a href="/tags/A/" style="font-size: 10px;">A</a> <a href="/tags/Algorithm/" style="font-size: 10.77px;">Algorithm</a> <a href="/tags/Android/" style="font-size: 17.69px;">Android</a> <a href="/tags/BIKE/" style="font-size: 10px;">BIKE</a> <a href="/tags/Book/" style="font-size: 10px;">Book</a> <a href="/tags/C/" style="font-size: 15.38px;">C</a> <a href="/tags/CSAPP/" style="font-size: 10px;">CSAPP</a> <a href="/tags/DASH/" style="font-size: 10px;">DASH</a> <a href="/tags/Diary/" style="font-size: 20px;">Diary</a> <a href="/tags/Django/" style="font-size: 10.77px;">Django</a> <a href="/tags/ELF/" style="font-size: 10.77px;">ELF</a> <a href="/tags/GIMP/" style="font-size: 10px;">GIMP</a> <a href="/tags/Google/" style="font-size: 10.77px;">Google</a> <a href="/tags/Google-App-Engine/" style="font-size: 10px;">Google App Engine</a> <a href="/tags/H.264-AVC/" style="font-size: 14.62px;">H.264/AVC</a> <a href="/tags/JM/" style="font-size: 13.85px;">JM</a> <a href="/tags/Law-of-Attraction/" style="font-size: 10px;">Law of Attraction</a> <a href="/tags/LightOJ/" style="font-size: 16.92px;">LightOJ</a> <a href="/tags/Linux/" style="font-size: 13.85px;">Linux</a> <a href="/tags/Music/" style="font-size: 11.54px;">Music</a> <a href="/tags/Notes/" style="font-size: 10.77px;">Notes</a> <a href="/tags/People/" style="font-size: 10px;">People</a> <a href="/tags/Podinns/" style="font-size: 10px;">Podinns</a> <a href="/tags/Python/" style="font-size: 13.08px;">Python</a> <a href="/tags/Quotes/" style="font-size: 10px;">Quotes</a> <a href="/tags/Research/" style="font-size: 10px;">Research</a> <a href="/tags/Status/" style="font-size: 10px;">Status</a> <a href="/tags/The-Baader-Meinhof-Phenomenon/" style="font-size: 10px;">The Baader-Meinhof Phenomenon</a> <a href="/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/tags/Topcoder/" style="font-size: 10.77px;">Topcoder</a> <a href="/tags/USACO/" style="font-size: 19.23px;">USACO</a> <a href="/tags/Ubuntu/" style="font-size: 16.15px;">Ubuntu</a> <a href="/tags/VLC/" style="font-size: 10px;">VLC</a> <a href="/tags/VirtualBox/" style="font-size: 10px;">VirtualBox</a> <a href="/tags/code-blocks/" style="font-size: 10px;">code::blocks</a> <a href="/tags/codec/" style="font-size: 14.62px;">codec</a> <a href="/tags/heroku/" style="font-size: 13.08px;">heroku</a> <a href="/tags/lsharemy/" style="font-size: 10px;">lsharemy</a> <a href="/tags/nVidia/" style="font-size: 10px;">nVidia</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/vim/" style="font-size: 12.31px;">vim</a> <a href="/tags/x264/" style="font-size: 10.77px;">x264</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">September 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">November 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">October 2012</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">August 2012</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/07/">July 2012</a><span class="archive-list-count">69</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">April 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">March 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">February 2012</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">January 2012</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/12/">December 2011</a><span class="archive-list-count">56</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">November 2011</a><span class="archive-list-count">48</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/10/">October 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">September 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08/">August 2011</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/07/">July 2011</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/06/">June 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/05/">May 2011</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/uncategorized/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/lmy/20121102-20130908/">2012年11月02日 – 2013年09月08日 快一年没更新了</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/csit/macro-definition/">宏定义（#define）总结</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/csit/extern-function/">extern修饰的函数</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/csit/variable-storage-location/">变量存储位置</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>

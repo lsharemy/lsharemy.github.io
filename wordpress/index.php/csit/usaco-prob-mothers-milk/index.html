@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>USACO - PROB Mother&#39;s Milk | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="我的：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="USACO - PROB Mother's Milk">
+<meta property="og:url" content="http://yoursite.com/wordpress/index.php/csit/usaco-prob-mothers-milk/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="我的：">
+<meta property="og:updated_time" content="2015-08-15T02:15:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="USACO - PROB Mother's Milk">
+<meta name="twitter:description" content="我的：">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-usaco-prob-mothers-milk" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/wordpress/index.php/csit/usaco-prob-mothers-milk/" class="article-date">
+  <time datetime="2012-07-16T08:27:43.000Z" itemprop="datePublished">2012-07-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/wordpress/">wordpress</a>►<a class="article-category-link" href="/categories/wordpress/index.php/">index.php</a>►<a class="article-category-link" href="/categories/wordpress/index.php/csit/">csit</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      USACO - PROB Mother&#39;s Milk
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>我的：<a id="more"></a></p>
+<p>[c]<br>/<em><br>ID: lmy0525<br>PROG: milk3<br>LANG: C++
+</em>/</p>
+<p>#include &lt;iostream&gt;</p>
+<p>#include &lt;fstream&gt;</p>
+<p>#include &lt;string&gt;</p>
+<p>#include &lt;vector&gt;</p>
+<p>#include &lt;algorithm&gt;</p>
+<p>using namespace std;</p>
+<p>int Capacity[3];<br>int ab[21][21] = {0};<br>vector &lt;int&gt; c;<br>int d[6][2] = { {0, 1}, {1, 0}, {0, 2}, {2, 0}, {1, 2}, {2, 1} };</p>
+<p>void pour(int *t, int s, int d)<br>{<br>    int pourmilk = min(t[s], (Capacity[d]-t[d]));<br>    t[s] = t[s] - pourmilk;<br>    t[d] = t[d] + pourmilk;<br>}</p>
+<p>void dfs(int* t)<br>{<br>    ab[t[0]][t[1]] = 1;<br>    if (t[0] == 0) c.push_back(t[2]);</p>
+<pre><code><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &amp;lt; <span class="number">6</span>; i++)
+{
+    <span class="keyword">int</span> temp[<span class="number">3</span>];
+    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &amp;lt; <span class="number">3</span>; j++) temp[j] = t[j];
+    pour(temp, d[i][<span class="number">0</span>], d[i][<span class="number">1</span>]);
+    <span class="keyword">if</span> (ab[temp[<span class="number">0</span>]][temp[<span class="number">1</span>]] == <span class="number">0</span>)
+    {
+        dfs(temp);
+    }
+}
+</code></pre><p>}</p>
+<p>int main() {<br>    ofstream fout (&quot;milk3.out&quot;);<br>    ifstream fin (&quot;milk3.in&quot;);<br>    fin &gt;&gt; Capacity[0] &gt;&gt; Capacity[1] &gt;&gt; Capacity[2];<br>    int temp[3];<br>    temp[0] = 0, temp[1] = 0, temp[2] = Capacity[2];<br>    dfs(temp);<br>    sort (c.begin(), c.end());<br>    for (int i = 0; i &lt; c.size(); i++)<br>    {<br>        if (i != 0) fout &lt;&lt; &quot; &quot;;<br>        fout &lt;&lt; c[i];<br>    }<br>    fout &lt;&lt; endl;<br>    return 0;<br>}<br>[/c]</p>
+<p>又没想到用结构体= =</p>
+<p>标程：</p>
+<p>[c]</p>
+<p>#include &lt;stdio.h&gt;</p>
+<p>#include &lt;stdlib.h&gt;</p>
+<p>#include &lt;string.h&gt;</p>
+<p>#include &lt;assert.h&gt;</p>
+<p>#include &lt;ctype.h&gt;</p>
+<p>#define MAX 20</p>
+<p>typedef struct State    State;<br>struct State {<br>    int a[3];<br>};</p>
+<p>int seen[MAX+1][MAX+1][MAX+1];<br>int canget[MAX+1];</p>
+<p>State<br>state(int a, int b, int c)<br>{<br>    State s;</p>
+<pre><code>s.<span class="literal">a</span>[<span class="number">0</span>] = <span class="literal">a</span><span class="comment">;</span>
+s.<span class="literal">a</span>[<span class="number">1</span>] = b<span class="comment">;</span>
+s.<span class="literal">a</span>[<span class="number">2</span>] = c<span class="comment">;</span>
+<span class="keyword">return</span> s<span class="comment">;</span>
+</code></pre><p>}</p>
+<p>int cap[3];</p>
+<p>/<em> pour from bucket &quot;from&quot; to bucket &quot;to&quot; </em>/<br>State<br>pour(State s, int from, int to)<br>{<br>    int amt;</p>
+<pre><code>amt = s.a[<span class="keyword">from</span>];
+<span class="keyword">if</span>(s.a[<span class="keyword">to</span>]+amt &amp;gt; cap[<span class="keyword">to</span>])
+amt = cap[<span class="keyword">to</span>] - s.a[<span class="keyword">to</span>];
+
+s.a[<span class="keyword">from</span>] -= amt;
+s.a[<span class="keyword">to</span>] += amt;
+<span class="command">return</span> s;
+</code></pre><p>}</p>
+<p>void<br>search(State s)<br>{<br>    int i, j;</p>
+<pre><code>if(seen[<span class="link_label">s.a[0</span>]][<span class="link_label">s.a[1</span>]][s.a[2]])
+return;
+
+seen[<span class="link_label">s.a[0</span>]][<span class="link_label">s.a[1</span>]][s.a[2]] = 1;
+
+if(s.a[0] == 0)    /<span class="bullet">* bucket A empty *</span>/
+canget[s.a[2]] = 1;
+
+for(i=0; i&amp;lt;3; i++)
+for(j=0; j&amp;lt;3; j++)
+search(pour(s, i, j));
+</code></pre><p>}</p>
+<p>void<br>main(void)<br>{<br>    int i;<br>    FILE <em>fin, </em>fout;<br>    char *sep;</p>
+<pre><code>fin = fopen<span class="list">(<span class="keyword">&amp;quot</span><span class="comment">;milk3.in&amp;quot;, &amp;quot;r&amp;quot;);</span>
+fout = fopen<span class="list">(<span class="keyword">&amp;quot</span><span class="comment">;milk3.out&amp;quot;, &amp;quot;w&amp;quot;);</span>
+assert<span class="list">(<span class="keyword">fin</span> != NULL <span class="keyword">&amp;amp</span><span class="comment">;&amp;amp; fout != NULL);</span>
+
+fscanf<span class="list">(<span class="keyword">fin</span>, <span class="keyword">&amp;quot</span><span class="comment">;%d %d %d&amp;quot;, &amp;amp;cap[0], &amp;amp;cap[1], &amp;amp;cap[2]);</span>
+
+search<span class="list">(<span class="keyword">state</span><span class="list">(<span class="number">0</span>, <span class="number">0</span>, cap[<span class="number">2</span>])</span>)</span><span class="comment">;</span>
+
+sep = <span class="keyword">&amp;quot</span><span class="comment">;&amp;quot;;</span>
+for<span class="list">(<span class="keyword">i=0</span><span class="comment">; i&amp;lt;=cap[2]; i++) {</span>
+if<span class="list">(<span class="keyword">canget</span>[i])</span> {
+    fprintf<span class="list">(<span class="keyword">fout</span>, <span class="keyword">&amp;quot</span><span class="comment">;%s%d&amp;quot;, sep, i);</span>
+    sep = <span class="keyword">&amp;quot</span><span class="comment">; &amp;quot;;</span>
+}
+}
+fprintf<span class="list">(<span class="keyword">fout</span>, <span class="keyword">&amp;quot</span><span class="comment">;\n&amp;quot;);</span>
+
+exit<span class="list">(<span class="number">0</span>)</span><span class="comment">;</span></span></span></span></span></span></span></span>
+</code></pre><p>}<br>[/c]</p>
+<p>DP:</p>
+<p>[c]</p>
+<p>#include&lt;stdio.h&gt;</p>
+<p>int m[21][21][21];<br>int poss[21];<br>int A, B, C;</p>
+<p>int main(void) {<br>    int i,j,k;<br>    int flag;<br>    FILE* in=fopen(&quot;milk3.in&quot;,&quot;r&quot;);<br>    fscanf(in, &quot;%d %d %d&quot;,&amp;A, &amp;B, &amp;C);<br>    fclose(in);<br>    for(i=0;i&lt;21;i++)<br>        for(j=0;j&lt;21;j++)<br>            for(k=0;k&lt;21;k++)<br>                m[i][j][k]=0;<br>    for(i=0;i&lt;21;i++)<br>        poss[i]=0;<br>    m[0][0][C]=1;</p>
+<pre><code><span class="keyword">for</span>(flag=<span class="number">1</span>;flag;) {
+    flag=<span class="number">0</span>;
+    <span class="keyword">for</span>(i=<span class="number">0</span>;i&amp;lt;=A;i++)
+        <span class="keyword">for</span>(j=<span class="number">0</span>;j&amp;lt;=B;j++)
+            <span class="keyword">for</span>(k=<span class="number">0</span>;k&amp;lt;=C;k++) {
+                <span class="keyword">if</span>(m[i][j][k]) {
+                <span class="keyword">if</span>(i==<span class="number">0</span>) poss[k]=<span class="number">1</span>;
+            <span class="keyword">if</span>(i) {
+                    <span class="keyword">if</span>(j&amp;lt;B) {
+                            <span class="keyword">if</span>(B-j&amp;gt;=i) {
+                                <span class="keyword">if</span>( m[<span class="number">0</span>][j+i][k]==<span class="number">0</span>) {
+                                    m[<span class="number">0</span>][j+i][k]=<span class="number">1</span>;
+                                flag=<span class="number">1</span>;
+                                }
+                            } <span class="keyword">else</span> {
+                                <span class="keyword">if</span>( m[i-(B-j)][B][k] == <span class="number">0</span>) {
+                                    m[i-(B-j)][B][k] =<span class="number">1</span>;
+                                    flag=<span class="number">1</span>;
+                                }
+                            }
+                        }
+                        <span class="keyword">if</span>(k&amp;lt;C) {
+                            <span class="keyword">if</span>(C-k&amp;gt;=i) {
+                                <span class="keyword">if</span>( m[<span class="number">0</span>][j][k+i]==<span class="number">0</span>) {
+                                    m[<span class="number">0</span>][j][k+i]=<span class="number">1</span>;
+                                    flag=<span class="number">1</span>;
+                                }
+                            }
+                            <span class="keyword">else</span> {
+                                <span class="keyword">if</span>( m[i-(C-k)][j][C] == <span class="number">0</span>) {
+                                    m[i-(C-k)][j][C] =<span class="number">1</span>;
+                                    flag=<span class="number">1</span>;
+                                }
+                            }
+                        }
+                    }
+                    <span class="keyword">if</span>(j) {
+                        <span class="keyword">if</span>(i&amp;lt;A) {
+                            <span class="keyword">if</span>(A-i&amp;gt;=j) {
+                                <span class="keyword">if</span>( m[i+j][<span class="number">0</span>][k]==<span class="number">0</span>) {
+                                    m[i+j][<span class="number">0</span>][k]=<span class="number">1</span>;
+                                    flag=<span class="number">1</span>;
+                                }
+                            } <span class="keyword">else</span> {
+                                <span class="keyword">if</span>( m[A][j-(A-i)][k] == <span class="number">0</span>) {
+                                    m[A][j-(A-i)][k] =<span class="number">1</span>;
+                                    flag=<span class="number">1</span>;
+                                }
+                            }
+                        }
+                        <span class="keyword">if</span>(k&amp;lt;C) {
+                            <span class="keyword">if</span>(C-k&amp;gt;=j) {
+                                <span class="keyword">if</span>( m[i][<span class="number">0</span>][k+j]==<span class="number">0</span>) {
+                                    m[i][<span class="number">0</span>][k+j]=<span class="number">1</span>;
+                                    flag=<span class="number">1</span>;
+                                }
+                            } <span class="keyword">else</span> {
+                                <span class="keyword">if</span>( m[i][j-(C-k)][C] == <span class="number">0</span>) {
+                                    m[i][j-(C-k)][C] =<span class="number">1</span>;
+                                    flag=<span class="number">1</span>;
+                                }
+                            }
+                        }
+                    }
+                    <span class="keyword">if</span>(k) {
+                        <span class="keyword">if</span>(i&amp;lt;A) {
+                            <span class="keyword">if</span>(A-i&amp;gt;=k) {
+                                <span class="keyword">if</span>( m[i+k][j][<span class="number">0</span>]==<span class="number">0</span>) {
+                                    m[i+k][j][<span class="number">0</span>]=<span class="number">1</span>;
+                                    flag=<span class="number">1</span>;
+                                }
+                            } <span class="keyword">else</span> {
+                                <span class="keyword">if</span>( m[A][j][k-(A-i)] == <span class="number">0</span>) {
+                                    m[A][j][k-(A-i)] =<span class="number">1</span>;
+                                    flag=<span class="number">1</span>;
+                                }
+                            }
+                        }
+                        <span class="keyword">if</span>(j&amp;lt;B) {
+                            <span class="keyword">if</span>(B-j&amp;gt;=k) {
+                                <span class="keyword">if</span>( m[i][j+k][<span class="number">0</span>]==<span class="number">0</span>) {
+                                    m[i][j+k][<span class="number">0</span>]=<span class="number">1</span>;
+                                    flag=<span class="number">1</span>;
+                                }
+                            } <span class="keyword">else</span> {
+                                <span class="keyword">if</span>( m[i][B][k-(B-j)] == <span class="number">0</span>) {
+                                    m[i][B][k-(B-j)] =<span class="number">1</span>;
+                                    flag=<span class="number">1</span>;
+                                }
+                            }
+                        }
+                    }
+        }                   
+    }
+}
+{
+    FILE* out=fopen(&amp;quot;milk3.out&amp;quot;, &amp;quot;w&amp;quot;);
+    <span class="keyword">for</span>(i=<span class="number">0</span>;i&amp;lt;<span class="number">21</span>;i++) {
+        <span class="keyword">if</span>(poss[i]) {
+            <span class="built_in">fprintf</span>(out,&amp;quot;%d&amp;quot;,i);
+            i++;
+            <span class="keyword">break</span>;
+        }
+    }
+    <span class="keyword">for</span>(;i&amp;lt;<span class="number">21</span>;i++) {
+        <span class="keyword">if</span>(poss[i]) {
+            <span class="built_in">fprintf</span>(out, &amp;quot; %d&amp;quot;, i);
+        }
+    }
+    <span class="built_in">fprintf</span>(out,&amp;quot;\n&amp;quot;);
+}
+<span class="keyword">return</span> <span class="number">0</span>;
+</code></pre><p>}<br>[/c]<br>用两个变量表示状态：</p>
+<p>[c]</p>
+<p>#include &lt;stdio.h&gt;<br>int A, B, C;<br>int CB[21][21]; // All states</p>
+<p>void readFile() {<br>    FILE *f;<br>    f = fopen(&quot;milk3.in&quot;, &quot;r&quot;);<br>    fscanf(f, &quot;%d%d%d&quot;, &amp;A, &amp;B, &amp;C);<br>    fclose(f);<br>}</p>
+<p>void writeFile() {<br>    FILE *f; int i;<br>    f = fopen(&quot;milk3.out&quot;, &quot;w&quot;);<br>    for(i = 0; i &lt;= C; i++) {<br>        if(CB[i][C - i] == 1) {<br>            if((i != C-B) &amp;&amp; (i != 0)) fprintf(f, &quot; &quot;);<br>            fprintf(f, &quot;%d&quot;, i);<br>        }<br>    }<br>    fprintf(f, &quot;\n&quot;);<br>    fclose(f);<br>}</p>
+<p>// do brute-force search, c/b: current state<br>void search(int c, int b) {<br>    int a;<br>    if(CB[c][b] == 1) return; // already searched<br>    CB[c][b] = 1;<br>    a = C-b-c; // calc amount in A<br>    // do all moves:<br>    // c-&gt;b<br>    if(B &lt; c+b) search(c - (B - b), B);<br>    else search(0, c + b);<br>    // b-&gt;c<br>    if(C &lt; c+b) search(C, b - (C - c));<br>    else search(c + b, 0);<br>    // c-&gt;a<br>    if(A &lt; c+a) search(c - (A - a), b);<br>    else search(0, b);<br>    // a-&gt;c<br>    if(C &lt; c+a) search(C, b);<br>    else search(c + a, b);<br>    // b-&gt;a<br>    if(A &lt; b+a) search(c, b - (A - a));<br>    else search(c, 0);<br>    // a-&gt;b<br>    if(B &lt; b+a) search(c, B);<br>    else search(c, b + a);<br>   }</p>
+<p>int main () {<br>    readFile();<br>    search(C, 0);<br>    writeFile();<br>    return 0;<br>}<br>[/c]</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/wordpress/index.php/csit/usaco-prob-mothers-milk/" data-id="cidfq2u04007wtgh5c15qk2xb" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/USACO/">USACO</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/wordpress/index.php/csit/usaco-text-introduction-to-binary-numbers/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          USACO - TEXT Introduction to Binary Numbers
+        
+      </div>
+    </a>
+  
+  
+    <a href="/wordpress/index.php/csit/usaco-prob-arithmetic-progressions/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">USACO - PROB Arithmetic Progressions</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/">wordpress</a><span class="category-list-count">285</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/">index.php</a><span class="category-list-count">285</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/about/">about</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/csit/">csit</a><span class="category-list-count">168</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/default/">default</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/lmy/">lmy</a><span class="category-list-count">109</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/thought/">thought</a><span class="category-list-count">3</span></li></ul></li></ul></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/8051/">8051</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/A/">A</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/">Algorithm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BIKE/">BIKE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Book/">Book</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSAPP/">CSAPP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DASH/">DASH</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Diary/">Diary</a><span class="tag-list-count">104</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/">Django</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ELF/">ELF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GIMP/">GIMP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google/">Google</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google-App-Engine/">Google App Engine</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/H.264-AVC/">H.264/AVC</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JM/">JM</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Law-of-Attraction/">Law of Attraction</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LightOJ/">LightOJ</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Music/">Music</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Notes/">Notes</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/People/">People</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Podinns/">Podinns</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Quotes/">Quotes</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Research/">Research</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Status/">Status</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/The-Baader-Meinhof-Phenomenon/">The Baader-Meinhof Phenomenon</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tools/">Tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Topcoder/">Topcoder</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/USACO/">USACO</a><span class="tag-list-count">68</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/">Ubuntu</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VLC/">VLC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VirtualBox/">VirtualBox</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/code-blocks/">code::blocks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/codec/">codec</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heroku/">heroku</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lsharemy/">lsharemy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nVidia/">nVidia</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/">socket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/x264/">x264</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/8051/" style="font-size: 18.46px;">8051</a> <a href="/tags/A/" style="font-size: 10px;">A</a> <a href="/tags/Algorithm/" style="font-size: 10.77px;">Algorithm</a> <a href="/tags/Android/" style="font-size: 17.69px;">Android</a> <a href="/tags/BIKE/" style="font-size: 10px;">BIKE</a> <a href="/tags/Book/" style="font-size: 10px;">Book</a> <a href="/tags/C/" style="font-size: 15.38px;">C</a> <a href="/tags/CSAPP/" style="font-size: 10px;">CSAPP</a> <a href="/tags/DASH/" style="font-size: 10px;">DASH</a> <a href="/tags/Diary/" style="font-size: 20px;">Diary</a> <a href="/tags/Django/" style="font-size: 10.77px;">Django</a> <a href="/tags/ELF/" style="font-size: 10.77px;">ELF</a> <a href="/tags/GIMP/" style="font-size: 10px;">GIMP</a> <a href="/tags/Google/" style="font-size: 10.77px;">Google</a> <a href="/tags/Google-App-Engine/" style="font-size: 10px;">Google App Engine</a> <a href="/tags/H.264-AVC/" style="font-size: 14.62px;">H.264/AVC</a> <a href="/tags/JM/" style="font-size: 13.85px;">JM</a> <a href="/tags/Law-of-Attraction/" style="font-size: 10px;">Law of Attraction</a> <a href="/tags/LightOJ/" style="font-size: 16.92px;">LightOJ</a> <a href="/tags/Linux/" style="font-size: 13.85px;">Linux</a> <a href="/tags/Music/" style="font-size: 11.54px;">Music</a> <a href="/tags/Notes/" style="font-size: 10.77px;">Notes</a> <a href="/tags/People/" style="font-size: 10px;">People</a> <a href="/tags/Podinns/" style="font-size: 10px;">Podinns</a> <a href="/tags/Python/" style="font-size: 13.08px;">Python</a> <a href="/tags/Quotes/" style="font-size: 10px;">Quotes</a> <a href="/tags/Research/" style="font-size: 10px;">Research</a> <a href="/tags/Status/" style="font-size: 10px;">Status</a> <a href="/tags/The-Baader-Meinhof-Phenomenon/" style="font-size: 10px;">The Baader-Meinhof Phenomenon</a> <a href="/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/tags/Topcoder/" style="font-size: 10.77px;">Topcoder</a> <a href="/tags/USACO/" style="font-size: 19.23px;">USACO</a> <a href="/tags/Ubuntu/" style="font-size: 16.15px;">Ubuntu</a> <a href="/tags/VLC/" style="font-size: 10px;">VLC</a> <a href="/tags/VirtualBox/" style="font-size: 10px;">VirtualBox</a> <a href="/tags/code-blocks/" style="font-size: 10px;">code::blocks</a> <a href="/tags/codec/" style="font-size: 14.62px;">codec</a> <a href="/tags/heroku/" style="font-size: 13.08px;">heroku</a> <a href="/tags/lsharemy/" style="font-size: 10px;">lsharemy</a> <a href="/tags/nVidia/" style="font-size: 10px;">nVidia</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/vim/" style="font-size: 12.31px;">vim</a> <a href="/tags/x264/" style="font-size: 10.77px;">x264</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">September 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">November 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">October 2012</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">August 2012</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/07/">July 2012</a><span class="archive-list-count">69</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">April 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">March 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">February 2012</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">January 2012</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/12/">December 2011</a><span class="archive-list-count">56</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">November 2011</a><span class="archive-list-count">48</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/10/">October 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">September 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08/">August 2011</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/07/">July 2011</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/06/">June 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/05/">May 2011</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/uncategorized/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/lmy/20121102-20130908/">2012年11月02日 – 2013年09月08日 快一年没更新了</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/csit/macro-definition/">宏定义（#define）总结</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/csit/extern-function/">extern修饰的函数</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/csit/variable-storage-location/">变量存储位置</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>

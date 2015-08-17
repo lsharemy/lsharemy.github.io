@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>USACO - PROB Preface Numbering | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="我的：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="USACO - PROB Preface Numbering">
+<meta property="og:url" content="http://yoursite.com/wordpress/index.php/csit/usaco-prob-preface-numbering/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="我的：">
+<meta property="og:updated_time" content="2015-08-15T02:15:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="USACO - PROB Preface Numbering">
+<meta name="twitter:description" content="我的：">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-usaco-prob-preface-numbering" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/wordpress/index.php/csit/usaco-prob-preface-numbering/" class="article-date">
+  <time datetime="2012-07-19T09:16:45.000Z" itemprop="datePublished">2012-07-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/wordpress/">wordpress</a>►<a class="article-category-link" href="/categories/wordpress/index.php/">index.php</a>►<a class="article-category-link" href="/categories/wordpress/index.php/csit/">csit</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      USACO - PROB Preface Numbering
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>我的：<a id="more"></a></p>
+<p>[c]<br>/<em><br>ID: lmy0525<br>PROG: preface<br>LANG: C++
+</em>/</p>
+<p>#include &lt;iostream&gt;</p>
+<p>#include &lt;fstream&gt;</p>
+<p>#include &lt;string&gt;</p>
+<p>#include &lt;algorithm&gt;</p>
+<p>#include &lt;cmath&gt;</p>
+<p>#include &lt;vector&gt;</p>
+<p>using namespace std;</p>
+<p>ofstream fout;<br>ifstream fin;</p>
+<p>char c[7] = {‘I’, ‘V’, ‘X’, ‘L’, ‘C’, ‘D’, ‘M’};<br>int cnt[7]; // I V X L C D M</p>
+<p>void calc(int n)<br>{<br>    // M MM MMM<br>    cnt[6] += n / 1000;<br>    n %= 1000;</p>
+<pre><code><span class="keyword">if</span> ( n &amp;gt;= <span class="number">900</span> ) <span class="comment">// CM</span>
+{
+    cnt[<span class="number">6</span>]++;
+    cnt[<span class="number">4</span>]++;
+    n -= <span class="number">900</span>;
+}
+<span class="keyword">else</span> <span class="keyword">if</span> (n &amp;gt;= <span class="number">500</span>) <span class="comment">// D DC DCC DCCC</span>
+{
+    cnt[<span class="number">5</span>]++;
+    cnt[<span class="number">4</span>] += (n-<span class="number">500</span>) / <span class="number">100</span>;
+    n = (n-<span class="number">500</span>) % <span class="number">100</span>;
+}
+<span class="keyword">else</span> <span class="keyword">if</span> (n &amp;gt;= <span class="number">400</span>) <span class="comment">// CD</span>
+{
+    cnt[<span class="number">4</span>]++;
+    cnt[<span class="number">5</span>]++;
+    n -= <span class="number">400</span>;
+}
+<span class="keyword">else</span> <span class="keyword">if</span> (n &amp;gt;= <span class="number">100</span>) <span class="comment">// C CC CCC</span>
+{
+    cnt[<span class="number">4</span>] += n / <span class="number">100</span>;
+    n %= <span class="number">100</span>;
+}
+
+<span class="keyword">if</span> ( n &amp;gt;= <span class="number">90</span> ) <span class="comment">// XC</span>
+{
+    cnt[<span class="number">4</span>]++;
+    cnt[<span class="number">2</span>]++;
+    n -= <span class="number">90</span>;
+}
+<span class="keyword">else</span> <span class="keyword">if</span> (n &amp;gt;= <span class="number">50</span>) <span class="comment">// L LX LXX L<span class="label">XXX</span></span>
+{
+    cnt[<span class="number">3</span>]++;
+    cnt[<span class="number">2</span>] += (n-<span class="number">50</span>) / <span class="number">10</span>;
+    n = (n-<span class="number">50</span>) % <span class="number">10</span>;
+}
+<span class="keyword">else</span> <span class="keyword">if</span> (n &amp;gt;= <span class="number">40</span>) <span class="comment">// XL</span>
+{
+    cnt[<span class="number">2</span>]++;
+    cnt[<span class="number">3</span>]++;
+    n -= <span class="number">40</span>;
+}
+<span class="keyword">else</span> <span class="keyword">if</span> (n &amp;gt;= <span class="number">10</span>) <span class="comment">// X XX <span class="label">XXX</span></span>
+{
+    cnt[<span class="number">2</span>] += n / <span class="number">10</span>;
+    n %= <span class="number">10</span>;
+}
+
+<span class="keyword">if</span> ( n &amp;gt;= <span class="number">9</span> ) <span class="comment">// IX </span>
+{
+    cnt[<span class="number">2</span>]++;
+    cnt[<span class="number">0</span>]++;
+}
+<span class="keyword">else</span> <span class="keyword">if</span> (n &amp;gt;= <span class="number">5</span>) <span class="comment">// V VI VII VIII</span>
+{
+    cnt[<span class="number">1</span>]++;
+    cnt[<span class="number">0</span>] += n-<span class="number">5</span>;
+}
+<span class="keyword">else</span> <span class="keyword">if</span> (n &amp;gt;= <span class="number">4</span>) <span class="comment">// IV</span>
+{
+    cnt[<span class="number">0</span>]++;
+    cnt[<span class="number">1</span>]++;
+}
+<span class="keyword">else</span> <span class="keyword">if</span> (n &amp;gt;= <span class="number">1</span>) <span class="comment">// I II III </span>
+{
+    cnt[<span class="number">0</span>] += n;
+}
+</code></pre><p>}</p>
+<p>int main() {<br>    fout.open(&quot;preface.out&quot;);<br>    fin.open(&quot;preface.in&quot;);<br>    int N;<br>    fin &gt;&gt; N;<br>    for (int i = 1; i &lt;= N; i++)<br>    {<br>        calc(i);<br>    }<br>    for (int i = 0; i &lt; 7; i++)<br>    {<br>        if (cnt[i])<br>        {<br>            fout &lt;&lt; c[i] &lt;&lt; &quot; &quot; &lt;&lt; cnt[i] &lt;&lt; endl;<br>        }<br>    }<br>    return 0;<br>}<br>[/c]</p>
+<p>标程1：<br>[c]<br>/<em><br>PROG: preface<br>ID: rsc001
+</em>/</p>
+<p>#include &lt;stdio.h&gt;</p>
+<p>#include &lt;stdlib.h&gt;</p>
+<p>#include &lt;string.h&gt;</p>
+<p>#include &lt;assert.h&gt;</p>
+<p>static char *encode[] = {<br>    &quot;&quot;, &quot;I&quot;, &quot;II&quot;, &quot;III&quot;, &quot;IV&quot;,<br>    &quot;V&quot;, &quot;VI&quot;, &quot;VII&quot;, &quot;VIII&quot;, &quot;IX&quot;,<br>};</p>
+<p>char<em><br>romandigit(int d, char </em>ivx)<br>{<br>    char <em>s, </em>p;<br>    static char str[10];</p>
+<pre><code><span class="keyword">for</span>(s=encode[d%<span class="number">10</span>], p=<span class="keyword">str</span>; *s; s++, p++) {
+    <span class="keyword">switch</span>(*s){
+    <span class="keyword">case</span> <span class="string">'I'</span>:
+        *p = ivx[<span class="number">0</span>];
+        <span class="keyword">break</span>;
+    <span class="keyword">case</span> <span class="string">'V'</span>:
+        *p = ivx[<span class="number">1</span>];
+        <span class="keyword">break</span>;
+    <span class="keyword">case</span> <span class="string">'X'</span>:
+        *p = ivx[<span class="number">2</span>];
+        <span class="keyword">break</span>;
+    }
+}
+*p = <span class="string">'&amp;#92;&amp;#48;'</span>;
+<span class="keyword">return</span> <span class="keyword">str</span>;
+</code></pre><p>}</p>
+<p>char*<br>roman(int n)<br>{<br>    static char buf[20];</p>
+<pre><code>strcpy<span class="list">(<span class="keyword">buf</span>, <span class="keyword">&amp;quot</span><span class="comment">;&amp;quot;);</span>
+strcat<span class="list">(<span class="keyword">buf</span>, romandigit<span class="list">(<span class="keyword">n/1000</span>, <span class="keyword">&amp;quot</span><span class="comment">;M&amp;quot;));</span>
+strcat<span class="list">(<span class="keyword">buf</span>, romandigit<span class="list">(<span class="keyword">n/100</span>,  <span class="keyword">&amp;quot</span><span class="comment">;CDM&amp;quot;));</span>
+strcat<span class="list">(<span class="keyword">buf</span>, romandigit<span class="list">(<span class="keyword">n/10</span>,   <span class="keyword">&amp;quot</span><span class="comment">;XLC&amp;quot;));</span>
+strcat<span class="list">(<span class="keyword">buf</span>, romandigit<span class="list">(<span class="keyword">n</span>,      <span class="keyword">&amp;quot</span><span class="comment">;IVX&amp;quot;));</span>
+return buf<span class="comment">;</span></span></span></span></span></span></span></span></span></span>
+</code></pre><p>}</p>
+<p>void<br>main(void)<br>{<br>    FILE <em>fin, </em>fout;<br>    int i, n;<br>    char *s;<br>    int count[256];</p>
+<pre><code>fin = fopen(&amp;quot;preface.<span class="keyword">in</span>&amp;quot;, &amp;quot;r&amp;quot;);
+fout = fopen(&amp;quot;preface.<span class="keyword">out</span>&amp;quot;, &amp;quot;w&amp;quot;);
+<span class="keyword">assert</span>(fin != NULL &amp;amp;&amp;amp; fout != NULL);
+
+fscanf(fin, &amp;quot;%<span class="keyword">d</span>&amp;quot;, &amp;amp;<span class="keyword">n</span>);
+
+<span class="keyword">for</span>(s=&amp;quot;IVXLCDM&amp;quot;; *s; s++)
+    <span class="keyword">count</span>[*s] = 0;
+
+<span class="keyword">for</span>(i=1; i&amp;lt;=<span class="keyword">n</span>; i++)
+    <span class="keyword">for</span>(s=roman(i); *s; s++)
+        <span class="keyword">count</span>[*s]++;
+
+<span class="keyword">for</span>(s=&amp;quot;IVXLCDM&amp;quot;; *s; s++)
+    <span class="keyword">if</span>(<span class="keyword">count</span>[*s])
+        fprintf(fout, &amp;quot;%c %<span class="keyword">d</span>\<span class="keyword">n</span>&amp;quot;, *s, <span class="keyword">count</span>[*s]);
+
+<span class="keyword">exit</span>(0);
+</code></pre><p>}<br>[/c]</p>
+<p>标程2：<br>[c]</p>
+<p>#include &lt;fstream.h&gt;</p>
+<p>int     Ig = 0;<br>int     Vg = 0;<br>int     Xg = 0;<br>int     Lg = 0;<br>int     Cg = 0;<br>int     Dg = 0;<br>int     Mg = 0;</p>
+<p>inline void<br>roman (int x)<br>{<br>    int     I = 0;<br>    int     V = 0;<br>    int     X = 0;<br>    int     L = 0;<br>    int     C = 0;<br>    int     D = 0;<br>    int     M = 0;<br>    for ( ; x &gt;= 1000; ++M, x -= 1000);<br>    for ( ; x &gt;= 500; ++D, x -= 500);<br>    for ( ; x &gt;= 100; ++C, x -= 100);<br>    for ( ; x &gt;= 50; ++L, x -= 50);<br>    for ( ; x &gt;= 10; ++X, x -= 10);<br>    for ( ; x &gt;= 5; ++V, x -= 5);<br>    for ( ; x &gt;= 1; ++I, x -= 1);</p>
+<pre><code><span class="keyword">while</span> (D &amp;gt; <span class="number">0</span> &amp;amp;&amp;amp; (C / <span class="number">4</span>) &amp;gt; <span class="number">0</span>) {
+--D; C -= <span class="number">4</span>; ++M; ++C;
+}
+<span class="keyword">while</span> (C &amp;gt;= <span class="number">4</span>) {
+C -= <span class="number">4</span>; ++D; ++C;
+}
+<span class="keyword">while</span> (L &amp;gt; <span class="number">0</span> &amp;amp;&amp;amp; (X / <span class="number">4</span>) &amp;gt; <span class="number">0</span>) {
+--L; X -= <span class="number">4</span>; ++C; ++X;
+}
+<span class="keyword">while</span> (X &amp;gt;= <span class="number">4</span>) {
+X -= <span class="number">4</span>; ++L; ++X;
+}
+<span class="keyword">while</span> (V &amp;gt; <span class="number">0</span> &amp;amp;&amp;amp; (I / <span class="number">4</span>) &amp;gt; <span class="number">0</span>) {
+--V; I -= <span class="number">4</span>; ++X; ++I;
+}
+<span class="keyword">while</span> (I &amp;gt;= <span class="number">4</span>) {
+I -= <span class="number">4</span>; ++V; ++I;
+}
+Ig += I;
+Vg += V;
+Xg += X;
+Lg += L;
+Cg += C;
+Dg += D;
+Mg += M;
+<span class="keyword">return</span>;
+</code></pre><p>}</p>
+<p>int<br>main ()<br>{</p>
+<pre><code>int     n;
+ifstream filein (<span class="subst">&amp;</span>quot;preface<span class="built_in">.</span><span class="keyword">in</span><span class="subst">&amp;</span>quot;);
+filein <span class="subst">&amp;</span><span class="literal">gt</span>;<span class="subst">&amp;</span><span class="literal">gt</span>; n;
+filein<span class="built_in">.</span>close ();
+
+f<span class="subst">or</span> (int <span class="keyword">loop</span> = <span class="number">1</span>; <span class="keyword">loop</span> <span class="subst">&amp;</span><span class="literal">lt</span>;= n; ++<span class="keyword">loop</span>) {
+roman (<span class="keyword">loop</span>);
+}
+
+ofstream fileout (<span class="subst">&amp;</span>quot;preface<span class="built_in">.</span>out<span class="subst">&amp;</span>quot;);
+<span class="keyword">if</span> (Ig != <span class="number">0</span>) {
+fileout <span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>; <span class="string">'I'</span> <span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>; <span class="string">' '</span> <span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>; Ig <span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>; endl;
+}
+<span class="keyword">if</span> (Vg != <span class="number">0</span>) {
+fileout <span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>; <span class="string">'V'</span> <span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>; <span class="string">' '</span> <span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>; Vg <span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>; endl;
+}
+<span class="keyword">if</span> (Xg != <span class="number">0</span>) {
+fileout <span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>; <span class="string">'X'</span> <span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>; <span class="string">' '</span> <span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>; Xg <span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>; endl;
+}
+<span class="keyword">if</span> (Lg != <span class="number">0</span>) {
+fileout <span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>; <span class="string">'L'</span> <span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>; <span class="string">' '</span> <span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>; Lg <span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>; endl;
+}
+<span class="keyword">if</span> (Cg != <span class="number">0</span>) {
+fileout <span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>; <span class="string">'C'</span> <span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>; <span class="string">' '</span> <span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>; Cg <span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>; endl;
+}
+<span class="keyword">if</span> (Dg != <span class="number">0</span>) {
+fileout <span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>; <span class="string">'D'</span> <span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>; <span class="string">' '</span> <span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>; Dg <span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>; endl;
+}
+<span class="keyword">if</span> (Mg != <span class="number">0</span>) {
+fileout <span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>; <span class="string">'M'</span> <span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>; <span class="string">' '</span> <span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>; Mg <span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>; endl;
+}
+fileout<span class="built_in">.</span>close ();
+
+<span class="keyword">return</span> (<span class="number">0</span>);
+</code></pre><p>}<br>[/c]</p>
+<p>标程3：<br>[c]</p>
+<p>#include &lt;stdio.h&gt;<br>int     ns[] =<br>   {1000, 900, 500, 400, 100, 90, 50,  40, 10,  9,  5,   4, 1};<br>   //&quot;M&quot; &quot;CM&quot;  &quot;D&quot;  &quot;CD&quot; &quot;C&quot; &quot;XC&quot; &quot;L&quot; &quot;XL&quot; &quot;X&quot; &quot;IX&quot; &quot;V&quot; &quot;IV&quot; &quot;I&quot;<br>char    rs[] = {&quot;IVXLCDM&quot;};<br>int     match1[] = {6, 4, 5, 4, 4, 2, 3, 2, 2, 0, 1, 0, 0};<br>int     match2[] = {-1, 6, -1, 5, -1, 4, -1, 3, -1, 2, -1, 1, -1};<br>int     n;<br>int     counts[7];</p>
+<p>void<br>count (int num)<br>{<br>    int     sct[] = {3, 1, 1, 1, 3, 1, 1, 1, 3, 1, 1, 1, 3};<br>    int     i, j = 0;<br>    for (i = 0; i &lt; 13; i++) {<br>    while (sct[i] &gt; 0) {<br>        if ((num - ns[i]) &gt;= 0) {<br>        num -= ns[i];<br>        counts[match1[i]]++;<br>        if (match2[i] &gt;= 0)<br>            counts[match2[i]]++;<br>        sct[i]–;<br>        }<br>        else<br>        break;<br>    }<br>    }<br>}</p>
+<p>void<br>main ()<br>{<br>    FILE   <em>fp = fopen (&quot;preface.in&quot;, &quot;r&quot;);<br>    FILE   </em>wfp = fopen (&quot;preface.out&quot;, &quot;w&quot;);<br>    int     i;<br>    fscanf (fp, &quot;%d&quot;, &amp;n);<br>    for (i = 0; i &lt; 7; i++)<br>    counts[i] = 0;<br>    for (i = 1; i &lt;= n; i++)<br>    count (i);<br>    for (i = 0; i &lt; 7; i++) {<br>    if (counts[i])<br>        fprintf (wfp, &quot;%c %d\n&quot;, rs[i], counts[i]);<br>    }<br>    fclose (fp);<br>    fclose (wfp);<br>}<br>[/c]</p>
+<p>标程4：<br>[c]</p>
+<p>#include &lt;fstream&gt;<br>using namespace std;<br>int count[7];<br>int mult[6] = {5, 2, 5, 2, 5, 2}; // The factors between consecutive roman<br>                  // numeral letter values.<br>char roman[] = &quot;IVXLCDM&quot;;<br>int vals[7] = {1, 5, 10, 50, 100, 500, 1000};</p>
+<p>int main() {<br>    ofstream fout (&quot;preface.out&quot;);<br>    ifstream fin (&quot;preface.in&quot;);<br>    int n;<br>    fin &gt;&gt; n;</p>
+<pre><code><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &amp;lt;= n; i++) {
+<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>, temp = i; temp != <span class="number">0</span>; j++) {
+         <span class="comment">// If there are more than three of the current letter.</span>
+    <span class="keyword">if</span> (temp % mult[j] &amp;gt; <span class="number">3</span>) {
+    count[j]++;
+            <span class="comment">// Checks if it can have a two letter difference</span>
+    <span class="comment">// (ie. IX instead of IV).</span>
+        <span class="keyword">if</span> (temp / mult[j] &amp;gt; <span class="number">0</span> &amp;amp;&amp;amp; i % vals[j + <span class="number">2</span>] &amp;gt; vals[j + <span class="number">1</span>]) {
+            count[j + <span class="number">2</span>]++;
+                 temp -= mult[j];
+            } <span class="keyword">else</span>
+        count[j + <span class="number">1</span>]++;
+    } <span class="keyword">else</span>
+    count[j] += temp % mult[j];
+    temp /= mult[j];
+}
+}
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &amp;lt; <span class="number">7</span>; i++)
+ <span class="keyword">if</span> (count[i])
+     fout &amp;lt;&amp;lt; roman[i] &amp;lt;&amp;lt; &amp;quot; &amp;quot; &amp;lt;&amp;lt; count[i] &amp;lt;&amp;lt; endl;
+<span class="keyword">return</span> <span class="number">0</span>;
+</code></pre><p>}<br>[/c]</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/wordpress/index.php/csit/usaco-prob-preface-numbering/" data-id="cidfq2tyo006stgh5yugi06ul" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/USACO/">USACO</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/wordpress/index.php/lmy/20120719/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          20120719
+        
+      </div>
+    </a>
+  
+  
+    <a href="/wordpress/index.php/csit/usaco-text-dynamic-programming/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">USACO - TEXT Dynamic Programming</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/">wordpress</a><span class="category-list-count">285</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/">index.php</a><span class="category-list-count">285</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/about/">about</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/csit/">csit</a><span class="category-list-count">168</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/default/">default</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/lmy/">lmy</a><span class="category-list-count">109</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/thought/">thought</a><span class="category-list-count">3</span></li></ul></li></ul></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/8051/">8051</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/A/">A</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/">Algorithm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BIKE/">BIKE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Book/">Book</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSAPP/">CSAPP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DASH/">DASH</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Diary/">Diary</a><span class="tag-list-count">104</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/">Django</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ELF/">ELF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GIMP/">GIMP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google/">Google</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google-App-Engine/">Google App Engine</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/H.264-AVC/">H.264/AVC</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JM/">JM</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Law-of-Attraction/">Law of Attraction</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LightOJ/">LightOJ</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Music/">Music</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Notes/">Notes</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/People/">People</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Podinns/">Podinns</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Quotes/">Quotes</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Research/">Research</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Status/">Status</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/The-Baader-Meinhof-Phenomenon/">The Baader-Meinhof Phenomenon</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tools/">Tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Topcoder/">Topcoder</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/USACO/">USACO</a><span class="tag-list-count">68</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/">Ubuntu</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VLC/">VLC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VirtualBox/">VirtualBox</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/code-blocks/">code::blocks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/codec/">codec</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heroku/">heroku</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lsharemy/">lsharemy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nVidia/">nVidia</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/">socket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/x264/">x264</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/8051/" style="font-size: 18.46px;">8051</a> <a href="/tags/A/" style="font-size: 10px;">A</a> <a href="/tags/Algorithm/" style="font-size: 10.77px;">Algorithm</a> <a href="/tags/Android/" style="font-size: 17.69px;">Android</a> <a href="/tags/BIKE/" style="font-size: 10px;">BIKE</a> <a href="/tags/Book/" style="font-size: 10px;">Book</a> <a href="/tags/C/" style="font-size: 15.38px;">C</a> <a href="/tags/CSAPP/" style="font-size: 10px;">CSAPP</a> <a href="/tags/DASH/" style="font-size: 10px;">DASH</a> <a href="/tags/Diary/" style="font-size: 20px;">Diary</a> <a href="/tags/Django/" style="font-size: 10.77px;">Django</a> <a href="/tags/ELF/" style="font-size: 10.77px;">ELF</a> <a href="/tags/GIMP/" style="font-size: 10px;">GIMP</a> <a href="/tags/Google/" style="font-size: 10.77px;">Google</a> <a href="/tags/Google-App-Engine/" style="font-size: 10px;">Google App Engine</a> <a href="/tags/H.264-AVC/" style="font-size: 14.62px;">H.264/AVC</a> <a href="/tags/JM/" style="font-size: 13.85px;">JM</a> <a href="/tags/Law-of-Attraction/" style="font-size: 10px;">Law of Attraction</a> <a href="/tags/LightOJ/" style="font-size: 16.92px;">LightOJ</a> <a href="/tags/Linux/" style="font-size: 13.85px;">Linux</a> <a href="/tags/Music/" style="font-size: 11.54px;">Music</a> <a href="/tags/Notes/" style="font-size: 10.77px;">Notes</a> <a href="/tags/People/" style="font-size: 10px;">People</a> <a href="/tags/Podinns/" style="font-size: 10px;">Podinns</a> <a href="/tags/Python/" style="font-size: 13.08px;">Python</a> <a href="/tags/Quotes/" style="font-size: 10px;">Quotes</a> <a href="/tags/Research/" style="font-size: 10px;">Research</a> <a href="/tags/Status/" style="font-size: 10px;">Status</a> <a href="/tags/The-Baader-Meinhof-Phenomenon/" style="font-size: 10px;">The Baader-Meinhof Phenomenon</a> <a href="/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/tags/Topcoder/" style="font-size: 10.77px;">Topcoder</a> <a href="/tags/USACO/" style="font-size: 19.23px;">USACO</a> <a href="/tags/Ubuntu/" style="font-size: 16.15px;">Ubuntu</a> <a href="/tags/VLC/" style="font-size: 10px;">VLC</a> <a href="/tags/VirtualBox/" style="font-size: 10px;">VirtualBox</a> <a href="/tags/code-blocks/" style="font-size: 10px;">code::blocks</a> <a href="/tags/codec/" style="font-size: 14.62px;">codec</a> <a href="/tags/heroku/" style="font-size: 13.08px;">heroku</a> <a href="/tags/lsharemy/" style="font-size: 10px;">lsharemy</a> <a href="/tags/nVidia/" style="font-size: 10px;">nVidia</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/vim/" style="font-size: 12.31px;">vim</a> <a href="/tags/x264/" style="font-size: 10.77px;">x264</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">September 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">November 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">October 2012</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">August 2012</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/07/">July 2012</a><span class="archive-list-count">69</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">April 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">March 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">February 2012</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">January 2012</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/12/">December 2011</a><span class="archive-list-count">56</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">November 2011</a><span class="archive-list-count">48</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/10/">October 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">September 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08/">August 2011</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/07/">July 2011</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/06/">June 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/05/">May 2011</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/uncategorized/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/lmy/20121102-20130908/">2012年11月02日 – 2013年09月08日 快一年没更新了</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/csit/macro-definition/">宏定义（#define）总结</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/csit/extern-function/">extern修饰的函数</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/csit/variable-storage-location/">变量存储位置</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>

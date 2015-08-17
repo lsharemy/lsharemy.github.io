@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>hello, world!程序编译链接运行深入剖析 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="学C语言的第一个程序就是以下这个helloworld程序:
+[c]
+#include
+int main(){    printf(&amp;quot;hello, world!\n&amp;quot;);}[/c]
+它通过gcc -o hello hello.c编译，然后通过./hello就可以运行了，屏幕上打印出”hello, world\n”
+不过它是如何被编译和链接的，又是如何在系统中运行的？第二次看《深入">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hello, world!程序编译链接运行深入剖析">
+<meta property="og:url" content="http://yoursite.com/wordpress/index.php/csit/hello-world-compile-link-run-deepin/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="学C语言的第一个程序就是以下这个helloworld程序:
+[c]
+#include
+int main(){    printf(&amp;quot;hello, world!\n&amp;quot;);}[/c]
+它通过gcc -o hello hello.c编译，然后通过./hello就可以运行了，屏幕上打印出”hello, world\n”
+不过它是如何被编译和链接的，又是如何在系统中运行的？第二次看《深入">
+<meta property="og:image" content="http://i.minus.com/ib0c7AaN9N4Tpl.JPG">
+<meta property="og:updated_time" content="2015-08-15T02:15:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="hello, world!程序编译链接运行深入剖析">
+<meta name="twitter:description" content="学C语言的第一个程序就是以下这个helloworld程序:
+[c]
+#include
+int main(){    printf(&amp;quot;hello, world!\n&amp;quot;);}[/c]
+它通过gcc -o hello hello.c编译，然后通过./hello就可以运行了，屏幕上打印出”hello, world\n”
+不过它是如何被编译和链接的，又是如何在系统中运行的？第二次看《深入">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-hello-world-compile-link-run-deepin" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/wordpress/index.php/csit/hello-world-compile-link-run-deepin/" class="article-date">
+  <time datetime="2012-09-30T12:58:01.000Z" itemprop="datePublished">2012-09-30</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/wordpress/">wordpress</a>►<a class="article-category-link" href="/categories/wordpress/index.php/">index.php</a>►<a class="article-category-link" href="/categories/wordpress/index.php/csit/">csit</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      hello, world!程序编译链接运行深入剖析
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>学C语言的第一个程序就是以下这个helloworld程序:</p>
+<p>[c]</p>
+<p>#include</p>
+<p>int main()<br>{<br>    printf(&quot;hello, world!\n&quot;);<br>}<br>[/c]</p>
+<p>它通过gcc -o hello hello.c编译，然后通过./hello就可以运行了，屏幕上打印出”hello, world\n”</p>
+<p>不过它是如何被编译和链接的，又是如何在系统中运行的？第二次看《深入理解计算机系统》，终于明白了一点，所以做个总结。</p>
+<h1 id="编译"><span style="color: #ff0000;">编译</span></h1><p>gcc -o hello hello.c这个命令其实gcc帮你干完了编译和链接两个工作。（编译其实还包括了汇编，可以把<em>.c-&gt;</em>.s理解为编译，.s-&gt;.o理解为汇编）</p>
+<p>如果想只编译那么要用-c选项，gcc -c hello.c，这会生成一个hello.o文件，这是一个可重定位目标文件，有关可重定位目标文件，我在<a href="http://lsharemy.com/wordpress/index.php/csit/elf-file-format/" target="_blank" rel="external">这篇文章</a>里做过总结。</p>
+<p>这个文件由一个ELF头、一个节头部表、以及很多个节组成。<a id="more"></a></p>
+<p>比较重要的节有：</p>
+<p>.text节，程序编译后的机器代码<br>.rodata节，只读数据，比如字符串常量、switch语句中的跳转表等就放在这个节<br>.data节，已初始化的全局变量<br>.bss节，未初始化的全局变更<br>.symtab节，一个符号表，存放程序中定义和引用的函数和全局变量的信息<br>.rel.text节和.rel.data节存放与重定位有关的信息<br>.debug节和.line节，只有用-g选项进行编译才会有<br>，存放与调试有关的信息<br>.strtab，一个字符串表。</p>
+<p>先通过objdump -d -r hello.o对该文件进行反汇编：</p>
+<p><pre>00000000 &lt;main&gt;:<br>   0:    55                       push   %ebp<br>   1:    89 e5                    mov    %esp,%ebp<br>   3:    83 e4 f0                 and    $0xfffffff0,%esp<br>   6:    83 ec 10                 sub    $0x10,%esp<br>   9:    c7 04 24 00 00 00 00     movl   $0x0,(%esp)<br>            c: R_386_32    .rodata<br>  10:    e8 fc ff ff ff           call   11 &lt;main+0x11&gt;<br>            11: R_386_PC32    puts<br>  15:    c9                       leave<br>  16:    c3                       ret</pre><br>-r选项同时显示出了代码重需要重定位的地方。这段程序其实就是将参数（字符常指针）入栈之后，调用打印函数。不过由于现在还不确定程序将来会在哪段地址运行，所以还没法确定字符串的地址、以及打印函数的地址，而这要到链接才能确定，到后面再讨论。</p>
+<h1 id="链接"><span style="color: #ff0000;">链接</span></h1><p>使用gcc -o hello hello.o来对其进行链接。</p>
+<p>链接包括符号解析和重定位两步。</p>
+<p>符号解析就是将输入的可重定位目标文件的符号表中的符号与其定义联系起来。比如我们在程序中调用了printf函数，它在系统的一个动态库中定义。</p>
+<p>完成符号解析之后，链接器就知道输入目标模块中的代码节和数据节的确切大小了。就可以开始重定位了，这个步骤中，将合并输入模块，并为每一个符号分配运行地址。</p>
+<p>重定位分两步组成：</p>
+<p>1.重定位节和符号定义。这一步中，连接器将所有相同类型的节合并起来，并为它们赋予存储器地址。当这一步完成时，程序中的每个指令和全局变量都有唯一的运行时存储器地址了。<br>2.重定位节中的符号引用。这一步，链接器修改代码节和数据节中对每个符号的引用，使得它们指向正确的地址。</p>
+<p>通过链接，就会生成可执行目标文件hello</p>
+<p>再看以下hello反汇编的main部分代码：</p>
+<p><pre>080483e4 &lt;main&gt;:<br> 80483e4:    55                       push   %ebp<br> 80483e5:    89 e5                    mov    %esp,%ebp<br> 80483e7:    83 e4 f0                 and    $0xfffffff0,%esp<br> 80483ea:    83 ec 10                 sub    $0x10,%esp<br> 80483ed:    c7 04 24 c0 84 04 08     movl   $0x80484c0,(%esp)<br> 80483f4:    e8 1f ff ff ff           call   8048318 &lt;puts@plt&gt;<br> 80483f9:    c9                       leave<br> 80483fa:    c3                       ret<br> 80483fb:    90                       nop<br> 80483fc:    90                       nop<br> 80483fd:    90                       nop<br> 80483fe:    90                       nop<br> 80483ff:    90                       nop</pre><br>看到之前需要重定位的两个地方现在都有了确切的地址了。</p>
+<h1 id="运行"><span style="color: #ff0000;">运行</span></h1><p>然后就可以通过./hello运行啦</p>
+<p>在Linux中，每个程序都有一个运行时存储器映像，如下图所示（图中“从可执行文件中加载那个大括号括错了，应该往下平移下）：</p>
+<p><img src="http://i.minus.com/ib0c7AaN9N4Tpl.JPG" alt="" title="Linux">用readelf -l hello可以看到只读段和读写段分别占用哪段地址：</p>
+<p><pre>Program Headers:<br>  Type           Offset   VirtAddr   PhysAddr   FileSiz MemSiz  Flg Align<br>LOAD           0x000000 0x08048000 0x08048000 0x004d4 0x004d4 R E 0x1000<br>LOAD           0x000f0c 0x08049f0c 0x08049f0c 0x00108 0x00110 RW  0x1000</pre><br>用readelf -S hello可以看到所有节的的信息：</p>
+<p><pre>Section Headers:<br>  [Nr] Name              Type            Addr     Off    Size   ES Flg Lk Inf Al<br>  [ 0]                   NULL            00000000 000000 000000 00      0   0  0<br>  [ 1] .interp           PROGBITS        08048134 000134 000013 00   A  0   0  1<br>  [ 2] .note.ABI-tag     NOTE            08048148 000148 000020 00   A  0   0  4<br>  [ 3] .note.gnu.build-i NOTE            08048168 000168 000024 00   A  0   0  4<br>  [ 4] .hash             HASH            0804818c 00018c 000028 04   A  6   0  4<br>  [ 5] .gnu.hash         GNU_HASH        080481b4 0001b4 000020 04   A  6   0  4<br>  [ 6] .dynsym           DYNSYM          080481d4 0001d4 000050 10   A  7   1  4<br>  [ 7] .dynstr           STRTAB          08048224 000224 00004a 00   A  0   0  1<br>  [ 8] .gnu.version      VERSYM          0804826e 00026e 00000a 02   A  6   0  2<br>  [ 9] .gnu.version_r    VERNEED         08048278 000278 000020 00   A  7   1  4<br>  [10] .rel.dyn          REL             08048298 000298 000008 08   A  6   0  4<br>  [11] .rel.plt          REL             080482a0 0002a0 000018 08   A  6  13  4<br>  [12] .init             PROGBITS        080482b8 0002b8 000030 00  AX  0   0  4<br>  [13] .plt              PROGBITS        080482e8 0002e8 000040 04  AX  0   0  4<br>  [14] .text             PROGBITS        08048330 000330 00016c 00  AX  0   0 16<br>  [15] .fini             PROGBITS        0804849c 00049c 00001c 00  AX  0   0  4<br>  [16] .rodata           PROGBITS        080484b8 0004b8 000016 00   A  0   0  4<br>  [17] .eh_frame         PROGBITS        080484d0 0004d0 000004 00   A  0   0  4<br>  [18] .ctors            PROGBITS        08049f0c 000f0c 000008 00  WA  0   0  4<br>  [19] .dtors            PROGBITS        08049f14 000f14 000008 00  WA  0   0  4<br>  [20] .jcr              PROGBITS        08049f1c 000f1c 000004 00  WA  0   0  4<br>  [21] .dynamic          DYNAMIC         08049f20 000f20 0000d0 08  WA  7   0  4<br>  [22] .got              PROGBITS        08049ff0 000ff0 000004 04  WA  0   0  4<br>  [23] .got.plt          PROGBITS        08049ff4 000ff4 000018 04  WA  0   0  4<br>  [24] .data             PROGBITS        0804a00c 00100c 000008 00  WA  0   0  4<br>  [25] .bss              NOBITS          0804a014 001014 000008 00  WA  0   0  4<br>  [26] .comment          PROGBITS        00000000 001014 000048 01  MS  0   0  1<br>  [27] .shstrtab         STRTAB          00000000 00105c 0000ee 00      0   0  1<br>  [28] .symtab           SYMTAB          00000000 0015fc 000410 10     29  45  4<br>  [29] .strtab           STRTAB          00000000 001a0c 0001fb 00      0   0  1</pre><br>在shell中敲入./hello后，shell会先调用fork()函数创建一个新的哦进程，然后调用exec()函数来加载hello程序，加载器会删除子进程现有的虚拟存储器段，并创建一组新的代码、数据、堆和栈段。其中堆和栈被初始化为零，代码段和数据段被初始化为hello中的相应内容。最后加载器跳转到_start，而它最终会调用hello中的main函数。</p>
+<p>（注：加载器并不会把代码段和数据段直接拷贝到内存中，而是在页表中将相应条目指向文件的适当位置，在每个页被引用时，会引发缺页中断，然后虚拟存储器系统会按照需要自动的跳入相应页）</p>
+<hr>
+<p>以下面这段代码为例，看下C语言中各变量的存储位置：</p>
+<p>[c]</p>
+<p>#include &lt;stdio.h&gt;</p>
+<p>#include &lt;stdlib.h&gt;</p>
+<p>int g_not_init1;<br>int g_not_init2;<br>int g_init1 = 1;<br>int g_init2 = 2;</p>
+<p>int main()<br>{<br>    char <em>str = &quot;abc&quot;;<br>    int local1 = 1;<br>    int local2 = 2;<br>    static int static1 = 1;<br>    static int static2 = 2;<br>    int </em>p = (int*)malloc(sizeof(int));<br>    printf(&quot;main:%p\n&quot;, main);<br>    printf(&quot;g_not_init1:%p\n&quot;, &amp;g_not_init1);<br>    printf(&quot;g_not_init2:%p\n&quot;, &amp;g_not_init2);<br>    printf(&quot;g_init1:%p\n&quot;, &amp;g_init1);<br>    printf(&quot;g_init2:%p\n&quot;, &amp;g_init2);<br>    printf(&quot;local1:%p\n&quot;, &amp;local1);<br>    printf(&quot;local2:%p\n&quot;, &amp;local2);<br>    printf(&quot;static1:%p\n&quot;, &amp;static1);<br>    printf(&quot;static2:%p\n&quot;, &amp;static2);<br>    printf(&quot;p:%p\n&quot;, p);<br>    printf(&quot;str:%p\n&quot;, str);<br>}<br>[/c]</p>
+<p>运行结果：</p>
+<p><pre>main:0x8048414<br>g_not_init1:0x804a034<br>g_not_init2:0x804a030<br>g_init1:0x804a018<br>g_init2:0x804a01c<br>local1:0xbfeb3a78<br>local2:0xbfeb3a74<br>static1:0x804a020<br>static2:0x804a024<br>p:0x8191008<br>str:0x80485f0</pre><br>用readelf -S hello查看下节信息：</p>
+<p><pre>Section Headers:<br>  [Nr] Name              Type            Addr     Off    Size   ES Flg Lk Inf Al<br>  [ 0]                   NULL            00000000 000000 000000 00      0   0  0<br>  [ 1] .interp           PROGBITS        08048134 000134 000013 00   A  0   0  1<br>  [ 2] .note.ABI-tag     NOTE            08048148 000148 000020 00   A  0   0  4<br>  [ 3] .note.gnu.build-i NOTE            08048168 000168 000024 00   A  0   0  4<br>  [ 4] .hash             HASH            0804818c 00018c 00002c 04   A  6   0  4<br>  [ 5] .gnu.hash         GNU_HASH        080481b8 0001b8 000020 04   A  6   0  4<br>  [ 6] .dynsym           DYNSYM          080481d8 0001d8 000060 10   A  7   1  4<br>  [ 7] .dynstr           STRTAB          08048238 000238 000053 00   A  0   0  1<br>  [ 8] .gnu.version      VERSYM          0804828c 00028c 00000c 02   A  6   0  2<br>  [ 9] .gnu.version_r    VERNEED         08048298 000298 000020 00   A  7   1  4<br>  [10] .rel.dyn          REL             080482b8 0002b8 000008 08   A  6   0  4<br>  [11] .rel.plt          REL             080482c0 0002c0 000020 08   A  6  13  4<br>  [12] .init             PROGBITS        080482e0 0002e0 000030 00  AX  0   0  4<br>  [13] .plt              PROGBITS        08048310 000310 000050 04  AX  0   0  4<br>  [14] .text             PROGBITS        08048360 000360 00026c 00  AX  0   0 16<br>  [15] .fini             PROGBITS        080485cc 0005cc 00001c 00  AX  0   0  4<br>  [16] .rodata           PROGBITS        080485e8 0005e8 000089 00   A  0   0  4<br>  [17] .eh_frame         PROGBITS        08048674 000674 000004 00   A  0   0  4<br>  [18] .ctors            PROGBITS        08049f0c 000f0c 000008 00  WA  0   0  4<br>  [19] .dtors            PROGBITS        08049f14 000f14 000008 00  WA  0   0  4<br>  [20] .jcr              PROGBITS        08049f1c 000f1c 000004 00  WA  0   0  4<br>  [21] .dynamic          DYNAMIC         08049f20 000f20 0000d0 08  WA  7   0  4<br>  [22] .got              PROGBITS        08049ff0 000ff0 000004 04  WA  0   0  4<br>  [23] .got.plt          PROGBITS        08049ff4 000ff4 00001c 04  WA  0   0  4<br>  [24] .data             PROGBITS        0804a010 001010 000018 00  WA  0   0  4<br>  [25] .bss              NOBITS          0804a028 001028 000010 00  WA  0   0  4<br>  [26] .comment          PROGBITS        00000000 001028 000048 01  MS  0   0  1<br>  [27] .shstrtab         STRTAB          00000000 001070 0000ee 00      0   0  1<br>  [28] .symtab           SYMTAB          00000000 001610 000480 10     29  47  4<br>  [29] .strtab           STRTAB          00000000 001a90 000251 00      0   0  1<br>Key to Flags:<br>  W (write), A (alloc), X (execute), M (merge), S (strings)<br>  I (info), L (link order), G (group), x (unknown)<br>  O (extra OS processing required) o (OS specific), p (processor specific)</pre><br>用readelf -l hello查看下段信息，注意这里还打印出了段与节的对应关系（Section to Segment mapping）：</p>
+<p><pre>Elf file type is EXEC (Executable file)<br>Entry point 0x8048360<br>There are 8 program headers, starting at offset 52</pre></p>
+<p>Program Headers:<br>  Type           Offset   VirtAddr   PhysAddr   FileSiz MemSiz  Flg Align<br>  PHDR           0x000034 0x08048034 0x08048034 0x00100 0x00100 R E 0x4<br>  INTERP         0x000134 0x08048134 0x08048134 0x00013 0x00013 R   0x1<br>      [Requesting program interpreter: /lib/ld-linux.so.2]<br>  LOAD           0x000000 0x08048000 0x08048000 0x00678 0x00678 R E 0x1000<br>  LOAD           0x000f0c 0x08049f0c 0x08049f0c 0x0011c 0x0012c RW  0x1000<br>  DYNAMIC        0x000f20 0x08049f20 0x08049f20 0x000d0 0x000d0 RW  0x4<br>  NOTE           0x000148 0x08048148 0x08048148 0x00044 0x00044 R   0x4<br>  GNU_STACK      0x000000 0x00000000 0x00000000 0x00000 0x00000 RW  0x4<br>  GNU_RELRO      0x000f0c 0x08049f0c 0x08049f0c 0x000f4 0x000f4 R   0x1</p>
+<p> Section to Segment mapping:<br>  Segment Sections…<br>   00<br>   01     .interp<br>   02     .interp .note.ABI-tag .note.gnu.build-id .hash .gnu.hash .dynsym .dynstr .gnu.version .gnu.version_r .rel.dyn .rel.plt .init .plt .text .fini .rodata .eh_frame<br>   03     .ctors .dtors .jcr .dynamic .got .got.plt .data .bss<br>   04     .dynamic<br>   05     .note.ABI-tag .note.gnu.build-id<br>   06<br>   07     .ctors .dtors .jcr .dynamic .got<br>结合前面程序运行结果，很容易可以发现如下事实：</p>
+<p>main函数的地址0x8048414属于.text节，放在只读段中</p>
+<p>常量字符串“abc”的地址（也就是str指针指向的地址）0x80485f0属于.rodata节，也放在只读段中</p>
+<p>已初始化的两个全局变量（地址分别为0x804a018和0x804a01c）属于.data节，放在读写段中</p>
+<p>未初始化的两个全局变量属于.bss节，放在读写段中</p>
+<p>两个初始化的静态变量与初始化过的全局变量一样，属于.data节</p>
+<p>可以猜到（代码中没写），未初始化的静态变量应该和未初始化的全局变量类似了</p>
+<p>两个局部变量的地址0xbfeb3a78和0xbfeb3a74，看下上面程序运行时的存储器映像图就明白了，局部变量是放在栈中的，而且是从高地址向低地址增长，这里都得到了验证。</p>
+<p>最后剩下p，它由malloc分配，所以应该放在运行时的堆中，可以看到它的位置在读写段的后面</p>
+<p>好了，以后再也不怕类似的笔试题了= =。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/wordpress/index.php/csit/hello-world-compile-link-run-deepin/" data-id="cidfq2ui400l3tgh5cjxmb98o" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CSAPP/">CSAPP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Notes/">Notes</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/wordpress/index.php/csit/string-matching-algorithms/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          字符串匹配算法总结
+        
+      </div>
+    </a>
+  
+  
+    <a href="/wordpress/index.php/csit/elf-file-format/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">ELF文件格式探索</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/">wordpress</a><span class="category-list-count">285</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/">index.php</a><span class="category-list-count">285</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/about/">about</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/csit/">csit</a><span class="category-list-count">168</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/default/">default</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/lmy/">lmy</a><span class="category-list-count">109</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/thought/">thought</a><span class="category-list-count">3</span></li></ul></li></ul></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/8051/">8051</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/A/">A</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/">Algorithm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BIKE/">BIKE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Book/">Book</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSAPP/">CSAPP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DASH/">DASH</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Diary/">Diary</a><span class="tag-list-count">104</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/">Django</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ELF/">ELF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GIMP/">GIMP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google/">Google</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google-App-Engine/">Google App Engine</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/H.264-AVC/">H.264/AVC</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JM/">JM</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Law-of-Attraction/">Law of Attraction</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LightOJ/">LightOJ</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Music/">Music</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Notes/">Notes</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/People/">People</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Podinns/">Podinns</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Quotes/">Quotes</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Research/">Research</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Status/">Status</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/The-Baader-Meinhof-Phenomenon/">The Baader-Meinhof Phenomenon</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tools/">Tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Topcoder/">Topcoder</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/USACO/">USACO</a><span class="tag-list-count">68</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/">Ubuntu</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VLC/">VLC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VirtualBox/">VirtualBox</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/code-blocks/">code::blocks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/codec/">codec</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heroku/">heroku</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lsharemy/">lsharemy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nVidia/">nVidia</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/">socket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/x264/">x264</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/8051/" style="font-size: 18.46px;">8051</a> <a href="/tags/A/" style="font-size: 10px;">A</a> <a href="/tags/Algorithm/" style="font-size: 10.77px;">Algorithm</a> <a href="/tags/Android/" style="font-size: 17.69px;">Android</a> <a href="/tags/BIKE/" style="font-size: 10px;">BIKE</a> <a href="/tags/Book/" style="font-size: 10px;">Book</a> <a href="/tags/C/" style="font-size: 15.38px;">C</a> <a href="/tags/CSAPP/" style="font-size: 10px;">CSAPP</a> <a href="/tags/DASH/" style="font-size: 10px;">DASH</a> <a href="/tags/Diary/" style="font-size: 20px;">Diary</a> <a href="/tags/Django/" style="font-size: 10.77px;">Django</a> <a href="/tags/ELF/" style="font-size: 10.77px;">ELF</a> <a href="/tags/GIMP/" style="font-size: 10px;">GIMP</a> <a href="/tags/Google/" style="font-size: 10.77px;">Google</a> <a href="/tags/Google-App-Engine/" style="font-size: 10px;">Google App Engine</a> <a href="/tags/H.264-AVC/" style="font-size: 14.62px;">H.264/AVC</a> <a href="/tags/JM/" style="font-size: 13.85px;">JM</a> <a href="/tags/Law-of-Attraction/" style="font-size: 10px;">Law of Attraction</a> <a href="/tags/LightOJ/" style="font-size: 16.92px;">LightOJ</a> <a href="/tags/Linux/" style="font-size: 13.85px;">Linux</a> <a href="/tags/Music/" style="font-size: 11.54px;">Music</a> <a href="/tags/Notes/" style="font-size: 10.77px;">Notes</a> <a href="/tags/People/" style="font-size: 10px;">People</a> <a href="/tags/Podinns/" style="font-size: 10px;">Podinns</a> <a href="/tags/Python/" style="font-size: 13.08px;">Python</a> <a href="/tags/Quotes/" style="font-size: 10px;">Quotes</a> <a href="/tags/Research/" style="font-size: 10px;">Research</a> <a href="/tags/Status/" style="font-size: 10px;">Status</a> <a href="/tags/The-Baader-Meinhof-Phenomenon/" style="font-size: 10px;">The Baader-Meinhof Phenomenon</a> <a href="/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/tags/Topcoder/" style="font-size: 10.77px;">Topcoder</a> <a href="/tags/USACO/" style="font-size: 19.23px;">USACO</a> <a href="/tags/Ubuntu/" style="font-size: 16.15px;">Ubuntu</a> <a href="/tags/VLC/" style="font-size: 10px;">VLC</a> <a href="/tags/VirtualBox/" style="font-size: 10px;">VirtualBox</a> <a href="/tags/code-blocks/" style="font-size: 10px;">code::blocks</a> <a href="/tags/codec/" style="font-size: 14.62px;">codec</a> <a href="/tags/heroku/" style="font-size: 13.08px;">heroku</a> <a href="/tags/lsharemy/" style="font-size: 10px;">lsharemy</a> <a href="/tags/nVidia/" style="font-size: 10px;">nVidia</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/vim/" style="font-size: 12.31px;">vim</a> <a href="/tags/x264/" style="font-size: 10.77px;">x264</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">September 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">November 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">October 2012</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">August 2012</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/07/">July 2012</a><span class="archive-list-count">69</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">April 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">March 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">February 2012</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">January 2012</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/12/">December 2011</a><span class="archive-list-count">56</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">November 2011</a><span class="archive-list-count">48</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/10/">October 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">September 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08/">August 2011</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/07/">July 2011</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/06/">June 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/05/">May 2011</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/uncategorized/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/lmy/20121102-20130908/">2012年11月02日 – 2013年09月08日 快一年没更新了</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/csit/macro-definition/">宏定义（#define）总结</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/csit/extern-function/">extern修饰的函数</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/csit/variable-storage-location/">变量存储位置</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>USACO - TEXT Computational Geometry | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="终于知道计算几何是什么了
+首先是计算机几何的三个“工具”：叉积、点积、反正切
+1.叉积u x v
+u x v的结果等于以下行列式的结果：
+|  i    j    k  || ux uy uz || vx vy vz |
+也就是等于(uyvz-vyu z)i + (uzvx-u xvz)j + (uxv y-uyvx)k">
+<meta property="og:type" content="article">
+<meta property="og:title" content="USACO - TEXT Computational Geometry">
+<meta property="og:url" content="http://yoursite.com/wordpress/index.php/csit/usaco-text-computational-geometry/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="终于知道计算几何是什么了
+首先是计算机几何的三个“工具”：叉积、点积、反正切
+1.叉积u x v
+u x v的结果等于以下行列式的结果：
+|  i    j    k  || ux uy uz || vx vy vz |
+也就是等于(uyvz-vyu z)i + (uzvx-u xvz)j + (uxv y-uyvx)k">
+<meta property="og:image" content="http://ace.delos.com/usaco/TEXT/geom6.gif">
+<meta property="og:image" content="http://ace.delos.com/usaco/TEXT/geom7.gif">
+<meta property="og:image" content="http://ace.delos.com/usaco/TEXT/geom1.gif">
+<meta property="og:image" content="http://ace.delos.com/usaco/TEXT/geom3.gif">
+<meta property="og:image" content="http://ace.delos.com/usaco/TEXT/geom4.gif">
+<meta property="og:image" content="http://ace.delos.com/usaco/TEXT/geom5.gif">
+<meta property="og:image" content="http://ace.delos.com/usaco/TEXT/geom8.gif">
+<meta property="og:image" content="http://ace.delos.com/usaco/TEXT/geom9.gif">
+<meta property="og:updated_time" content="2015-08-15T02:15:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="USACO - TEXT Computational Geometry">
+<meta name="twitter:description" content="终于知道计算几何是什么了
+首先是计算机几何的三个“工具”：叉积、点积、反正切
+1.叉积u x v
+u x v的结果等于以下行列式的结果：
+|  i    j    k  || ux uy uz || vx vy vz |
+也就是等于(uyvz-vyu z)i + (uzvx-u xvz)j + (uxv y-uyvx)k">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-usaco-text-computational-geometry" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/wordpress/index.php/csit/usaco-text-computational-geometry/" class="article-date">
+  <time datetime="2012-09-10T04:04:10.000Z" itemprop="datePublished">2012-09-10</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/wordpress/">wordpress</a>►<a class="article-category-link" href="/categories/wordpress/index.php/">index.php</a>►<a class="article-category-link" href="/categories/wordpress/index.php/csit/">csit</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      USACO - TEXT Computational Geometry
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>终于知道计算几何是什么了</p>
+<p>首先是计算机几何的三个“工具”：叉积、点积、反正切</p>
+<p>1.叉积<em>u x v</em></p>
+<p><em>u x v的结果等于以下行列式的结果：</em></p>
+<p>|  i    j    k  |<br>| ux uy uz |<br>| vx vy vz |</p>
+<p>也就是等于(<em>u</em><sub>y</sub><em>v</em><sub>z</sub>-<em>v</em><sub>y</sub><em>u</em><sub> z</sub>)<strong>i</strong> + (<em>u</em><sub>z</sub><em>v</em><sub>x</sub>-<em>u</em><sub> x</sub><em>v</em><sub>z</sub>)<strong>j</strong> + (<em>u</em><sub>x</sub><em>v</em><sub> y</sub>-<em>u</em><sub>y</sub><em>v</em><sub>x</sub>)<strong>k</strong></p>
+<p><img src="http://ace.delos.com/usaco/TEXT/geom6.gif" alt=""><a id="more"></a></p>
+<p>叉积的三个性质：</p>
+<p>（1）两个向量的叉积与这两个向量都垂直</p>
+<p>（2）两个向量的叉积的长度=|u|<em>|v|</em>sin（夹角）</p>
+<p>（3）两个向量的叉积的方向符合右手螺旋法则（手指从u到v，大姆子指的方向）</p>
+<p><img src="http://ace.delos.com/usaco/TEXT/geom7.gif" alt=""></p>
+<p>2.点积u · v</p>
+<p><em>u和v的点积等于u</em><sub><em>x</em></sub><em>v</em><sub><em>x</em></sub> + <em>u</em> <sub>y</sub><em>v</em><sub>y</sub> + <em>u</em><sub>z</sub><em>v</em> <sub>z</sub></p>
+<p>也等于|u|<em>|v|</em>cos（夹角）</p>
+<p>如果点积为正，夹角是锐角；点积为负，夹角是钝角；点积为0，夹角为90度。</p>
+<p>3.反正切Arctangent</p>
+<p>C中的两个函数，一个是<em>atan，它返回-pi/2到pi/2之间的一个数</em></p>
+<p>还有一个是<em>atan2，返回-pi到pi之间的一个数，可以确定象限，所以这个函数一般用的比较多</em></p>
+<hr>
+<p>注意：</p>
+<p>1.几何问题往往有很多特例！要注意</p>
+<p>2.浮点数的判等！要注意</p>
+<hr>
+<p>几何算法：</p>
+<p>1.计算三角形面积</p>
+<p>知道三个点的坐标：算出两个向量，三角行的面积等于向量叉积长度的一半</p>
+<p>直到三条边的长度：令<em>s = (a+b+c)/2，则面积等于<em>sqrt(s<em> (s-a)</em>(s-b)*(s-c))</em></em></p>
+<p><img src="http://ace.delos.com/usaco/TEXT/geom1.gif" alt=""></p>
+<p>2.判断两条线段是否平行</p>
+<p>在两条线上分别找出一个向量，看这两个向量是否平行，只要看它们的叉积是不是（几乎）等于0</p>
+<p>3.多边形的面积</p>
+<p>多边形的顶点为别为：(<em>x</em> <sub>1</sub>, <em>y</em> <sub>1</sub>), …, (<em>x</em> <sub>n</sub>, <em>y</em> <sub>n</sub>)，那么它的面积为：</p>
+<table>
+<thead>
+<tr>
+<th>1</th>
+<th>x1 x2 … xn</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2</td>
+<td>y1 y2 … yn</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>行列式的值等于<em>x</em><sub>1</sub> <em>y</em><sub>2 </sub>+ <em>x</em><sub>2</sub><em>y</em><sub>3</sub>+ … + <em>x</em><sub><em>n</em></sub> <em>y</em><sub>1</sub> - <em>y</em><sub>1</sub> <em>x</em><sub>2</sub> - <em>y</em><sub>2</sub><em>x</em><sub>3</sub> - … - <em>y</em><sub>n</sub> <em>x</em><sub>1</sub></p>
+<p>4.点到直线的距离</p>
+<p><em>d</em>(P,AB) = |(P - A) x (B - A)| / | B - A|，可由上面求三角形的面积转换而来</p>
+<p>点P到由A、B、C构成的平面的距离：令<em>n</em> = (B - A) x (C - A)，则<em>d</em>(P,ABC) = (P-A) · n / |n|，n是垂直平面的一个向量，所以求出P到n的投影长度即可。</p>
+<p>5.点是否在直线上</p>
+<p>看该点到该直线的距离是否是0即可，见4</p>
+<p>6.点是否在一条直线的同一边（二维）</p>
+<p>查看C和D是否在AB直线的同一边，分别计算<em>(B - A) x (C - A)</em> and <em>(B - A) x (D - A)</em>的z分量的符号，如果两者的符号相同，则C和D在AB的同一边</p>
+<p>7.点是否在一条线段上</p>
+<p>要看C是否在线段AB上，只要看AB的长度是不是AC和CB的长度之和</p>
+<p>8.点是否在三角形内</p>
+<p>先找到三角形内的一个点B（比如三角形3个点取平均值），然后查看A和B是否都在三角行三条边的同一边。</p>
+<p><img src="http://ace.delos.com/usaco/TEXT/geom3.gif" alt=""></p>
+<p>9.点是否在凸多边形内</p>
+<p>类似于8</p>
+<p><img src="http://ace.delos.com/usaco/TEXT/geom4.gif" alt=""></p>
+<p>10.4个点是否共面</p>
+<p>选择其中3个点A、B、C，对于剩下的点D，如果满足(B - A) x (C - A)) · (D - A) = 0，则4点共面</p>
+<p>11.2条直线相交</p>
+<p>2维，不平行，则相交</p>
+<p>3维，不平行且共面，则相交</p>
+<p>12.2条线段相交</p>
+<p>2维，当A、B分别在C、D的两边，同时C、D分别在AB的两边，则两直线相交</p>
+<p><img src="http://ace.delos.com/usaco/TEXT/geom5.gif" alt=""></p>
+<p>3维，如果以下方程组</p>
+<p>A<sub><em>x</em></sub> + (B<sub><em>x</em></sub> - A<sub><em>x</em></sub>) i = C<sub><em>x</em></sub> + (D<sub><em>x</em></sub> - C<sub><em>x</em></sub>) j<br>A<sub><em>y</em></sub> + (B<sub><em>y</em></sub> - A<sub><em>y</em></sub>) i = C<sub><em>y</em></sub> + (D<sub><em>y</em></sub> - C<sub><em>y</em></sub>) j<br>A<sub><em>z</em></sub> + (B<sub><em>z</em></sub> - A<sub><em>z</em></sub>) i = C<sub><em>z</em></sub> + (D<sub><em>z</em></sub> - C<sub><em>z</em></sub>) j</p>
+<p>存在一组解(<em>i</em>, <em>j</em>)，其中0 &lt;= <em>i</em> &lt;= 1且0 &lt;= <em>j</em> &lt;= 1。则AB和CD相交于 (A<sub><em>x</em></sub> + (B<sub><em>x</em></sub> - A<sub><em>x</em></sub>)i, A<sub><em>y</em></sub> + (B<sub><em>y</em></sub> - A<sub><em>y</em></sub>)i, A<sub><em>z</em></sub> + (B<sub><em>z</em></sub> - A<sub><em>z</em></sub>) i。</p>
+<p>13.两条线段的交点</p>
+<p>2维，解以下方程组</p>
+<p>A<sub><em>x</em></sub> + (B<sub><em>x</em></sub> - A<sub><em>x</em></sub>)i = C<sub><em>x</em></sub> + (D<sub><em>x</em></sub> - C<sub><em>x</em></sub>) j<br>A<sub><em>y</em></sub> + (B<sub><em>y</em></sub> - A<sub><em>y</em></sub>)i = C<sub><em>y</em></sub> + (D<sub><em>y</em></sub> - C<sub><em>y</em></sub>) j</p>
+<p>则交点为：(A<sub><em>x</em></sub> + (B<sub><em>x</em></sub> - A<sub><em>x</em></sub>) i, A<sub><em>y</em></sub> + (B<sub><em>y</em></sub> - A<sub><em>y</em></sub>) i)</p>
+<p>3维，见12</p>
+<p>14.多边形的凸性</p>
+<p>按顺时针的方向沿着多边形走，对任意连续的三个点(A, B, C)，计算(B - A) x (C - A)的z分量，如果符号为都为正，这是凸多边形</p>
+<p>15.点是否在一个非凸多边形中</p>
+<p>从该点出发，向任意方向做一条射线，如果该射线经过了多变行的顶点或与多边形的某边重合，则重新作一条射线。如果该射线与多边形相交的边数为奇数，则在多边形内。</p>
+<p><img src="http://ace.delos.com/usaco/TEXT/geom8.gif" alt=""></p>
+<hr>
+<p>几何方法：（没太理解透）</p>
+<p>1.蒙特卡罗方法(<a href="http://zh.wikipedia.org/zh/%E8%92%99%E5%9C%B0%E5%8D%A1%E7%BE%85%E6%96%B9%E6%B3%95" target="_blank" rel="external">http://zh.wikipedia.org/zh/%E8%92%99%E5%9C%B0%E5%8D%A1%E7%BE%85%E6%96%B9%E6%B3%95</a>)</p>
+<p>2.分区法</p>
+<p><img src="http://ace.delos.com/usaco/TEXT/geom9.gif" alt=""></p>
+<hr>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/wordpress/index.php/csit/usaco-text-computational-geometry/" data-id="cidfq2tsw003jtgh58zkpgj34" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/USACO/">USACO</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/wordpress/index.php/csit/elf-file-format/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          ELF文件格式探索
+        
+      </div>
+    </a>
+  
+  
+    <a href="/wordpress/index.php/lmy/20120820-20120830/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">2012年08月20日 - 2012年08月30日 BMX</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/">wordpress</a><span class="category-list-count">285</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/">index.php</a><span class="category-list-count">285</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/about/">about</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/csit/">csit</a><span class="category-list-count">168</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/default/">default</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/lmy/">lmy</a><span class="category-list-count">109</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/thought/">thought</a><span class="category-list-count">3</span></li></ul></li></ul></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/8051/">8051</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/A/">A</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/">Algorithm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BIKE/">BIKE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Book/">Book</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSAPP/">CSAPP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DASH/">DASH</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Diary/">Diary</a><span class="tag-list-count">104</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/">Django</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ELF/">ELF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GIMP/">GIMP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google/">Google</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google-App-Engine/">Google App Engine</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/H.264-AVC/">H.264/AVC</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JM/">JM</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Law-of-Attraction/">Law of Attraction</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LightOJ/">LightOJ</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Music/">Music</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Notes/">Notes</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/People/">People</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Podinns/">Podinns</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Quotes/">Quotes</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Research/">Research</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Status/">Status</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/The-Baader-Meinhof-Phenomenon/">The Baader-Meinhof Phenomenon</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tools/">Tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Topcoder/">Topcoder</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/USACO/">USACO</a><span class="tag-list-count">68</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/">Ubuntu</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VLC/">VLC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VirtualBox/">VirtualBox</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/code-blocks/">code::blocks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/codec/">codec</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heroku/">heroku</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lsharemy/">lsharemy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nVidia/">nVidia</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/">socket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/x264/">x264</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/8051/" style="font-size: 18.46px;">8051</a> <a href="/tags/A/" style="font-size: 10px;">A</a> <a href="/tags/Algorithm/" style="font-size: 10.77px;">Algorithm</a> <a href="/tags/Android/" style="font-size: 17.69px;">Android</a> <a href="/tags/BIKE/" style="font-size: 10px;">BIKE</a> <a href="/tags/Book/" style="font-size: 10px;">Book</a> <a href="/tags/C/" style="font-size: 15.38px;">C</a> <a href="/tags/CSAPP/" style="font-size: 10px;">CSAPP</a> <a href="/tags/DASH/" style="font-size: 10px;">DASH</a> <a href="/tags/Diary/" style="font-size: 20px;">Diary</a> <a href="/tags/Django/" style="font-size: 10.77px;">Django</a> <a href="/tags/ELF/" style="font-size: 10.77px;">ELF</a> <a href="/tags/GIMP/" style="font-size: 10px;">GIMP</a> <a href="/tags/Google/" style="font-size: 10.77px;">Google</a> <a href="/tags/Google-App-Engine/" style="font-size: 10px;">Google App Engine</a> <a href="/tags/H.264-AVC/" style="font-size: 14.62px;">H.264/AVC</a> <a href="/tags/JM/" style="font-size: 13.85px;">JM</a> <a href="/tags/Law-of-Attraction/" style="font-size: 10px;">Law of Attraction</a> <a href="/tags/LightOJ/" style="font-size: 16.92px;">LightOJ</a> <a href="/tags/Linux/" style="font-size: 13.85px;">Linux</a> <a href="/tags/Music/" style="font-size: 11.54px;">Music</a> <a href="/tags/Notes/" style="font-size: 10.77px;">Notes</a> <a href="/tags/People/" style="font-size: 10px;">People</a> <a href="/tags/Podinns/" style="font-size: 10px;">Podinns</a> <a href="/tags/Python/" style="font-size: 13.08px;">Python</a> <a href="/tags/Quotes/" style="font-size: 10px;">Quotes</a> <a href="/tags/Research/" style="font-size: 10px;">Research</a> <a href="/tags/Status/" style="font-size: 10px;">Status</a> <a href="/tags/The-Baader-Meinhof-Phenomenon/" style="font-size: 10px;">The Baader-Meinhof Phenomenon</a> <a href="/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/tags/Topcoder/" style="font-size: 10.77px;">Topcoder</a> <a href="/tags/USACO/" style="font-size: 19.23px;">USACO</a> <a href="/tags/Ubuntu/" style="font-size: 16.15px;">Ubuntu</a> <a href="/tags/VLC/" style="font-size: 10px;">VLC</a> <a href="/tags/VirtualBox/" style="font-size: 10px;">VirtualBox</a> <a href="/tags/code-blocks/" style="font-size: 10px;">code::blocks</a> <a href="/tags/codec/" style="font-size: 14.62px;">codec</a> <a href="/tags/heroku/" style="font-size: 13.08px;">heroku</a> <a href="/tags/lsharemy/" style="font-size: 10px;">lsharemy</a> <a href="/tags/nVidia/" style="font-size: 10px;">nVidia</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/vim/" style="font-size: 12.31px;">vim</a> <a href="/tags/x264/" style="font-size: 10.77px;">x264</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">September 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">November 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">October 2012</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">August 2012</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/07/">July 2012</a><span class="archive-list-count">69</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">April 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">March 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">February 2012</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">January 2012</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/12/">December 2011</a><span class="archive-list-count">56</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">November 2011</a><span class="archive-list-count">48</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/10/">October 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">September 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08/">August 2011</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/07/">July 2011</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/06/">June 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/05/">May 2011</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/uncategorized/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/lmy/20121102-20130908/">2012年11月02日 – 2013年09月08日 快一年没更新了</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/csit/macro-definition/">宏定义（#define）总结</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/csit/extern-function/">extern修饰的函数</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/csit/variable-storage-location/">变量存储位置</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>

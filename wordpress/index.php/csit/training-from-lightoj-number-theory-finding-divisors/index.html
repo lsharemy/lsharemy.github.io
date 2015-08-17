@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Training from LightOJ | Number Theory - Finding Divisors | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="寻找因子跟寻找质因子一样，也是试除法。多于整数n，也只需要试除到sqrt(n)为止，因为因子总是成对的。比如36的因子有1、2、3、4、6、9、12、18、36。只要找到2，我们也就找到了36/2=18，找到3，也就找到了36/3=12，所以">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Training from LightOJ | Number Theory - Finding Divisors">
+<meta property="og:url" content="http://yoursite.com/wordpress/index.php/csit/training-from-lightoj-number-theory-finding-divisors/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="寻找因子跟寻找质因子一样，也是试除法。多于整数n，也只需要试除到sqrt(n)为止，因为因子总是成对的。比如36的因子有1、2、3、4、6、9、12、18、36。只要找到2，我们也就找到了36/2=18，找到3，也就找到了36/3=12，所以">
+<meta property="og:updated_time" content="2015-08-15T02:15:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Training from LightOJ | Number Theory - Finding Divisors">
+<meta name="twitter:description" content="寻找因子跟寻找质因子一样，也是试除法。多于整数n，也只需要试除到sqrt(n)为止，因为因子总是成对的。比如36的因子有1、2、3、4、6、9、12、18、36。只要找到2，我们也就找到了36/2=18，找到3，也就找到了36/3=12，所以">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-training-from-lightoj-number-theory-finding-divisors" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/wordpress/index.php/csit/training-from-lightoj-number-theory-finding-divisors/" class="article-date">
+  <time datetime="2011-12-21T15:34:12.000Z" itemprop="datePublished">2011-12-21</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/wordpress/">wordpress</a>►<a class="article-category-link" href="/categories/wordpress/index.php/">index.php</a>►<a class="article-category-link" href="/categories/wordpress/index.php/csit/">csit</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Training from LightOJ | Number Theory - Finding Divisors
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="寻找因子"><span style="color: #ff0000;">寻找因子</span></h1><p>跟寻找质因子一样，也是试除法。多于整数n，也只需要试除到sqrt(n)为止，因为因子总是成对的。比如36的因子有1、2、3、4、6、9、12、18、36。只要找到2，我们也就找到了36/2=18，找到3，也就找到了36/3=12，所以<a id="more"></a>只要检测到sqrt(n)为止就好了。代码如下：</p>
+<p>[c]</p>
+<p>#include &lt;cstdio&gt;</p>
+<p>#include &lt;set&gt;</p>
+<p>#include &lt;cmath&gt;</p>
+<p>using namespace std;</p>
+<p>int main()<br>{<br>    set &lt;int&gt; divisor;<br>    int n, i;<br>    scanf(&quot;%d&quot;, &amp;n);<br>    int sqrtN = sqrt(n);<br>    for (i = 1; i &lt;= sqrtN; i++)<br>    {<br>        if (n % i == 0)<br>        {<br>            divisor.insert(i);<br>            divisor.insert(n/i);<br>        }<br>    }</p>
+<pre><code><span class="type">set</span>&amp;lt;<span class="type">int</span>&amp;gt;::<span class="keyword">iterator</span> it;
+<span class="keyword">for</span> (it = divisor.begin(); it != divisor.<span class="keyword">end</span>(); it++)
+    printf(&amp;quot;%d &amp;quot;, *it);
+printf(&amp;quot;\ndivisor count: %d&amp;quot;, divisor.size());
+</code></pre><p>}<br>[/c]</p>
+<p>既然我们已经找到了所有因子，因子的个数通过计数就可以得到了，所有因子的和也可以通过把它们全部加起来得到。</p>
+<h1 id="寻找因子个数"><span style="color: #ff0000;">寻找因子个数</span></h1><p>上面通过找出所有因子，最后得到因子个数。不过还有更简单的方法来得到因子的个数。这个方法需要先对数n进行质因数分解。比如，对于18，质因数分解为：18 = 2<sup>1</sup> * 3<sup>2</sup></p>
+<p>那么18的所有因子可以表示为：2<sup>x</sup> * 3<sup>y</sup> 其中0 &lt;= x &lt;= 1 and 0 &lt;= y &lt;= 2</p>
+<p>即如下6个：<br>2<sup>0</sup> <em> 3<sup>0</sup> = 1<br>2<sup>0</sup> </em> 3<sup>1</sup> = 3<br>2<sup>0</sup> <em> 3<sup>2</sup> = 9<br>2<sup>1</sup> </em> 3<sup>0</sup> = 2<br>2<sup>1</sup> <em> 3<sup>1</sup> = 6<br>2<sup>1</sup> </em> 3<sup>2</sup> = 18</p>
+<p>可以推出，如果一个数可以质因数分解成2<sup>x</sup> <em> 3<sup>y</sup>，那么它的因子个数为(x+1)</em>(y+1)。</p>
+<p>更一般的，如果一个数可以质因数分解为p<sub>1</sub><sup>x1</sup> <em> p<sub>2</sub><sup>x2</sup> </em> p<sub>3</sub><sup>x3</sup> <em> … </em> p<sub>n</sub><sup>xn</sup></p>
+<p>那么它的因子个数为(x<sub>1</sub> + 1) <em> (x<sub>2</sub> + 1) </em> (x<sub>3</sub> + 1) <em> … </em> (x<sub>n</sub> + 1)</p>
+<p>代码如下：</p>
+<p>[c]</p>
+<p>#include &lt;cstdio&gt;</p>
+<p>#include &lt;set&gt;</p>
+<p>#include &lt;cmath&gt;</p>
+<p>using namespace std;</p>
+<p>int prime[32];<br>int factor[32];<br>int cnt;</p>
+<p>int main()<br>{<br>    int n;<br>    scanf(&quot;%d&quot;, &amp;n);<br>    cnt = 0;<br>    for (int i = 2; i*i &lt;= n; i++)<br>    {<br>        if (n % i == 0)<br>        {<br>            factor[cnt] = 0;<br>            prime[cnt] = i;<br>            while (n % i == 0)<br>            {<br>                n /= i;<br>                factor[cnt]++;<br>            }<br>            cnt++;<br>        }<br>    }<br>    if ( n &gt; 1)<br>    {<br>        prime[cnt] = n;<br>        factor[cnt++] = 1;<br>    }</p>
+<pre><code><span class="keyword">int</span> divisorCnt = <span class="number">1</span>;
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &amp;lt; cnt; i++)
+    divisorCnt *= factor[i]+<span class="number">1</span>;
+<span class="built_in">printf</span>(&amp;quot;%d&amp;quot;, divisorCnt);
+</code></pre><p>}<br>[/c]</p>
+<h1 id="计算所有因子的和"><span style="color: #ff0000;">计算所有因子的和</span></h1><p>正如前面所说，得到了所有的因子之后，把它们全部加起来就得到了和。不过有更好的办法。也需要用到质因数分解。比如对于60。因子有1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 60。它们的和为168。也可以写成：</p>
+<p>2<sup>0</sup> <em> 3<sup>0</sup> </em> 5<sup>0</sup> + 2<sup>0</sup> <em> 3<sup>0</sup> </em> 5<sup>1</sup> + 2<sup>0</sup> <em> 3<sup>1</sup> </em> 5<sup>0</sup> + 2<sup>0</sup> <em> 3<sup>1</sup> </em> 5<sup>1</sup> +</p>
+<p>2<sup>1</sup> <em> 3<sup>0</sup> </em> 5<sup>0</sup> + 2<sup>1</sup> <em> 3<sup>0</sup> </em> 5<sup>1</sup> + 2<sup>1</sup> <em> 3<sup>1</sup> </em> 5<sup>0</sup> + 2<sup>1</sup> <em> 3<sup>1</sup> </em> 5<sup>1</sup> +</p>
+<p>2<sup>2</sup> <em> 3<sup>0</sup> </em> 5<sup>0</sup> + 2<sup>2</sup> <em> 3<sup>0</sup> </em> 5<sup>1</sup> + 2<sup>2</sup> <em> 3<sup>1</sup> </em> 5<sup>0</sup> + 2<sup>2</sup> <em> 3<sup>1</sup> </em> 5<sup>1</sup></p>
+<p>化简为：</p>
+<p>2<sup>0</sup> <em> (3<sup>0</sup> </em> 5<sup>0</sup> + 3<sup>0</sup> <em> 5<sup>1</sup> + 3<sup>1</sup> </em> 5<sup>0</sup> + 3<sup>1</sup> * 5<sup>1</sup>) +</p>
+<p>2<sup>1</sup> <em> (3<sup>0</sup> </em> 5<sup>0</sup> + 3<sup>0</sup> <em> 5<sup>1</sup> + 3<sup>1</sup> </em> 5<sup>0</sup> + 3<sup>1</sup> * 5<sup>1</sup>) +</p>
+<p>2<sup>2</sup> <em> (3<sup>0</sup> </em> 5<sup>0</sup> + 3<sup>0</sup> <em> 5<sup>1</sup> + 3<sup>1</sup> </em> 5<sup>0</sup> + 3<sup>1</sup> * 5<sup>1</sup>)</p>
+<p>继续化简：</p>
+<p>(2<sup>0</sup> + 2<sup>1</sup> + 2<sup>2</sup>) <em> (3<sup>0</sup> </em> 5<sup>0</sup> + 3<sup>0</sup> <em> 5<sup>1</sup> + 3<sup>1</sup> </em> 5<sup>0</sup> + 3<sup>1</sup> * 5<sup>1</sup>)</p>
+<p>最后得到：</p>
+<p>(2<sup>0</sup> + 2<sup>1</sup> + 2<sup>2</sup>) <em> (3<sup>0</sup> + 3<sup>1</sup>) </em> (5<sup>0</sup> + 5<sup>1</sup>)</p>
+<p>利用公式：1+r<sup>1</sup> + r<sup>2</sup> + … + r<sup>n</sup> = (r<sup>n</sup> - 1)/(r - 1)</p>
+<p>所以如果一个整数的质因数分解为p<sub>1</sub><sup>x1</sup> <em> p<sub>2</sub><sup>x2</sup> </em> p<sub>3</sub><sup>x3</sup> <em> … </em> p<sub>n</sub><sup>xn</sup></p>
+<p>则它的所有因子的和为：[(p<sub>1</sub><sup>x1+1 </sup>- 1)/(p<sub>1 </sub>- 1)] <em> [(p<sub>2</sub><sup>x2</sup> - 1)/(p<sub>2 </sub>- 1)] </em> [(p<sub>3</sub><sup>x3</sup> - 1)/p3<sub> </sub>- 1)] <em> … </em> [(p<sub>n</sub><sup>xn</sup> - 1)/pn<sub> </sub>- 1)]</p>
+<p>代码如下（只可以在小整的情况下使用，而且用了递归，效率应该也不高，水平有限，以后再回来改进）</p>
+<p>[c]</p>
+<p>#include &lt;cstdio&gt;</p>
+<p>#include &lt;cmath&gt;</p>
+<p>using namespace std;</p>
+<p>int prime[32];<br>int factor[32];<br>int cnt;</p>
+<p>//求解 x^n<br>int Pow(int x,int n)<br>{<br>    int ret=1,s=x;<br>    while(1)<br>    {<br>        if(n&amp;1)<br>            ret=ret<em>s;<br>        if(n&gt;&gt;=1)<br>            s=(s</em>s);<br>        else<br>            break;<br>    }<br>    return ret;<br>}</p>
+<p>//求解 1+p+p^2+…+p^n 等比数列的求和<br>int Sum(int p, int n)<br>{<br>    if(n==0)<br>        return 1;<br>    if(n&amp;1)<br>        return ((1+Pow(p,n/2+1))<em>Sum(p,n/2));<br>    else<br>        return ((1+Pow(p,n/2+1))</em>Sum(p,(n-1)/2)+Pow(p,n/2));<br>}</p>
+<p>int main()<br>{<br>    int n;<br>    scanf(&quot;%d&quot;, &amp;n);<br>    cnt = 0;<br>    for (int i = 2; i*i &lt;= n; i++)<br>    {<br>        if (n % i == 0)<br>        {<br>            factor[cnt] = 0;<br>            prime[cnt] = i;<br>            while (n % i == 0)<br>            {<br>                n /= i;<br>                factor[cnt]++;<br>            }<br>            cnt++;<br>        }<br>    }<br>    if ( n &gt; 1)<br>    {<br>        prime[cnt] = n;<br>        factor[cnt++] = 1;<br>    }</p>
+<pre><code><span class="keyword">int</span> divisorSum = <span class="number">1</span>;
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &amp;lt; cnt; i++)
+    divisorSum *= Sum (prime[i], factor[i]);
+<span class="built_in">printf</span>(&amp;quot;%d&amp;quot;, divisorSum);
+</code></pre><p>}<br>[/c]</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/wordpress/index.php/csit/training-from-lightoj-number-theory-finding-divisors/" data-id="cidfq2u7a00dftgh5yawy3by6" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LightOJ/">LightOJ</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/wordpress/index.php/lmy/20111221/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          2011年12月21日 健康
+        
+      </div>
+    </a>
+  
+  
+    <a href="/wordpress/index.php/lmy/20111220/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">2011年12月20日 久违的健身房</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/">wordpress</a><span class="category-list-count">285</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/">index.php</a><span class="category-list-count">285</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/about/">about</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/csit/">csit</a><span class="category-list-count">168</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/default/">default</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/lmy/">lmy</a><span class="category-list-count">109</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/thought/">thought</a><span class="category-list-count">3</span></li></ul></li></ul></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/8051/">8051</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/A/">A</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/">Algorithm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BIKE/">BIKE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Book/">Book</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSAPP/">CSAPP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DASH/">DASH</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Diary/">Diary</a><span class="tag-list-count">104</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/">Django</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ELF/">ELF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GIMP/">GIMP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google/">Google</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google-App-Engine/">Google App Engine</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/H.264-AVC/">H.264/AVC</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JM/">JM</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Law-of-Attraction/">Law of Attraction</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LightOJ/">LightOJ</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Music/">Music</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Notes/">Notes</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/People/">People</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Podinns/">Podinns</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Quotes/">Quotes</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Research/">Research</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Status/">Status</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/The-Baader-Meinhof-Phenomenon/">The Baader-Meinhof Phenomenon</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tools/">Tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Topcoder/">Topcoder</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/USACO/">USACO</a><span class="tag-list-count">68</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/">Ubuntu</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VLC/">VLC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VirtualBox/">VirtualBox</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/code-blocks/">code::blocks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/codec/">codec</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heroku/">heroku</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lsharemy/">lsharemy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nVidia/">nVidia</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/">socket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/x264/">x264</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/8051/" style="font-size: 18.46px;">8051</a> <a href="/tags/A/" style="font-size: 10px;">A</a> <a href="/tags/Algorithm/" style="font-size: 10.77px;">Algorithm</a> <a href="/tags/Android/" style="font-size: 17.69px;">Android</a> <a href="/tags/BIKE/" style="font-size: 10px;">BIKE</a> <a href="/tags/Book/" style="font-size: 10px;">Book</a> <a href="/tags/C/" style="font-size: 15.38px;">C</a> <a href="/tags/CSAPP/" style="font-size: 10px;">CSAPP</a> <a href="/tags/DASH/" style="font-size: 10px;">DASH</a> <a href="/tags/Diary/" style="font-size: 20px;">Diary</a> <a href="/tags/Django/" style="font-size: 10.77px;">Django</a> <a href="/tags/ELF/" style="font-size: 10.77px;">ELF</a> <a href="/tags/GIMP/" style="font-size: 10px;">GIMP</a> <a href="/tags/Google/" style="font-size: 10.77px;">Google</a> <a href="/tags/Google-App-Engine/" style="font-size: 10px;">Google App Engine</a> <a href="/tags/H.264-AVC/" style="font-size: 14.62px;">H.264/AVC</a> <a href="/tags/JM/" style="font-size: 13.85px;">JM</a> <a href="/tags/Law-of-Attraction/" style="font-size: 10px;">Law of Attraction</a> <a href="/tags/LightOJ/" style="font-size: 16.92px;">LightOJ</a> <a href="/tags/Linux/" style="font-size: 13.85px;">Linux</a> <a href="/tags/Music/" style="font-size: 11.54px;">Music</a> <a href="/tags/Notes/" style="font-size: 10.77px;">Notes</a> <a href="/tags/People/" style="font-size: 10px;">People</a> <a href="/tags/Podinns/" style="font-size: 10px;">Podinns</a> <a href="/tags/Python/" style="font-size: 13.08px;">Python</a> <a href="/tags/Quotes/" style="font-size: 10px;">Quotes</a> <a href="/tags/Research/" style="font-size: 10px;">Research</a> <a href="/tags/Status/" style="font-size: 10px;">Status</a> <a href="/tags/The-Baader-Meinhof-Phenomenon/" style="font-size: 10px;">The Baader-Meinhof Phenomenon</a> <a href="/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/tags/Topcoder/" style="font-size: 10.77px;">Topcoder</a> <a href="/tags/USACO/" style="font-size: 19.23px;">USACO</a> <a href="/tags/Ubuntu/" style="font-size: 16.15px;">Ubuntu</a> <a href="/tags/VLC/" style="font-size: 10px;">VLC</a> <a href="/tags/VirtualBox/" style="font-size: 10px;">VirtualBox</a> <a href="/tags/code-blocks/" style="font-size: 10px;">code::blocks</a> <a href="/tags/codec/" style="font-size: 14.62px;">codec</a> <a href="/tags/heroku/" style="font-size: 13.08px;">heroku</a> <a href="/tags/lsharemy/" style="font-size: 10px;">lsharemy</a> <a href="/tags/nVidia/" style="font-size: 10px;">nVidia</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/vim/" style="font-size: 12.31px;">vim</a> <a href="/tags/x264/" style="font-size: 10.77px;">x264</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">September 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">November 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">October 2012</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">August 2012</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/07/">July 2012</a><span class="archive-list-count">69</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">April 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">March 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">February 2012</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">January 2012</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/12/">December 2011</a><span class="archive-list-count">56</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">November 2011</a><span class="archive-list-count">48</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/10/">October 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">September 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08/">August 2011</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/07/">July 2011</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/06/">June 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/05/">May 2011</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/uncategorized/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/lmy/20121102-20130908/">2012年11月02日 – 2013年09月08日 快一年没更新了</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/csit/macro-definition/">宏定义（#define）总结</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/csit/extern-function/">extern修饰的函数</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/csit/variable-storage-location/">变量存储位置</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>

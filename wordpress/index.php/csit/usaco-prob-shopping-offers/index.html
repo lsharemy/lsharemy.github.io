@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>USACO - PROB Shopping Offers | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="好吧，DP，看了别人的题解才写出来的
+代码：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="USACO - PROB Shopping Offers">
+<meta property="og:url" content="http://yoursite.com/wordpress/index.php/csit/usaco-prob-shopping-offers/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="好吧，DP，看了别人的题解才写出来的
+代码：">
+<meta property="og:updated_time" content="2015-08-15T02:15:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="USACO - PROB Shopping Offers">
+<meta name="twitter:description" content="好吧，DP，看了别人的题解才写出来的
+代码：">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-usaco-prob-shopping-offers" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/wordpress/index.php/csit/usaco-prob-shopping-offers/" class="article-date">
+  <time datetime="2012-08-13T08:37:15.000Z" itemprop="datePublished">2012-08-13</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/wordpress/">wordpress</a>►<a class="article-category-link" href="/categories/wordpress/index.php/">index.php</a>►<a class="article-category-link" href="/categories/wordpress/index.php/csit/">csit</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      USACO - PROB Shopping Offers
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>好吧，DP，看了别人的题解才写出来的</p>
+<p>代码：<a id="more"></a></p>
+<p>[c]<br>/<em><br>ID: lmy0525<br>PROG: shopping<br>LANG: C++
+</em>/</p>
+<p>#include &lt;iostream&gt;</p>
+<p>#include &lt;fstream&gt;</p>
+<p>#include &lt;string&gt;</p>
+<p>#include &lt;algorithm&gt;</p>
+<p>#include &lt;cmath&gt;</p>
+<p>#include &lt;vector&gt;</p>
+<p>#include &lt;cstring&gt;</p>
+<p>#include &lt;iomanip&gt;</p>
+<p>#include &lt;queue&gt;</p>
+<p>#include &lt;map&gt;</p>
+<p>#include &lt;stack&gt;<br>using namespace std;</p>
+<p>ofstream fout;<br>ifstream fin;</p>
+<p>vector &lt; pair&lt;int, int&gt; &gt; offer[100];<br>int price[6], need[6], code[1000], reduce[100];<br>int f[6][6][6][6][6];</p>
+<p>int main()<br>{<br>    fout.open(&quot;shopping.out&quot;);<br>    fin.open(&quot;shopping.in&quot;);<br>    int s;<br>    fin &gt;&gt; s;<br>    for (int i = 1; i &lt;= s; i++)<br>    {<br>        int n;<br>        fin &gt;&gt; n;<br>        for (int j = 0; j &lt; n; j++)<br>        {<br>            int c, k;<br>            fin &gt;&gt; c &gt;&gt; k;<br>            offer[i].push_back(make_pair(c, k));<br>        }<br>        fin &gt;&gt; reduce[i];<br>    }<br>    int b;<br>    fin &gt;&gt; b;<br>    for (int i = 1; i &lt;= b; i++)<br>    {<br>        int c, k, p;<br>        fin &gt;&gt; c &gt;&gt; k &gt;&gt; p;<br>        code[c] = i;<br>        need[i] = k;<br>        price[i] = p;<br>    }<br>    for (int i1 = 0; i1 &lt;= need[1]; i1++)<br>    for (int i2 = 0; i2 &lt;= need[2]; i2++)<br>    for (int i3 = 0; i3 &lt;= need[3]; i3++)<br>    for (int i4 = 0; i4 &lt;= need[4]; i4++)<br>    for (int i5 = 0; i5 &lt;= need[5]; i5++)<br>    {<br>        f[i1][i2][i3][i4][i5] = price[1]<em>i1+price[2]</em>i2+price[3]<em>i3+price[4]</em>i4+price[5]*i5;<br>        for (int i = 1; i &lt;= s; i++)<br>        {<br>            int temp[6] = {0, 0, 0, 0, 0, 0};<br>            bool flag = true;<br>            for (int j = 0; j &lt; offer[i].size(); j++)<br>            {<br>                int c, k;<br>                c = offer[i][j].first;<br>                k = offer[i][j].second;<br>                if (code[c] == 0)<br>                {<br>                    flag = false;<br>                    break;<br>                }<br>                temp[code[c]] = k;<br>            }<br>            if (!flag) continue;<br>            if (!(temp[1]&lt;=i1 &amp;&amp; temp[2]&lt;=i2 &amp;&amp; temp[3]&lt;=i3 &amp;&amp; temp[4]&lt;=i4 &amp;&amp; temp[5]&lt;=i5)) continue;<br>            f[i1][i2][i3][i4][i5] = min(f[i1][i2][i3][i4][i5], f[i1-temp[1]][i2-temp[2]][i3-temp[3]][i4-temp[4]][i5-temp[5]]+reduce[i]);<br>        }<br>    }<br>    fout &lt;&lt; f[need[1]][need[2]][need[3]][need[4]][need[5]] &lt;&lt; endl;<br>    return 0;<br>}<br>[/c]</p>
+<p>标程1（转换成图论@_@）：</p>
+<p>[c]</p>
+<p>#include &lt;stdio.h&gt;</p>
+<p>#include &lt;string.h&gt;</p>
+<p>/<em> maximum number of offers </em>/<br>/<em> 100 offers + 5 degenerate offers </em>/</p>
+<p>#define MAXO 105</p>
+<p>typedef struct OFFER_T<br> {<br>  int nitem; /<em> number of items in the offer </em>/<br>  int itemid[5]; /<em> item’s id </em>/<br>  int itemamt[5]; /<em> item’s amount </em>/<br>  int cost; /<em> the cost of this offer </em>/<br> } offer_t;</p>
+<p>offer_t offers[MAXO];<br>int noffer;</p>
+<p>/<em> the cost of each basket type </em>/<br>int cost[7776];</p>
+<p>/<em> the item statistics </em>/<br>int itemid[5]; /<em> the id </em>/<br>int itemcst[5]; /<em> the cost of buying just 1 </em>/<br>int nitem;</p>
+<p>/<em> heap used by Dijkstra’s algorithm </em>/<br>int heap[7776];<br>int hsize;<br>int hloc[7776]; /<em> location of baskets within the heap </em>/</p>
+<p>/<em> debugging routine </em>/<br>void check_heap(void)<br> { /<em> ensure heap order is maintained </em>/<br>  int lv;<br>  return;</p>
+<p>  for (lv = 1; lv &lt; hsize; lv++)<br>   {<br>    if (cost[heap[lv]] &lt; cost[heap[(lv-1)/2]])<br>     {<br>      fprintf (stderr, &quot;HEAP ERROR!\n&quot;);<br>      return;<br>     }<br>   }<br> }</p>
+<p>/<em> delete the minimum element in the heap </em>/<br>void delete_min(void)<br> {<br>  int loc, val;<br>  int p, t;</p>
+<p>  /<em> take last item from the heap </em>/<br>  loc = heap[–hsize];<br>  val = cost[loc];</p>
+<p>  /<em> p is the current position of item (loc,val) in the heap </em>/<br>  /<em> the item isn’t actually there, but that’s where we’re<br>     considering putting it </em>/<br>  p = 0; </p>
+<p>  while (2<em>p+1 &lt; hsize)<br>   { /</em> while one child is less than the last item,<br>        move the lesser child up <em>/<br>    t = 2</em>p+1;<br>    /<em> pick lesser child </em>/<br>    if (t+1 &lt; hsize &amp;&amp; cost[heap[t+1]] &lt; cost[heap[t]]) t++;</p>
+<pre><code><span class="keyword">if</span> (cost[heap[t]] &amp;lt; val)
+ { /* <span class="keyword">if</span> child <span class="keyword">is</span> <span class="keyword">less than</span> <span class="keyword">last</span> <span class="property">item</span>, move <span class="keyword">it</span> up */
+  heap[p] = heap[t];
+  hloc[heap[p]] = p;
+  p = t;
+ } <span class="keyword">else</span> break;
+</code></pre><p>   }</p>
+<p>  /<em> put the last item back into the heap </em>/<br>  heap[p] = loc;<br>  hloc[loc] = p;<br>  check_heap();<br> }</p>
+<p>/<em> we decreased the value corresponding to basket loc </em>/<br>/<em> alter heap to maintain heap order </em>/<br>void update(int loc)<br> {<br>  int val;<br>  int p, t;</p>
+<p>  val = cost[loc];<br>  p = hloc[loc];</p>
+<p>  while (p &gt; 0) /<em> while it’s not at the root </em>/<br>   {<br>    t = (p-1)/2; /<em> t = parent of node </em>/<br>    if (cost[heap[t]] &gt; val)<br>     { /<em> parent is higher cost than us, swap </em>/<br>      heap[p] = heap[t];<br>      hloc[heap[p]] = p;<br>      p = t;<br>     } else break;<br>   }</p>
+<p>  /<em> put basket back into heap </em>/<br>  heap[p] = loc;<br>  hloc[loc] = p;<br>  check_heap();<br> }</p>
+<p>/<em> add this element into the heap </em>/<br>void add_heap(int loc)<br> {<br>  if (hloc[loc] == -1)<br>   { /<em> if it’s not in the heap </em>/</p>
+<pre><code>/* add <span class="keyword">it</span> <span class="keyword">to</span> <span class="keyword">the</span> <span class="keyword">end</span> (same <span class="keyword">as</span> provisionally setting <span class="keyword">it</span>'s value
+   <span class="keyword">to</span> infinity) */
+heap[hsize++] = loc;
+hloc[loc] = hsize-<span class="number">1</span>;
+</code></pre><p>   }</p>
+<p>  /<em> set to correct value </em>/<br>  update(loc);<br> }</p>
+<p>/<em> given an id, calculate the index of it </em>/<br>int find_item(int id)<br> {<br>  if (itemid[0] == id) return 0;<br>  if (itemid[1] == id) return 1;<br>  if (itemid[2] == id) return 2;<br>  if (itemid[3] == id) return 3;<br>  if (itemid[4] == id) return 4;<br>  return -1;<br> }</p>
+<p>/<em> encoding constants 6^0, 6^1, 6^2, …, 6^5 </em>/<br>const int mask[5] = {1, 6, 36, 216, 1296};</p>
+<p>void find_cost(void)<br> {<br>  int p;<br>  int cst;<br>  int lv, lv2;<br>  int amt;<br>  offer_t *o;<br>  int i;<br>  int t;</p>
+<p>  /<em> initialize costs to be infinity </em>/<br>  for (lv = 0; lv &lt; 7776; lv++) cost[lv] = 999*25+1;</p>
+<p>  /<em> offer not in heap yet </em>/<br>  for (lv = 0; lv &lt; 7776; lv++) hloc[lv] = -1;</p>
+<p>  /<em> add empty baset </em>/<br>  cost[0] = 0;<br>  add_heap(0);</p>
+<p>  while (hsize)<br>   {<br>    /<em> take minimum basket not checked yet </em>/<br>    p = heap[0];<br>    cst = cost[p];</p>
+<pre><code><span class="comment">/* delete it from the heap */</span>
+delete_min<span class="params">()</span>;
+
+<span class="comment">/* try adding each offer to it */</span>
+<span class="keyword">for</span> <span class="params">(lv = <span class="number">0</span>; lv &amp;lt; noffer; lv++)</span>
+ {
+  o = &amp;amp;offers[lv];
+  t = p; <span class="comment">/* the index of the new heap */</span>
+  <span class="keyword">for</span> <span class="params">(lv2 = <span class="number">0</span>; lv2 &amp;lt; o-&amp;gt;nitem; lv2++)</span>
+   {
+    i = o-&amp;gt;itemid[lv2];
+<span class="comment">/* amt = amt of item lv2 already in basket */</span>
+amt = <span class="params">(t / mask[i])</span> <span class="built_in">%</span> <span class="number">6</span>;
+
+<span class="keyword">if</span> <span class="params">(amt + o-&amp;gt;itemamt[lv2] &amp;lt;= <span class="number">5</span>)</span>
+  t += mask[i] <span class="built_in">*</span> o-&amp;gt;itemamt[lv2];
+<span class="keyword">else</span>
+ { <span class="comment">/* if we get more than 5 items in the basket,
+      this is an illegal move */</span>
+  t = <span class="number">0</span>; <span class="comment">/* ensures we will ignore it, since cost[0] = 0 */</span>
+  break;
+ }
+   }
+  <span class="keyword">if</span> <span class="params">(cost[t] &amp;gt; cst + o-&amp;gt;cost)</span>
+   { <span class="comment">/* we found a better way to get this basket */</span>
+
+    <span class="comment">/* update the cost */</span>
+    cost[t] = cst + o-&amp;gt;cost;
+add_heap<span class="params">(t)</span>; <span class="comment">/* add, if necessary, and reheap */</span>
+   }
+ }
+</code></pre><p>   }<br> }</p>
+<p>int main(int argc, char <em>*argv)<br> {<br>  FILE </em>fout, <em>fin;<br>  int lv, lv2; /</em> loop variable <em>/<br>  int amt[5]; /</em> goal amounts of each type <em>/<br>  int a; /</em> temporary variable */</p>
+<p>  if ((fin = fopen(&quot;shopping.in&quot;, &quot;r&quot;)) == NULL)<br>   {<br>    perror (&quot;fopen fin&quot;);<br>    exit(1);<br>   }<br>  if ((fout = fopen(&quot;shopping.out&quot;, &quot;w&quot;)) == NULL)<br>   {<br>    perror (&quot;fopen fout&quot;);<br>    exit(1);<br>   }</p>
+<p>  fscanf (fin, &quot;%d&quot;, &amp;noffer);</p>
+<p>  /<em> read offers </em>/<br>  for (lv = 0; lv &lt; noffer; lv++)<br>   {<br>    fscanf (fin, &quot;%d&quot;, &amp;offers[lv].nitem);<br>    for (lv2 = 0; lv2 &lt; offers[lv].nitem; lv2++)<br>      fscanf (fin, &quot;%d %d&quot;, &amp;offers[lv].itemid[lv2], &amp;offers[lv].itemamt[lv2]);<br>    fscanf (fin, &quot;%d&quot;, &amp;offers[lv].cost);<br>   }</p>
+<p>  /<em> read item’s information </em>/<br>  fscanf (fin, &quot;%d&quot;, &amp;nitem);<br>  for (lv = 0; lv &lt; nitem; lv++)<br>    fscanf (fin, &quot;%d %d %d&quot;, &amp;itemid[lv], &amp;amt[lv], &amp;cost[lv]);</p>
+<p>  /<em> fill in rest of items will illegal data, if necessary </em>/<br>  for (lv = nitem; lv &lt; 5; lv++)<br>   {<br>    itemid[lv] = -1;<br>    amt[lv] = 0;<br>    cost[lv] = 0;<br>   }</p>
+<p>  /<em> go through offers </em>/<br>  /<em> make sure itemid’s are of item’s in goal basket </em>/<br>  /<em> translate itemid’s into indexes </em>/<br>  for (lv = 0; lv &lt; noffer; lv++)<br>   {<br>    for (lv2 = 0; lv2 &lt; offers[lv].nitem; lv2++)<br>     {<br>      a = find_item(offers[lv].itemid[lv2]);<br>      if (a == -1)<br>       { /<em> offer contains an item which isn’t in goal basket </em>/</p>
+<pre><code>/* <span class="built_in">delete</span> offer */
+
+/* <span class="built_in">copy</span> <span class="keyword">last</span> offer over this one */
+    memcpy (&amp;amp;offers[<span class="keyword">lv</span>], &amp;amp;offers[noffer-<span class="number">1</span>], sizeof(offer_t));
+noffer--;
+
+/* <span class="keyword">make</span> sure we check this one again */
+<span class="keyword">lv</span>--;
+<span class="keyword">break</span>;
+   }
+  <span class="keyword">else</span>
+    offers[<span class="keyword">lv</span>].itemid[lv2] = <span class="keyword">a</span>; /* translate id <span class="keyword">to</span> <span class="built_in">index</span> */
+ }
+</code></pre><p>   }</p>
+<p>  /* add in the degenerate offers of buying single items 8/<br>  for (lv = 0; lv &lt; nitem; lv++)<br>   {<br>    offers[noffer].nitem = 1;<br>    offers[noffer].cost = cost[lv];<br>    offers[noffer].itemamt[0] = 1;<br>    offers[noffer].itemid[0] = lv;<br>    noffer++;<br>   }</p>
+<p>  /<em> find the cost for all baskets </em>/<br>  find_cost();</p>
+<p>  /<em> calculate index of goal basket </em>/<br>  a = 0;<br>  for (lv = 0; lv &lt; 5; lv++)<br>    a += amt[lv] * mask[lv];</p>
+<p>  /<em> output answer </em>/<br>  fprintf (fout, &quot;%i\n&quot;, cost[a]);<br>  return 0;<br> }<br>[/c]</p>
+<p>标程2:</p>
+<p>[c]</p>
+<p>#include &lt;fstream&gt;</p>
+<p>#include &lt;cstring&gt;<br>using namespace std;</p>
+<p>ifstream fin (&quot;shopping.in&quot;);<br>ofstream fout(&quot;shopping.out&quot;);</p>
+<p>struct special_offer {<br>    int n;<br>    int price;              // the price of that special offer<br>    struct product {        // for each product we have to keep :<br>        int id;             // the id of the product<br>        int items;          // how many items it includes<br>    } prod[6];<br>} so[100];                  // here the special offers are kept</p>
+<p>int code[1000],             /<em> Each code is ‘hashed’ from its real value<br>                               to a smaller index.  Example :<br>                   If in the input we have code 111, 934, 55,<br>                   1, 66 we code them as 1,2,3,4,5. That is<br>                   kept in code[1000];
+                             </em>/</p>
+<p>price[6],                   // the price of each product<br>many[6];                    // how many of each product are to be bought</p>
+<p>int s,                      // the number of special offers<br>    b;                      // the number of different kinds of products to be bought</p>
+<p>int sol[6][6][6][6][6];     // here we keep the price of each configuration</p>
+<p>void init() {               // reads the input<br>    fin&gt;&gt;s;<br>    for (int i=1;i&lt;=s;i++) {<br>        fin&gt;&gt;so[i].n;<br>        for (int j=1;j&lt;=so[i].n;j++)<br>            fin&gt;&gt;so[i].prod[j].id&gt;&gt;so[i].prod[j].items;<br>        fin&gt;&gt;so[i].price;<br>    }<br>    fin&gt;&gt;b;<br>    for (int i=1;i&lt;=b;i++) {<br>        int tmp;<br>        fin&gt;&gt;tmp;<br>        code[tmp]=i; // here we convert the code to an id from 1..5<br>        fin&gt;&gt;many[i];<br>        fin&gt;&gt;price[i];<br>    }<br>}</p>
+<p>void solve() { // the procedure that solves the problem<br>    for (int a=0;a&lt;=many[1];a++)<br>        for (int b=0;b&lt;=many[2];b++)<br>            for (int c=0;c&lt;=many[3];c++)<br>                for (int d=0;d&lt;=many[4];d++)<br>                    for (int e=0;e&lt;=many[5];e++)<br>                        if ((a!=0)||(b!=0)||(c!=0)||(d!=0)||(e!=0)) {</p>
+<pre><code><span class="keyword">int</span> min=a*price[<span class="number">1</span>]+b*price[<span class="number">2</span>]+c*price[<span class="number">3</span>]+d*price[<span class="number">4</span>]+e*price[<span class="number">5</span>];
+<span class="comment">/* in min we keep the lowest price at which we can buy a items
+   from the 1st type, +b from the 2nd+c of the 3rd... e from the
+       5th */</span>
+
+<span class="keyword">for</span> (<span class="keyword">int</span> k=<span class="number">1</span>;k&amp;lt;=s;k++) { <span class="comment">// for each special offer</span>
+    <span class="keyword">int</span> can=<span class="number">1</span>,hm[<span class="number">6</span>];
+    <span class="built_in">memset</span>(&amp;amp;hm,<span class="number">0</span>,<span class="keyword">sizeof</span>(hm));
+    <span class="keyword">for</span> (<span class="keyword">int</span> l=<span class="number">1</span>;l&amp;lt;=so[k].n;l++)
+        hm[code[so[k].prod[l].id]]=so[k].prod[l].items;
+       <span class="keyword">if</span> ((hm[<span class="number">1</span>]&amp;gt;a)||(hm[<span class="number">2</span>]&amp;gt;b)||(hm[<span class="number">3</span>]&amp;gt;c)||(hm[<span class="number">4</span>]&amp;gt;d)||(hm[<span class="number">5</span>]&amp;gt;e))
+           can=<span class="number">0</span>;<span class="comment">// we check if it is possible to use that offer</span>
+
+       <span class="keyword">if</span> (can) {        <span class="comment">// if possible-&amp;gt; check if it is better</span>
+                         <span class="comment">// than the current min</span>
+           <span class="keyword">int</span> pr=so[k].price+sol[a-hm[<span class="number">1</span>]][b-hm[<span class="number">2</span>]][c-hm[<span class="number">3</span>]]
+                    [d-hm[<span class="number">4</span>]][e-hm[<span class="number">5</span>]];
+                   <span class="comment">/* Those which are not included in the special offer */</span>
+           <span class="keyword">if</span> (pr&amp;lt;min) min=pr;
+       }
+}
+sol[a][b][c][d][e]=min;
+
+                  }
+</code></pre><p>}</p>
+<p>int main() {<br>    memset(&amp;so,0,sizeof(so));<br>    init();<br>    solve();<br>    fout&lt;&lt;sol[many[1]][many[2]][many[3]][many[4]][many[5]]&lt;&lt;endl;<br>    return 0;<br>}<br>[/c]</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/wordpress/index.php/csit/usaco-prob-shopping-offers/" data-id="cidfq2txd005rtgh5mh83ro2z" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/A/">A</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/USACO/">USACO</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/wordpress/index.php/csit/usaco-prob-camelot/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          USACO - PROB Camelot
+        
+      </div>
+    </a>
+  
+  
+    <a href="/wordpress/index.php/csit/usaco-text-eulerian-tours/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">USACO - TEXT Eulerian Tours</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/">wordpress</a><span class="category-list-count">285</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/">index.php</a><span class="category-list-count">285</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/about/">about</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/csit/">csit</a><span class="category-list-count">168</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/default/">default</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/lmy/">lmy</a><span class="category-list-count">109</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wordpress/index.php/thought/">thought</a><span class="category-list-count">3</span></li></ul></li></ul></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/8051/">8051</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/A/">A</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Algorithm/">Algorithm</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BIKE/">BIKE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Book/">Book</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C/">C</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CSAPP/">CSAPP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DASH/">DASH</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Diary/">Diary</a><span class="tag-list-count">104</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/">Django</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ELF/">ELF</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GIMP/">GIMP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google/">Google</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google-App-Engine/">Google App Engine</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/H.264-AVC/">H.264/AVC</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JM/">JM</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Law-of-Attraction/">Law of Attraction</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LightOJ/">LightOJ</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Music/">Music</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Notes/">Notes</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/People/">People</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Podinns/">Podinns</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Quotes/">Quotes</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Research/">Research</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Status/">Status</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/The-Baader-Meinhof-Phenomenon/">The Baader-Meinhof Phenomenon</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tools/">Tools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Topcoder/">Topcoder</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/USACO/">USACO</a><span class="tag-list-count">68</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Ubuntu/">Ubuntu</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VLC/">VLC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VirtualBox/">VirtualBox</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/code-blocks/">code::blocks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/codec/">codec</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heroku/">heroku</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lsharemy/">lsharemy</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nVidia/">nVidia</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/socket/">socket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/x264/">x264</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/8051/" style="font-size: 18.46px;">8051</a> <a href="/tags/A/" style="font-size: 10px;">A</a> <a href="/tags/Algorithm/" style="font-size: 10.77px;">Algorithm</a> <a href="/tags/Android/" style="font-size: 17.69px;">Android</a> <a href="/tags/BIKE/" style="font-size: 10px;">BIKE</a> <a href="/tags/Book/" style="font-size: 10px;">Book</a> <a href="/tags/C/" style="font-size: 15.38px;">C</a> <a href="/tags/CSAPP/" style="font-size: 10px;">CSAPP</a> <a href="/tags/DASH/" style="font-size: 10px;">DASH</a> <a href="/tags/Diary/" style="font-size: 20px;">Diary</a> <a href="/tags/Django/" style="font-size: 10.77px;">Django</a> <a href="/tags/ELF/" style="font-size: 10.77px;">ELF</a> <a href="/tags/GIMP/" style="font-size: 10px;">GIMP</a> <a href="/tags/Google/" style="font-size: 10.77px;">Google</a> <a href="/tags/Google-App-Engine/" style="font-size: 10px;">Google App Engine</a> <a href="/tags/H.264-AVC/" style="font-size: 14.62px;">H.264/AVC</a> <a href="/tags/JM/" style="font-size: 13.85px;">JM</a> <a href="/tags/Law-of-Attraction/" style="font-size: 10px;">Law of Attraction</a> <a href="/tags/LightOJ/" style="font-size: 16.92px;">LightOJ</a> <a href="/tags/Linux/" style="font-size: 13.85px;">Linux</a> <a href="/tags/Music/" style="font-size: 11.54px;">Music</a> <a href="/tags/Notes/" style="font-size: 10.77px;">Notes</a> <a href="/tags/People/" style="font-size: 10px;">People</a> <a href="/tags/Podinns/" style="font-size: 10px;">Podinns</a> <a href="/tags/Python/" style="font-size: 13.08px;">Python</a> <a href="/tags/Quotes/" style="font-size: 10px;">Quotes</a> <a href="/tags/Research/" style="font-size: 10px;">Research</a> <a href="/tags/Status/" style="font-size: 10px;">Status</a> <a href="/tags/The-Baader-Meinhof-Phenomenon/" style="font-size: 10px;">The Baader-Meinhof Phenomenon</a> <a href="/tags/Tools/" style="font-size: 10px;">Tools</a> <a href="/tags/Topcoder/" style="font-size: 10.77px;">Topcoder</a> <a href="/tags/USACO/" style="font-size: 19.23px;">USACO</a> <a href="/tags/Ubuntu/" style="font-size: 16.15px;">Ubuntu</a> <a href="/tags/VLC/" style="font-size: 10px;">VLC</a> <a href="/tags/VirtualBox/" style="font-size: 10px;">VirtualBox</a> <a href="/tags/code-blocks/" style="font-size: 10px;">code::blocks</a> <a href="/tags/codec/" style="font-size: 14.62px;">codec</a> <a href="/tags/heroku/" style="font-size: 13.08px;">heroku</a> <a href="/tags/lsharemy/" style="font-size: 10px;">lsharemy</a> <a href="/tags/nVidia/" style="font-size: 10px;">nVidia</a> <a href="/tags/socket/" style="font-size: 10px;">socket</a> <a href="/tags/vim/" style="font-size: 12.31px;">vim</a> <a href="/tags/x264/" style="font-size: 10.77px;">x264</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/09/">September 2013</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/11/">November 2012</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/10/">October 2012</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/09/">September 2012</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">August 2012</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/07/">July 2012</a><span class="archive-list-count">69</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">April 2012</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/03/">March 2012</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/02/">February 2012</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">January 2012</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/12/">December 2011</a><span class="archive-list-count">56</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/11/">November 2011</a><span class="archive-list-count">48</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/10/">October 2011</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">September 2011</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/08/">August 2011</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/07/">July 2011</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/06/">June 2011</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/05/">May 2011</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/uncategorized/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/lmy/20121102-20130908/">2012年11月02日 – 2013年09月08日 快一年没更新了</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/csit/macro-definition/">宏定义（#define）总结</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/csit/extern-function/">extern修饰的函数</a>
+          </li>
+        
+          <li>
+            <a href="/wordpress/index.php/csit/variable-storage-location/">变量存储位置</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2015 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>
