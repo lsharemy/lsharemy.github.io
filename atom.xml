@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   
-  <title><![CDATA[Hexo]]></title>
+  <title><![CDATA[lsharemy]]></title>
   
   <link href="/atom.xml" rel="self"/>
-  <link href="http://yoursite.com//"/>
+  <link href="http://lsharemy.com//"/>
   <updated>2015-08-12T08:19:07.000Z</updated>
-  <id>http://yoursite.com//</id>
+  <id>http://lsharemy.com//</id>
   
   <author>
-    <name><![CDATA[John Doe]]></name>
+    <name><![CDATA[lmy]]></name>
     
   </author>
   
@@ -17,8 +17,8 @@
   
   <entry>
     <title><![CDATA[Hello World]]></title>
-    <link href="http://yoursite.com/uncategorized/hello-world/"/>
-    <id>http://yoursite.com/uncategorized/hello-world/</id>
+    <link href="http://lsharemy.com/uncategorized/hello-world/"/>
+    <id>http://lsharemy.com/uncategorized/hello-world/</id>
     <published>2015-08-12T08:19:07.000Z</published>
     <updated>2015-08-12T08:19:07.000Z</updated>
     <content type="html"><![CDATA[<p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
@@ -39,8 +39,8 @@
   
   <entry>
     <title><![CDATA[2012年11月02日 – 2013年09月08日 快一年没更新了]]></title>
-    <link href="http://yoursite.com/wordpress/index.php/lmy/20121102-20130908/"/>
-    <id>http://yoursite.com/wordpress/index.php/lmy/20121102-20130908/</id>
+    <link href="http://lsharemy.com/wordpress/index.php/lmy/20121102-20130908/"/>
+    <id>http://lsharemy.com/wordpress/index.php/lmy/20121102-20130908/</id>
     <published>2013-09-08T15:38:45.000Z</published>
     <updated>2015-08-15T02:15:24.000Z</updated>
     <content type="html"><![CDATA[<p>好吧，这一年发生了很多</p>
@@ -55,18 +55,18 @@
     
     </summary>
     
-      <category term="wordpress" scheme="http://yoursite.com/categories/wordpress/"/>
+      <category term="wordpress" scheme="http://lsharemy.com/categories/wordpress/"/>
     
-      <category term="index.php" scheme="http://yoursite.com/categories/wordpress/index.php/"/>
+      <category term="index.php" scheme="http://lsharemy.com/categories/wordpress/index.php/"/>
     
-      <category term="lmy" scheme="http://yoursite.com/categories/wordpress/index.php/lmy/"/>
+      <category term="lmy" scheme="http://lsharemy.com/categories/wordpress/index.php/lmy/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[宏定义（#define）总结]]></title>
-    <link href="http://yoursite.com/wordpress/index.php/csit/macro-definition/"/>
-    <id>http://yoursite.com/wordpress/index.php/csit/macro-definition/</id>
+    <link href="http://lsharemy.com/wordpress/index.php/csit/macro-definition/"/>
+    <id>http://lsharemy.com/wordpress/index.php/csit/macro-definition/</id>
     <published>2012-11-06T06:19:45.000Z</published>
     <updated>2015-08-15T02:15:24.000Z</updated>
     <content type="html"><![CDATA[<p>简单的宏替换：</p>
@@ -85,20 +85,20 @@
 <p>注意要加括号以保证计算次序的正]]>
     </summary>
     
-      <category term="C" scheme="http://yoursite.com/tags/C/"/>
+      <category term="C" scheme="http://lsharemy.com/tags/C/"/>
     
-      <category term="wordpress" scheme="http://yoursite.com/categories/wordpress/"/>
+      <category term="wordpress" scheme="http://lsharemy.com/categories/wordpress/"/>
     
-      <category term="index.php" scheme="http://yoursite.com/categories/wordpress/index.php/"/>
+      <category term="index.php" scheme="http://lsharemy.com/categories/wordpress/index.php/"/>
     
-      <category term="csit" scheme="http://yoursite.com/categories/wordpress/index.php/csit/"/>
+      <category term="csit" scheme="http://lsharemy.com/categories/wordpress/index.php/csit/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[extern修饰的函数]]></title>
-    <link href="http://yoursite.com/wordpress/index.php/csit/extern-function/"/>
-    <id>http://yoursite.com/wordpress/index.php/csit/extern-function/</id>
+    <link href="http://lsharemy.com/wordpress/index.php/csit/extern-function/"/>
+    <id>http://lsharemy.com/wordpress/index.php/csit/extern-function/</id>
     <published>2012-11-05T07:26:03.000Z</published>
     <updated>2015-08-15T02:15:24.000Z</updated>
     <content type="html"><![CDATA[<p>函数定义默认都是extern的，所以显示的指定extern是可选的</p>
@@ -112,20 +112,20 @@
 <p><a href="http://stackoverflow.com/questions/496448/how-t]]>
     </summary>
     
-      <category term="C" scheme="http://yoursite.com/tags/C/"/>
+      <category term="C" scheme="http://lsharemy.com/tags/C/"/>
     
-      <category term="wordpress" scheme="http://yoursite.com/categories/wordpress/"/>
+      <category term="wordpress" scheme="http://lsharemy.com/categories/wordpress/"/>
     
-      <category term="index.php" scheme="http://yoursite.com/categories/wordpress/index.php/"/>
+      <category term="index.php" scheme="http://lsharemy.com/categories/wordpress/index.php/"/>
     
-      <category term="csit" scheme="http://yoursite.com/categories/wordpress/index.php/csit/"/>
+      <category term="csit" scheme="http://lsharemy.com/categories/wordpress/index.php/csit/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[变量存储位置]]></title>
-    <link href="http://yoursite.com/wordpress/index.php/csit/variable-storage-location/"/>
-    <id>http://yoursite.com/wordpress/index.php/csit/variable-storage-location/</id>
+    <link href="http://lsharemy.com/wordpress/index.php/csit/variable-storage-location/"/>
+    <id>http://lsharemy.com/wordpress/index.php/csit/variable-storage-location/</id>
     <published>2012-11-05T07:18:26.000Z</published>
     <updated>2015-08-15T02:15:24.000Z</updated>
     <content type="html"><![CDATA[<p>有关变量存储的位置，做个笔记。<a id="more"></a></p>
@@ -148,22 +148,22 @@
     
     </summary>
     
-      <category term="C" scheme="http://yoursite.com/tags/C/"/>
+      <category term="C" scheme="http://lsharemy.com/tags/C/"/>
     
-      <category term="ELF" scheme="http://yoursite.com/tags/ELF/"/>
+      <category term="ELF" scheme="http://lsharemy.com/tags/ELF/"/>
     
-      <category term="wordpress" scheme="http://yoursite.com/categories/wordpress/"/>
+      <category term="wordpress" scheme="http://lsharemy.com/categories/wordpress/"/>
     
-      <category term="index.php" scheme="http://yoursite.com/categories/wordpress/index.php/"/>
+      <category term="index.php" scheme="http://lsharemy.com/categories/wordpress/index.php/"/>
     
-      <category term="csit" scheme="http://yoursite.com/categories/wordpress/index.php/csit/"/>
+      <category term="csit" scheme="http://lsharemy.com/categories/wordpress/index.php/csit/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[itoa和atoi]]></title>
-    <link href="http://yoursite.com/wordpress/index.php/csit/itoa-and-atoi/"/>
-    <id>http://yoursite.com/wordpress/index.php/csit/itoa-and-atoi/</id>
+    <link href="http://lsharemy.com/wordpress/index.php/csit/itoa-and-atoi/"/>
+    <id>http://lsharemy.com/wordpress/index.php/csit/itoa-and-atoi/</id>
     <published>2012-11-04T08:48:49.000Z</published>
     <updated>2015-08-15T02:15:24.000Z</updated>
     <content type="html"><![CDATA[<p>再贴个自己写的itoa和atoi：</p>
@@ -187,20 +187,20 @@
 <p>void re]]>
     </summary>
     
-      <category term="C" scheme="http://yoursite.com/tags/C/"/>
+      <category term="C" scheme="http://lsharemy.com/tags/C/"/>
     
-      <category term="wordpress" scheme="http://yoursite.com/categories/wordpress/"/>
+      <category term="wordpress" scheme="http://lsharemy.com/categories/wordpress/"/>
     
-      <category term="index.php" scheme="http://yoursite.com/categories/wordpress/index.php/"/>
+      <category term="index.php" scheme="http://lsharemy.com/categories/wordpress/index.php/"/>
     
-      <category term="csit" scheme="http://yoursite.com/categories/wordpress/index.php/csit/"/>
+      <category term="csit" scheme="http://lsharemy.com/categories/wordpress/index.php/csit/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[二分搜索]]></title>
-    <link href="http://yoursite.com/wordpress/index.php/csit/binary-search/"/>
-    <id>http://yoursite.com/wordpress/index.php/csit/binary-search/</id>
+    <link href="http://lsharemy.com/wordpress/index.php/csit/binary-search/"/>
+    <id>http://lsharemy.com/wordpress/index.php/csit/binary-search/</id>
     <published>2012-11-04T08:25:19.000Z</published>
     <updated>2015-08-15T02:15:24.000Z</updated>
     <content type="html"><![CDATA[<p>好吧，来贴个自己写的二分搜索代码（包括普通的二分、返回第一个出现位置的二分、以及返回最后一个出现位置的二分）：</p>
@@ -221,22 +221,22 @@
 <p>]]>
     </summary>
     
-      <category term="Algorithm" scheme="http://yoursite.com/tags/Algorithm/"/>
+      <category term="Algorithm" scheme="http://lsharemy.com/tags/Algorithm/"/>
     
-      <category term="C" scheme="http://yoursite.com/tags/C/"/>
+      <category term="C" scheme="http://lsharemy.com/tags/C/"/>
     
-      <category term="wordpress" scheme="http://yoursite.com/categories/wordpress/"/>
+      <category term="wordpress" scheme="http://lsharemy.com/categories/wordpress/"/>
     
-      <category term="index.php" scheme="http://yoursite.com/categories/wordpress/index.php/"/>
+      <category term="index.php" scheme="http://lsharemy.com/categories/wordpress/index.php/"/>
     
-      <category term="csit" scheme="http://yoursite.com/categories/wordpress/index.php/csit/"/>
+      <category term="csit" scheme="http://lsharemy.com/categories/wordpress/index.php/csit/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[2012年08月31日 - 2012年11月01日 找工作]]></title>
-    <link href="http://yoursite.com/wordpress/index.php/lmy/20120831-20121101/"/>
-    <id>http://yoursite.com/wordpress/index.php/lmy/20120831-20121101/</id>
+    <link href="http://lsharemy.com/wordpress/index.php/lmy/20120831-20121101/"/>
+    <id>http://lsharemy.com/wordpress/index.php/lmy/20120831-20121101/</id>
     <published>2012-11-02T09:08:45.000Z</published>
     <updated>2015-08-15T02:15:24.000Z</updated>
     <content type="html"><![CDATA[<p>好吧</p>
@@ -259,20 +259,20 @@
     
     </summary>
     
-      <category term="Diary" scheme="http://yoursite.com/tags/Diary/"/>
+      <category term="Diary" scheme="http://lsharemy.com/tags/Diary/"/>
     
-      <category term="wordpress" scheme="http://yoursite.com/categories/wordpress/"/>
+      <category term="wordpress" scheme="http://lsharemy.com/categories/wordpress/"/>
     
-      <category term="index.php" scheme="http://yoursite.com/categories/wordpress/index.php/"/>
+      <category term="index.php" scheme="http://lsharemy.com/categories/wordpress/index.php/"/>
     
-      <category term="lmy" scheme="http://yoursite.com/categories/wordpress/index.php/lmy/"/>
+      <category term="lmy" scheme="http://lsharemy.com/categories/wordpress/index.php/lmy/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[判断一个整数是否为无符号数(unsigned)]]></title>
-    <link href="http://yoursite.com/wordpress/index.php/csit/isunsigned/"/>
-    <id>http://yoursite.com/wordpress/index.php/csit/isunsigned/</id>
+    <link href="http://lsharemy.com/wordpress/index.php/csit/isunsigned/"/>
+    <id>http://lsharemy.com/wordpress/index.php/csit/isunsigned/</id>
     <published>2012-10-22T02:18:00.000Z</published>
     <updated>2015-08-15T02:15:24.000Z</updated>
     <content type="html"><![CDATA[<p>#define ISUNSIGNED(a) (a &gt;=0 &amp;&amp; (a=~a,a &gt;=0 ? (a=~a,1):(a=~a,0)))</p>
@@ -283,20 +283,20 @@
 <p>具体分析见：<a href="http://www.cnblogs.com/xkfz007/arch]]>
     </summary>
     
-      <category term="C" scheme="http://yoursite.com/tags/C/"/>
+      <category term="C" scheme="http://lsharemy.com/tags/C/"/>
     
-      <category term="wordpress" scheme="http://yoursite.com/categories/wordpress/"/>
+      <category term="wordpress" scheme="http://lsharemy.com/categories/wordpress/"/>
     
-      <category term="index.php" scheme="http://yoursite.com/categories/wordpress/index.php/"/>
+      <category term="index.php" scheme="http://lsharemy.com/categories/wordpress/index.php/"/>
     
-      <category term="csit" scheme="http://yoursite.com/categories/wordpress/index.php/csit/"/>
+      <category term="csit" scheme="http://lsharemy.com/categories/wordpress/index.php/csit/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[逗号表达式陷阱]]></title>
-    <link href="http://yoursite.com/wordpress/index.php/csit/comma-separated-expression-trap/"/>
-    <id>http://yoursite.com/wordpress/index.php/csit/comma-separated-expression-trap/</id>
+    <link href="http://lsharemy.com/wordpress/index.php/csit/comma-separated-expression-trap/"/>
+    <id>http://lsharemy.com/wordpress/index.php/csit/comma-separated-expression-trap/</id>
     <published>2012-10-22T01:50:29.000Z</published>
     <updated>2015-08-15T02:15:24.000Z</updated>
     <content type="html"><![CDATA[<p>以下程序会输出什么：</p>
@@ -315,20 +315,20 @@
 <p>int main(void)<br>{<br>    int a = 1, b = 1, c;<b]]>
     </summary>
     
-      <category term="C" scheme="http://yoursite.com/tags/C/"/>
+      <category term="C" scheme="http://lsharemy.com/tags/C/"/>
     
-      <category term="wordpress" scheme="http://yoursite.com/categories/wordpress/"/>
+      <category term="wordpress" scheme="http://lsharemy.com/categories/wordpress/"/>
     
-      <category term="index.php" scheme="http://yoursite.com/categories/wordpress/index.php/"/>
+      <category term="index.php" scheme="http://lsharemy.com/categories/wordpress/index.php/"/>
     
-      <category term="csit" scheme="http://yoursite.com/categories/wordpress/index.php/csit/"/>
+      <category term="csit" scheme="http://lsharemy.com/categories/wordpress/index.php/csit/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[sizeof陷阱]]></title>
-    <link href="http://yoursite.com/wordpress/index.php/csit/sizeof-trap/"/>
-    <id>http://yoursite.com/wordpress/index.php/csit/sizeof-trap/</id>
+    <link href="http://lsharemy.com/wordpress/index.php/csit/sizeof-trap/"/>
+    <id>http://lsharemy.com/wordpress/index.php/csit/sizeof-trap/</id>
     <published>2012-10-21T13:42:35.000Z</published>
     <updated>2015-08-15T02:15:24.000Z</updated>
     <content type="html"><![CDATA[<p>以下程序会输出什么？</p>
@@ -349,20 +349,20 @@
 <p>int main(void)<br>{<br>    int a = 1;<br>    prin]]>
     </summary>
     
-      <category term="C" scheme="http://yoursite.com/tags/C/"/>
+      <category term="C" scheme="http://lsharemy.com/tags/C/"/>
     
-      <category term="wordpress" scheme="http://yoursite.com/categories/wordpress/"/>
+      <category term="wordpress" scheme="http://lsharemy.com/categories/wordpress/"/>
     
-      <category term="index.php" scheme="http://yoursite.com/categories/wordpress/index.php/"/>
+      <category term="index.php" scheme="http://lsharemy.com/categories/wordpress/index.php/"/>
     
-      <category term="csit" scheme="http://yoursite.com/categories/wordpress/index.php/csit/"/>
+      <category term="csit" scheme="http://lsharemy.com/categories/wordpress/index.php/csit/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[select/poll/epoll]]></title>
-    <link href="http://yoursite.com/wordpress/index.php/csit/select-poll-epoll/"/>
-    <id>http://yoursite.com/wordpress/index.php/csit/select-poll-epoll/</id>
+    <link href="http://lsharemy.com/wordpress/index.php/csit/select-poll-epoll/"/>
+    <id>http://lsharemy.com/wordpress/index.php/csit/select-poll-epoll/</id>
     <published>2012-10-18T05:32:21.000Z</published>
     <updated>2015-08-15T02:15:24.000Z</updated>
     <content type="html"><![CDATA[<p>好吧，面试老问这个，总结下</p>
@@ -417,20 +417,20 @@
     
     </summary>
     
-      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
+      <category term="Linux" scheme="http://lsharemy.com/tags/Linux/"/>
     
-      <category term="wordpress" scheme="http://yoursite.com/categories/wordpress/"/>
+      <category term="wordpress" scheme="http://lsharemy.com/categories/wordpress/"/>
     
-      <category term="index.php" scheme="http://yoursite.com/categories/wordpress/index.php/"/>
+      <category term="index.php" scheme="http://lsharemy.com/categories/wordpress/index.php/"/>
     
-      <category term="csit" scheme="http://yoursite.com/categories/wordpress/index.php/csit/"/>
+      <category term="csit" scheme="http://lsharemy.com/categories/wordpress/index.php/csit/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[Linux在线帮助（man）的“章节”]]></title>
-    <link href="http://yoursite.com/wordpress/index.php/csit/section-numbers-of-the-manual/"/>
-    <id>http://yoursite.com/wordpress/index.php/csit/section-numbers-of-the-manual/</id>
+    <link href="http://lsharemy.com/wordpress/index.php/csit/section-numbers-of-the-manual/"/>
+    <id>http://lsharemy.com/wordpress/index.php/csit/section-numbers-of-the-manual/</id>
     <published>2012-10-17T13:35:40.000Z</published>
     <updated>2015-08-15T02:15:24.000Z</updated>
     <content type="html"><![CDATA[<p><pre>       1   Executable programs or shell commands<br>       2   System calls (functions provided by the kernel)<br>       3   Library calls (functions within program libraries)<br>       4   Special files (usually found in /dev)<br>       5   File formats and conventions eg /etc/passwd<br>       6   Games<br>       7   Miscellaneous  (including  macro  packages and conven‐<br>           tions), e.g. man(7), groff(7)<br>       8   System administration commands (usually only for root)<br>       9   Kernel routines [Non standard]</pre><br>通过man 1 intro可以查看1中的介绍，其他章节类似</p>
@@ -443,20 +443,20 @@
     <![CDATA[<p><pre>       1   Executable programs or shell commands<br>       2   System calls (functions provided by the kernel)<br>       3   Library]]>
     </summary>
     
-      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
+      <category term="Linux" scheme="http://lsharemy.com/tags/Linux/"/>
     
-      <category term="wordpress" scheme="http://yoursite.com/categories/wordpress/"/>
+      <category term="wordpress" scheme="http://lsharemy.com/categories/wordpress/"/>
     
-      <category term="index.php" scheme="http://yoursite.com/categories/wordpress/index.php/"/>
+      <category term="index.php" scheme="http://lsharemy.com/categories/wordpress/index.php/"/>
     
-      <category term="csit" scheme="http://yoursite.com/categories/wordpress/index.php/csit/"/>
+      <category term="csit" scheme="http://lsharemy.com/categories/wordpress/index.php/csit/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[vector的简单实现]]></title>
-    <link href="http://yoursite.com/wordpress/index.php/csit/a-simple-implementation-of-vector/"/>
-    <id>http://yoursite.com/wordpress/index.php/csit/a-simple-implementation-of-vector/</id>
+    <link href="http://lsharemy.com/wordpress/index.php/csit/a-simple-implementation-of-vector/"/>
+    <id>http://lsharemy.com/wordpress/index.php/csit/a-simple-implementation-of-vector/</id>
     <published>2012-10-11T09:22:19.000Z</published>
     <updated>2015-08-15T02:15:24.000Z</updated>
     <content type="html"><![CDATA[<p>实现一个vector，学习到了C++中的不少概念。</p>
@@ -521,20 +521,20 @@
 <p>[c]<br>templ]]>
     </summary>
     
-      <category term="C" scheme="http://yoursite.com/tags/C/"/>
+      <category term="C" scheme="http://lsharemy.com/tags/C/"/>
     
-      <category term="wordpress" scheme="http://yoursite.com/categories/wordpress/"/>
+      <category term="wordpress" scheme="http://lsharemy.com/categories/wordpress/"/>
     
-      <category term="index.php" scheme="http://yoursite.com/categories/wordpress/index.php/"/>
+      <category term="index.php" scheme="http://lsharemy.com/categories/wordpress/index.php/"/>
     
-      <category term="csit" scheme="http://yoursite.com/categories/wordpress/index.php/csit/"/>
+      <category term="csit" scheme="http://lsharemy.com/categories/wordpress/index.php/csit/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[vector笔记]]></title>
-    <link href="http://yoursite.com/wordpress/index.php/csit/vector-notes/"/>
-    <id>http://yoursite.com/wordpress/index.php/csit/vector-notes/</id>
+    <link href="http://lsharemy.com/wordpress/index.php/csit/vector-notes/"/>
+    <id>http://lsharemy.com/wordpress/index.php/csit/vector-notes/</id>
     <published>2012-10-06T14:15:18.000Z</published>
     <updated>2015-08-15T02:15:24.000Z</updated>
     <content type="html"><![CDATA[<p>[c]</p>
@@ -555,22 +555,22 @@
 <p>int main()<br>{<br>    vector &lt;in]]>
     </summary>
     
-      <category term="C" scheme="http://yoursite.com/tags/C/"/>
+      <category term="C" scheme="http://lsharemy.com/tags/C/"/>
     
-      <category term="Notes" scheme="http://yoursite.com/tags/Notes/"/>
+      <category term="Notes" scheme="http://lsharemy.com/tags/Notes/"/>
     
-      <category term="wordpress" scheme="http://yoursite.com/categories/wordpress/"/>
+      <category term="wordpress" scheme="http://lsharemy.com/categories/wordpress/"/>
     
-      <category term="index.php" scheme="http://yoursite.com/categories/wordpress/index.php/"/>
+      <category term="index.php" scheme="http://lsharemy.com/categories/wordpress/index.php/"/>
     
-      <category term="csit" scheme="http://yoursite.com/categories/wordpress/index.php/csit/"/>
+      <category term="csit" scheme="http://lsharemy.com/categories/wordpress/index.php/csit/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[字符串匹配算法总结]]></title>
-    <link href="http://yoursite.com/wordpress/index.php/csit/string-matching-algorithms/"/>
-    <id>http://yoursite.com/wordpress/index.php/csit/string-matching-algorithms/</id>
+    <link href="http://lsharemy.com/wordpress/index.php/csit/string-matching-algorithms/"/>
+    <id>http://lsharemy.com/wordpress/index.php/csit/string-matching-algorithms/</id>
     <published>2012-10-03T06:48:50.000Z</published>
     <updated>2015-08-15T02:15:24.000Z</updated>
     <content type="html"><![CDATA[<p>字符串匹配问题就是要在一段文本T中，找出所有模式P出现的所有位置。</p>
@@ -600,20 +600,20 @@
     
     </summary>
     
-      <category term="Algorithm" scheme="http://yoursite.com/tags/Algorithm/"/>
+      <category term="Algorithm" scheme="http://lsharemy.com/tags/Algorithm/"/>
     
-      <category term="wordpress" scheme="http://yoursite.com/categories/wordpress/"/>
+      <category term="wordpress" scheme="http://lsharemy.com/categories/wordpress/"/>
     
-      <category term="index.php" scheme="http://yoursite.com/categories/wordpress/index.php/"/>
+      <category term="index.php" scheme="http://lsharemy.com/categories/wordpress/index.php/"/>
     
-      <category term="csit" scheme="http://yoursite.com/categories/wordpress/index.php/csit/"/>
+      <category term="csit" scheme="http://lsharemy.com/categories/wordpress/index.php/csit/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[hello, world!程序编译链接运行深入剖析]]></title>
-    <link href="http://yoursite.com/wordpress/index.php/csit/hello-world-compile-link-run-deepin/"/>
-    <id>http://yoursite.com/wordpress/index.php/csit/hello-world-compile-link-run-deepin/</id>
+    <link href="http://lsharemy.com/wordpress/index.php/csit/hello-world-compile-link-run-deepin/"/>
+    <id>http://lsharemy.com/wordpress/index.php/csit/hello-world-compile-link-run-deepin/</id>
     <published>2012-09-30T12:58:01.000Z</published>
     <updated>2015-08-15T02:15:24.000Z</updated>
     <content type="html"><![CDATA[<p>学C语言的第一个程序就是以下这个helloworld程序:</p>
@@ -623,7 +623,7 @@
 <p>它通过gcc -o hello hello.c编译，然后通过./hello就可以运行了，屏幕上打印出”hello, world\n”</p>
 <p>不过它是如何被编译和链接的，又是如何在系统中运行的？第二次看《深入理解计算机系统》，终于明白了一点，所以做个总结。</p>
 <h1 id="编译"><span style="color: #ff0000;">编译</span></h1><p>gcc -o hello hello.c这个命令其实gcc帮你干完了编译和链接两个工作。（编译其实还包括了汇编，可以把<em>.c-&gt;</em>.s理解为编译，.s-&gt;.o理解为汇编）</p>
-<p>如果想只编译那么要用-c选项，gcc -c hello.c，这会生成一个hello.o文件，这是一个可重定位目标文件，有关可重定位目标文件，我在<a href="http://lsharemy.com/wordpress/index.php/csit/elf-file-format/" target="_blank" rel="external">这篇文章</a>里做过总结。</p>
+<p>如果想只编译那么要用-c选项，gcc -c hello.c，这会生成一个hello.o文件，这是一个可重定位目标文件，有关可重定位目标文件，我在<a href="http://lsharemy.com/wordpress/index.php/csit/elf-file-format/">这篇文章</a>里做过总结。</p>
 <p>这个文件由一个ELF头、一个节头部表、以及很多个节组成。<a id="more"></a></p>
 <p>比较重要的节有：</p>
 <p>.text节，程序编译后的机器代码<br>.rodata节，只读数据，比如字符串常量、switch语句中的跳转表等就放在这个节<br>.data节，已初始化的全局变量<br>.bss节，未初始化的全局变更<br>.symtab节，一个符号表，存放程序中定义和引用的函数和全局变量的信息<br>.rel.text节和.rel.data节存放与重定位有关的信息<br>.debug节和.line节，只有用-g选项进行编译才会有<br>，存放与调试有关的信息<br>.strtab，一个字符串表。</p>
@@ -680,22 +680,22 @@
     
     </summary>
     
-      <category term="CSAPP" scheme="http://yoursite.com/tags/CSAPP/"/>
+      <category term="CSAPP" scheme="http://lsharemy.com/tags/CSAPP/"/>
     
-      <category term="Notes" scheme="http://yoursite.com/tags/Notes/"/>
+      <category term="Notes" scheme="http://lsharemy.com/tags/Notes/"/>
     
-      <category term="wordpress" scheme="http://yoursite.com/categories/wordpress/"/>
+      <category term="wordpress" scheme="http://lsharemy.com/categories/wordpress/"/>
     
-      <category term="index.php" scheme="http://yoursite.com/categories/wordpress/index.php/"/>
+      <category term="index.php" scheme="http://lsharemy.com/categories/wordpress/index.php/"/>
     
-      <category term="csit" scheme="http://yoursite.com/categories/wordpress/index.php/csit/"/>
+      <category term="csit" scheme="http://lsharemy.com/categories/wordpress/index.php/csit/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[ELF文件格式探索]]></title>
-    <link href="http://yoursite.com/wordpress/index.php/csit/elf-file-format/"/>
-    <id>http://yoursite.com/wordpress/index.php/csit/elf-file-format/</id>
+    <link href="http://lsharemy.com/wordpress/index.php/csit/elf-file-format/"/>
+    <id>http://lsharemy.com/wordpress/index.php/csit/elf-file-format/</id>
     <published>2012-09-15T07:51:42.000Z</published>
     <updated>2015-08-15T02:15:24.000Z</updated>
     <content type="html"><![CDATA[<p>这两天在看《深入理解计算机系统》</p>
@@ -799,22 +799,22 @@
     
     </summary>
     
-      <category term="ELF" scheme="http://yoursite.com/tags/ELF/"/>
+      <category term="ELF" scheme="http://lsharemy.com/tags/ELF/"/>
     
-      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
+      <category term="Linux" scheme="http://lsharemy.com/tags/Linux/"/>
     
-      <category term="wordpress" scheme="http://yoursite.com/categories/wordpress/"/>
+      <category term="wordpress" scheme="http://lsharemy.com/categories/wordpress/"/>
     
-      <category term="index.php" scheme="http://yoursite.com/categories/wordpress/index.php/"/>
+      <category term="index.php" scheme="http://lsharemy.com/categories/wordpress/index.php/"/>
     
-      <category term="csit" scheme="http://yoursite.com/categories/wordpress/index.php/csit/"/>
+      <category term="csit" scheme="http://lsharemy.com/categories/wordpress/index.php/csit/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[USACO - TEXT Computational Geometry]]></title>
-    <link href="http://yoursite.com/wordpress/index.php/csit/usaco-text-computational-geometry/"/>
-    <id>http://yoursite.com/wordpress/index.php/csit/usaco-text-computational-geometry/</id>
+    <link href="http://lsharemy.com/wordpress/index.php/csit/usaco-text-computational-geometry/"/>
+    <id>http://lsharemy.com/wordpress/index.php/csit/usaco-text-computational-geometry/</id>
     <published>2012-09-10T04:04:10.000Z</published>
     <updated>2015-08-15T02:15:24.000Z</updated>
     <content type="html"><![CDATA[<p>终于知道计算几何是什么了</p>
@@ -920,20 +920,20 @@
     
     </summary>
     
-      <category term="USACO" scheme="http://yoursite.com/tags/USACO/"/>
+      <category term="USACO" scheme="http://lsharemy.com/tags/USACO/"/>
     
-      <category term="wordpress" scheme="http://yoursite.com/categories/wordpress/"/>
+      <category term="wordpress" scheme="http://lsharemy.com/categories/wordpress/"/>
     
-      <category term="index.php" scheme="http://yoursite.com/categories/wordpress/index.php/"/>
+      <category term="index.php" scheme="http://lsharemy.com/categories/wordpress/index.php/"/>
     
-      <category term="csit" scheme="http://yoursite.com/categories/wordpress/index.php/csit/"/>
+      <category term="csit" scheme="http://lsharemy.com/categories/wordpress/index.php/csit/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[2012年08月20日 - 2012年08月30日 BMX]]></title>
-    <link href="http://yoursite.com/wordpress/index.php/lmy/20120820-20120830/"/>
-    <id>http://yoursite.com/wordpress/index.php/lmy/20120820-20120830/</id>
+    <link href="http://lsharemy.com/wordpress/index.php/lmy/20120820-20120830/"/>
+    <id>http://lsharemy.com/wordpress/index.php/lmy/20120820-20120830/</id>
     <published>2012-08-31T06:30:43.000Z</published>
     <updated>2015-08-15T02:15:24.000Z</updated>
     <content type="html"><![CDATA[<p>20日，大屯路，西单</p>
@@ -955,13 +955,13 @@
     
     </summary>
     
-      <category term="Diary" scheme="http://yoursite.com/tags/Diary/"/>
+      <category term="Diary" scheme="http://lsharemy.com/tags/Diary/"/>
     
-      <category term="wordpress" scheme="http://yoursite.com/categories/wordpress/"/>
+      <category term="wordpress" scheme="http://lsharemy.com/categories/wordpress/"/>
     
-      <category term="index.php" scheme="http://yoursite.com/categories/wordpress/index.php/"/>
+      <category term="index.php" scheme="http://lsharemy.com/categories/wordpress/index.php/"/>
     
-      <category term="lmy" scheme="http://yoursite.com/categories/wordpress/index.php/lmy/"/>
+      <category term="lmy" scheme="http://lsharemy.com/categories/wordpress/index.php/lmy/"/>
     
   </entry>
   

@@ -3,20 +3,20 @@
 <head>
   <meta charset="utf-8">
   
-  <title>JM代码阅读之六条带头语法 | JM Code Notes 6 – slice header | Hexo</title>
+  <title>JM代码阅读之六条带头语法 | JM Code Notes 6 – slice header | lsharemy</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="在“JM代码阅读之三帧内预测 | JM Code Notes 3 – Intra Prediction”和“JM代码阅读之五帧间预测 | JM Code Notes 5 – Inter Prediction”中，已经分析了macroblock_layer的语法结构了，其实也就是分析完slice_data了，下面继续往上层分析，也就是slice_header语法。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JM代码阅读之六条带头语法 | JM Code Notes 6 – slice header">
-<meta property="og:url" content="http://yoursite.com/wordpress/index.php/csit/jm-code-notes-6-slice-header/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:url" content="http://lsharemy.com/wordpress/index.php/csit/jm-code-notes-6-slice-header/index.html">
+<meta property="og:site_name" content="lsharemy">
 <meta property="og:description" content="在“JM代码阅读之三帧内预测 | JM Code Notes 3 – Intra Prediction”和“JM代码阅读之五帧间预测 | JM Code Notes 5 – Inter Prediction”中，已经分析了macroblock_layer的语法结构了，其实也就是分析完slice_data了，下面继续往上层分析，也就是slice_header语法。">
 <meta property="og:updated_time" content="2015-08-15T02:15:24.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JM代码阅读之六条带头语法 | JM Code Notes 6 – slice header">
 <meta name="twitter:description" content="在“JM代码阅读之三帧内预测 | JM Code Notes 3 – Intra Prediction”和“JM代码阅读之五帧间预测 | JM Code Notes 5 – Inter Prediction”中，已经分析了macroblock_layer的语法结构了，其实也就是分析完slice_data了，下面继续往上层分析，也就是slice_header语法。">
   
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="lsharemy" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -33,7 +33,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
+        <a href="/" id="logo">lsharemy</a>
       </h1>
       
     </div>
@@ -55,7 +55,7 @@
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://lsharemy.com"></form>
       </div>
     </div>
   </div>
@@ -87,7 +87,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>在“<a href="http://lsharemy.com/wordpress/index.php/csit/jm-code-notes-3-intra-prediction/" title="Permalink to JM代码阅读之三帧内预测 | JM Code Notes 3 – Intra Prediction" target="_blank" rel="external">JM代码阅读之三帧内预测 | JM Code Notes 3 – Intra Prediction</a>”和“<a href="http://lsharemy.com/wordpress/index.php/csit/jm-code-notes-5-inter-prediction/" title="Permalink to JM代码阅读之五帧间预测 | JM Code Notes 5 – Inter Prediction" target="_blank" rel="external">JM代码阅读之五帧间预测 | JM Code Notes 5 – Inter Prediction</a>”中，已经分析了<span style="color: #f18200;">macroblock_layer</span>的语法结构了，其实也就是分析完<span style="color: #f18200;">slice_data</span>了，下面继续往上层分析，也就是<span style="color: #f18200;">slice_header</span>语法。</p>
+        <p>在“<a href="http://lsharemy.com/wordpress/index.php/csit/jm-code-notes-3-intra-prediction/" title="Permalink to JM代码阅读之三帧内预测 | JM Code Notes 3 – Intra Prediction">JM代码阅读之三帧内预测 | JM Code Notes 3 – Intra Prediction</a>”和“<a href="http://lsharemy.com/wordpress/index.php/csit/jm-code-notes-5-inter-prediction/" title="Permalink to JM代码阅读之五帧间预测 | JM Code Notes 5 – Inter Prediction">JM代码阅读之五帧间预测 | JM Code Notes 5 – Inter Prediction</a>”中，已经分析了<span style="color: #f18200;">macroblock_layer</span>的语法结构了，其实也就是分析完<span style="color: #f18200;">slice_data</span>了，下面继续往上层分析，也就是<span style="color: #f18200;">slice_header</span>语法。</p>
 <a id="more"></a>
 <p>请打开文档<span style="color: #ff0000;">7.3.3</span>小节:-D</p>
 <p>这一次直接看实例，嘿嘿，不要太开心</p>
@@ -103,7 +103,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/wordpress/index.php/csit/jm-code-notes-6-slice-header/" data-id="cidgzghrb00j67oh5vt4uw3n4" class="article-share-link">Share</a>
+      <a data-url="http://lsharemy.com/wordpress/index.php/csit/jm-code-notes-6-slice-header/" data-id="cidh32g3x00j6woh58ccrujmf" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/H.264-AVC/">H.264/AVC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JM/">JM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/codec/">codec</a></li></ul>
@@ -212,7 +212,7 @@
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2015 John Doe<br>
+      &copy; 2015 lmy<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

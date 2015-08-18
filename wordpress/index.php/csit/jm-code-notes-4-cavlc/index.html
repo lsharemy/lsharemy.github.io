@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8">
   
-  <title>JM代码阅读之四残差变换系数块的CAVLC编码 | JM Code Notes 4 – CAVLC | Hexo</title>
+  <title>JM代码阅读之四残差变换系数块的CAVLC编码 | JM Code Notes 4 – CAVLC | lsharemy</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="开始研究CAVLC编码，参考：JM16.0代码、标准文档的9.2小节
 还是使用上篇Notes（JM代码阅读之三帧内预测 | JM Code Notes 3 – Intra Prediction）中的那个宏块来进行研究。
 先讲CAVLC编码变换系数块的过程。再通过分析之前那个宏块来加深理解。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JM代码阅读之四残差变换系数块的CAVLC编码 | JM Code Notes 4 – CAVLC">
-<meta property="og:url" content="http://yoursite.com/wordpress/index.php/csit/jm-code-notes-4-cavlc/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:url" content="http://lsharemy.com/wordpress/index.php/csit/jm-code-notes-4-cavlc/index.html">
+<meta property="og:site_name" content="lsharemy">
 <meta property="og:description" content="开始研究CAVLC编码，参考：JM16.0代码、标准文档的9.2小节
 还是使用上篇Notes（JM代码阅读之三帧内预测 | JM Code Notes 3 – Intra Prediction）中的那个宏块来进行研究。
 先讲CAVLC编码变换系数块的过程。再通过分析之前那个宏块来加深理解。">
@@ -22,7 +22,7 @@
 还是使用上篇Notes（JM代码阅读之三帧内预测 | JM Code Notes 3 – Intra Prediction）中的那个宏块来进行研究。
 先讲CAVLC编码变换系数块的过程。再通过分析之前那个宏块来加深理解。">
   
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="lsharemy" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -39,7 +39,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
+        <a href="/" id="logo">lsharemy</a>
       </h1>
       
     </div>
@@ -61,7 +61,7 @@
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://lsharemy.com"></form>
       </div>
     </div>
   </div>
@@ -94,7 +94,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>开始研究<span style="color: #4d90fe;">CAVLC</span>编码，参考：<span style="color: #ff0000;">JM16.0</span>代码、标准文档的<span style="color: #ff0000;">9.2</span>小节</p>
-<p>还是使用上篇Notes（<a href="http://lsharemy.com/wordpress/index.php/csit/jm-code-notes-3-intra-prediction/" title="Permalink to JM代码阅读之三帧内预测 | JM Code Notes 3 – Intra Prediction" target="_blank" rel="external">JM代码阅读之三帧内预测 | JM Code Notes 3 – Intra Prediction</a>）中的那个宏块来进行研究。</p>
+<p>还是使用上篇Notes（<a href="http://lsharemy.com/wordpress/index.php/csit/jm-code-notes-3-intra-prediction/" title="Permalink to JM代码阅读之三帧内预测 | JM Code Notes 3 – Intra Prediction">JM代码阅读之三帧内预测 | JM Code Notes 3 – Intra Prediction</a>）中的那个宏块来进行研究。</p>
 <p>先讲<span style="color: #4d90fe;">CAVLC</span>编码变换系数块的过程。再通过分析之前那个宏块来加深理解。</p>
 <a id="more"></a>
 <p><span style="color: #4d90fe;">CAVLC</span>编码变换系数块（4x4的残差块）的过程如下：</p>
@@ -140,7 +140,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/wordpress/index.php/csit/jm-code-notes-4-cavlc/" data-id="cidgzghrb00jk7oh51olg80u3" class="article-share-link">Share</a>
+      <a data-url="http://lsharemy.com/wordpress/index.php/csit/jm-code-notes-4-cavlc/" data-id="cidh32g4c00jkwoh5tpq0vbpv" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/H.264-AVC/">H.264/AVC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JM/">JM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/codec/">codec</a></li></ul>
@@ -249,7 +249,7 @@
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2015 John Doe<br>
+      &copy; 2015 lmy<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

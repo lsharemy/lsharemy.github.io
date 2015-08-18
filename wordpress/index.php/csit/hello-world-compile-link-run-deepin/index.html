@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>hello, world!程序编译链接运行深入剖析 | Hexo</title>
+  <title>hello, world!程序编译链接运行深入剖析 | lsharemy</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="学C语言的第一个程序就是以下这个helloworld程序:
 [c]
@@ -13,8 +13,8 @@ int main(){    printf(&amp;quot;hello, world!\n&amp;quot;);}[/c]
 不过它是如何被编译和链接的，又是如何在系统中运行的？第二次看《深入">
 <meta property="og:type" content="article">
 <meta property="og:title" content="hello, world!程序编译链接运行深入剖析">
-<meta property="og:url" content="http://yoursite.com/wordpress/index.php/csit/hello-world-compile-link-run-deepin/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:url" content="http://lsharemy.com/wordpress/index.php/csit/hello-world-compile-link-run-deepin/index.html">
+<meta property="og:site_name" content="lsharemy">
 <meta property="og:description" content="学C语言的第一个程序就是以下这个helloworld程序:
 [c]
 #include
@@ -32,7 +32,7 @@ int main(){    printf(&amp;quot;hello, world!\n&amp;quot;);}[/c]
 它通过gcc -o hello hello.c编译，然后通过./hello就可以运行了，屏幕上打印出”hello, world\n”
 不过它是如何被编译和链接的，又是如何在系统中运行的？第二次看《深入">
   
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="lsharemy" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -49,7 +49,7 @@ int main(){    printf(&amp;quot;hello, world!\n&amp;quot;);}[/c]
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
+        <a href="/" id="logo">lsharemy</a>
       </h1>
       
     </div>
@@ -71,7 +71,7 @@ int main(){    printf(&amp;quot;hello, world!\n&amp;quot;);}[/c]
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://lsharemy.com"></form>
       </div>
     </div>
   </div>
@@ -110,7 +110,7 @@ int main(){    printf(&amp;quot;hello, world!\n&amp;quot;);}[/c]
 <p>它通过gcc -o hello hello.c编译，然后通过./hello就可以运行了，屏幕上打印出”hello, world\n”</p>
 <p>不过它是如何被编译和链接的，又是如何在系统中运行的？第二次看《深入理解计算机系统》，终于明白了一点，所以做个总结。</p>
 <h1 id="编译"><span style="color: #ff0000;">编译</span></h1><p>gcc -o hello hello.c这个命令其实gcc帮你干完了编译和链接两个工作。（编译其实还包括了汇编，可以把<em>.c-&gt;</em>.s理解为编译，.s-&gt;.o理解为汇编）</p>
-<p>如果想只编译那么要用-c选项，gcc -c hello.c，这会生成一个hello.o文件，这是一个可重定位目标文件，有关可重定位目标文件，我在<a href="http://lsharemy.com/wordpress/index.php/csit/elf-file-format/" target="_blank" rel="external">这篇文章</a>里做过总结。</p>
+<p>如果想只编译那么要用-c选项，gcc -c hello.c，这会生成一个hello.o文件，这是一个可重定位目标文件，有关可重定位目标文件，我在<a href="http://lsharemy.com/wordpress/index.php/csit/elf-file-format/">这篇文章</a>里做过总结。</p>
 <p>这个文件由一个ELF头、一个节头部表、以及很多个节组成。<a id="more"></a></p>
 <p>比较重要的节有：</p>
 <p>.text节，程序编译后的机器代码<br>.rodata节，只读数据，比如字符串常量、switch语句中的跳转表等就放在这个节<br>.data节，已初始化的全局变量<br>.bss节，未初始化的全局变更<br>.symtab节，一个符号表，存放程序中定义和引用的函数和全局变量的信息<br>.rel.text节和.rel.data节存放与重定位有关的信息<br>.debug节和.line节，只有用-g选项进行编译才会有<br>，存放与调试有关的信息<br>.strtab，一个字符串表。</p>
@@ -157,7 +157,7 @@ int main(){    printf(&amp;quot;hello, world!\n&amp;quot;);}[/c]
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/wordpress/index.php/csit/hello-world-compile-link-run-deepin/" data-id="cidgzghtx00l47oh5wlrchl7m" class="article-share-link">Share</a>
+      <a data-url="http://lsharemy.com/wordpress/index.php/csit/hello-world-compile-link-run-deepin/" data-id="cidh32g6m00l4woh5k8pp1c02" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CSAPP/">CSAPP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Notes/">Notes</a></li></ul>
@@ -266,7 +266,7 @@ int main(){    printf(&amp;quot;hello, world!\n&amp;quot;);}[/c]
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2015 John Doe<br>
+      &copy; 2015 lmy<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   
-  <title>8051 串行通信端口操作程序 asm | Hexo</title>
+  <title>8051 串行通信端口操作程序 asm | lsharemy</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="今天研究串口，收获很大，弄懂串口的原理了，刚开始结果一直不对，原来是因为12M的晶振频率弄不出9600的波特率，会有7%的误差，这也是串口异步通信中不能容忍的（最多5%），后来改成2400的波特率，就可以了。下面是代码：
 对了，今天还把XP下的超级终端拷到win7上来用了，工作的很好，嘿嘿，下面这个程序运行的效果就是在超级终端上的回显（敲什么就显示什么）。还会把你敲的字符的ASCII码显示到LED">
 <meta property="og:type" content="article">
 <meta property="og:title" content="8051 串行通信端口操作程序 asm">
-<meta property="og:url" content="http://yoursite.com/wordpress/index.php/csit/8051-serial-asm/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:url" content="http://lsharemy.com/wordpress/index.php/csit/8051-serial-asm/index.html">
+<meta property="og:site_name" content="lsharemy">
 <meta property="og:description" content="今天研究串口，收获很大，弄懂串口的原理了，刚开始结果一直不对，原来是因为12M的晶振频率弄不出9600的波特率，会有7%的误差，这也是串口异步通信中不能容忍的（最多5%），后来改成2400的波特率，就可以了。下面是代码：
 对了，今天还把XP下的超级终端拷到win7上来用了，工作的很好，嘿嘿，下面这个程序运行的效果就是在超级终端上的回显（敲什么就显示什么）。还会把你敲的字符的ASCII码显示到LED">
 <meta property="og:updated_time" content="2015-08-15T02:15:24.000Z">
@@ -19,7 +19,7 @@
 <meta name="twitter:description" content="今天研究串口，收获很大，弄懂串口的原理了，刚开始结果一直不对，原来是因为12M的晶振频率弄不出9600的波特率，会有7%的误差，这也是串口异步通信中不能容忍的（最多5%），后来改成2400的波特率，就可以了。下面是代码：
 对了，今天还把XP下的超级终端拷到win7上来用了，工作的很好，嘿嘿，下面这个程序运行的效果就是在超级终端上的回显（敲什么就显示什么）。还会把你敲的字符的ASCII码显示到LED">
   
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="lsharemy" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -36,7 +36,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
+        <a href="/" id="logo">lsharemy</a>
       </h1>
       
     </div>
@@ -58,7 +58,7 @@
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://lsharemy.com"></form>
       </div>
     </div>
   </div>
@@ -104,7 +104,7 @@ RETI
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/wordpress/index.php/csit/8051-serial-asm/" data-id="cidgzgi0f00qd7oh5s1hlf6yt" class="article-share-link">Share</a>
+      <a data-url="http://lsharemy.com/wordpress/index.php/csit/8051-serial-asm/" data-id="cidh32gdz00qdwoh50uf0l8mf" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/8051/">8051</a></li></ul>
@@ -213,7 +213,7 @@ RETI
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2015 John Doe<br>
+      &copy; 2015 lmy<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

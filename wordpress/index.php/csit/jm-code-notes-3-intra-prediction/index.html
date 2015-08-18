@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   
-  <title>JM代码阅读之三帧内预测 | JM Code Notes 3 – Intra Prediction | Hexo</title>
+  <title>JM代码阅读之三帧内预测 | JM Code Notes 3 – Intra Prediction | lsharemy</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="帧内预测依据先前已经编码并重建好的块（左上、上、右上、左）形成一个预测块P，当前块减去这个预测块，将差值进行编码。对于4x4亮度块，有九种可选的预测模式；对于16x16亮度块，有四种可选模式；对于色度块，有四种可选预测模式。最终选择使得P和当前块的差值最小的预测模式作为当前块的预测模式。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JM代码阅读之三帧内预测 | JM Code Notes 3 – Intra Prediction">
-<meta property="og:url" content="http://yoursite.com/wordpress/index.php/csit/jm-code-notes-3-intra-prediction/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:url" content="http://lsharemy.com/wordpress/index.php/csit/jm-code-notes-3-intra-prediction/index.html">
+<meta property="og:site_name" content="lsharemy">
 <meta property="og:description" content="帧内预测依据先前已经编码并重建好的块（左上、上、右上、左）形成一个预测块P，当前块减去这个预测块，将差值进行编码。对于4x4亮度块，有九种可选的预测模式；对于16x16亮度块，有四种可选模式；对于色度块，有四种可选预测模式。最终选择使得P和当前块的差值最小的预测模式作为当前块的预测模式。">
 <meta property="og:image" content="http://localhostr.com/file/uIz9e3u/intra.png">
 <meta property="og:updated_time" content="2015-08-15T02:15:24.000Z">
@@ -17,7 +17,7 @@
 <meta name="twitter:title" content="JM代码阅读之三帧内预测 | JM Code Notes 3 – Intra Prediction">
 <meta name="twitter:description" content="帧内预测依据先前已经编码并重建好的块（左上、上、右上、左）形成一个预测块P，当前块减去这个预测块，将差值进行编码。对于4x4亮度块，有九种可选的预测模式；对于16x16亮度块，有四种可选模式；对于色度块，有四种可选预测模式。最终选择使得P和当前块的差值最小的预测模式作为当前块的预测模式。">
   
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="lsharemy" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -34,7 +34,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
+        <a href="/" id="logo">lsharemy</a>
       </h1>
       
     </div>
@@ -56,7 +56,7 @@
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://lsharemy.com"></form>
       </div>
     </div>
   </div>
@@ -109,12 +109,12 @@
 <p>再写入<span style="color: #4d90fe;">CBP</span>和<span style="color: #4d90fe;">DQUANT</span>，<span style="color: #4d90fe;">CBP</span>即<span style="color: #4d90fe;">coded_block_pattern</span>，具体含义见7.4.5小节，<span style="color: #4d90fe;">DQUANT</span>即<span style="color: #4d90fe;">mb_qp_delta</span>，是当前QP和之前QP的一个差值，如果一样，则差值为0，好像没这么简单，想知道的还是看文档吧，嘿嘿，也在7.4.5小节。</p>
 <p>最后写入的就是真正的残差数据了，残差数据是采用CAVLC编码的，该编码方法还有待研究。</p>
 <p><span style="color: #76b900;">——————————————————————————————————————-</span></p>
-<p>CAVLC编码见<a href="http://lsharemy.com/wordpress/index.php/csit/jm-code-notes-4-cavlc/" title="Permalink to JM代码阅读之四残差变换系数块的CAVLC编码 | JM Code Notes 4 – CAVLC" target="_blank" rel="external">JM代码阅读之四残差变换系数块的CAVLC编码 | JM Code Notes 4 – CAVLC</a></p>
+<p>CAVLC编码见<a href="http://lsharemy.com/wordpress/index.php/csit/jm-code-notes-4-cavlc/" title="Permalink to JM代码阅读之四残差变换系数块的CAVLC编码 | JM Code Notes 4 – CAVLC">JM代码阅读之四残差变换系数块的CAVLC编码 | JM Code Notes 4 – CAVLC</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/wordpress/index.php/csit/jm-code-notes-3-intra-prediction/" data-id="cidgzghrr00jr7oh59eruhy77" class="article-share-link">Share</a>
+      <a data-url="http://lsharemy.com/wordpress/index.php/csit/jm-code-notes-3-intra-prediction/" data-id="cidh32g4s00jrwoh5rad1hxsv" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/H.264-AVC/">H.264/AVC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JM/">JM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/codec/">codec</a></li></ul>
@@ -223,7 +223,7 @@
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2015 John Doe<br>
+      &copy; 2015 lmy<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   
-  <title>8051 喇叭程序 c | Hexo</title>
+  <title>8051 喇叭程序 c | lsharemy</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="通过不同频率的方波，驱动喇叭，得到不同频率的声音。你会发现原来警车、救护车、消防车的声音是如此简单。
 发声原理（其中延时函数与上篇文章相同）：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="8051 喇叭程序 c">
-<meta property="og:url" content="http://yoursite.com/wordpress/index.php/csit/8051-speaker-c/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:url" content="http://lsharemy.com/wordpress/index.php/csit/8051-speaker-c/index.html">
+<meta property="og:site_name" content="lsharemy">
 <meta property="og:description" content="通过不同频率的方波，驱动喇叭，得到不同频率的声音。你会发现原来警车、救护车、消防车的声音是如此简单。
 发声原理（其中延时函数与上篇文章相同）：">
 <meta property="og:updated_time" content="2015-08-15T02:15:24.000Z">
@@ -19,7 +19,7 @@
 <meta name="twitter:description" content="通过不同频率的方波，驱动喇叭，得到不同频率的声音。你会发现原来警车、救护车、消防车的声音是如此简单。
 发声原理（其中延时函数与上篇文章相同）：">
   
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="lsharemy" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -36,7 +36,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
+        <a href="/" id="logo">lsharemy</a>
       </h1>
       
     </div>
@@ -58,7 +58,7 @@
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://lsharemy.com"></form>
       </div>
     </div>
   </div>
@@ -91,7 +91,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>通过不同频率的方波，驱动喇叭，得到不同频率的声音。你会发现原来<span style="color: #ff0000;">警车、救护车、消防车</span>的声音是如此简单。</p>
-<p>发声原理（其中延时函数与<a href="http://lsharemy.com/wordpress/index.php/csit/8051-key2-c/" target="_blank" rel="external">上篇文章</a>相同）：<a id="more"></a></p>
+<p>发声原理（其中延时函数与<a href="http://lsharemy.com/wordpress/index.php/csit/8051-key2-c/">上篇文章</a>相同）：<a id="more"></a></p>
 <p>[c]<br>main()<br>{<br>    while(1)<br>    {<br>        //发出大约500Hz的方波 频率越大声音越尖<br>        DelayMs(1); //延时函数<br>        SPK=!SPK;   //sbit SPK=P1^2;<br>    }<br>}<br>[/c]</p>
 <p>下面就是<span style="color: #ff0000;">警车</span>了，嘿嘿（其实就是频率从一个初值开始递增，增加到一定值后，又从初始频率开始的增，如此反复）：</p>
 <p>[c]<br>/<em>————————————————<br>                    定时器初始化子程序<br>————————————————</em>/<br>void Init_Timer0(void)<br>{<br>    TMOD |= 0x01;    //使用模式1，16位定时器<br>    EA=1;            //总中断打开<br>    ET0=1;           //定时器中断打开<br>    TR0=1;           //定时器开关打开<br>}<br>/<em>————————————————<br>                    主函数<br>————————————————</em>/<br>main()<br>{<br>    Init_Timer0();  //初始化定时器<br>    while(1)<br>    {<br>        DelayMs(1); //延时1ms，累加频率值<br>        frq++;<br>    }<br>}<br>/<em>————————————————<br>                 定时器中断子程序<br>————————————————</em>/<br>void Timer0_isr(void) interrupt 1<br>{<br>    TH0=0xfe;         //重新赋值<br>    TL0=frq;         //低8位值在主程序中不断累加<br>    SPK=!SPK;        //端口电平取反<br>}<br>[/c]</p>
@@ -104,7 +104,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/wordpress/index.php/csit/8051-speaker-c/" data-id="cidgzgi0f00q87oh5daxcyilk" class="article-share-link">Share</a>
+      <a data-url="http://lsharemy.com/wordpress/index.php/csit/8051-speaker-c/" data-id="cidh32gdz00q8woh57goamwa8" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/8051/">8051</a></li></ul>
@@ -213,7 +213,7 @@
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2015 John Doe<br>
+      &copy; 2015 lmy<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
