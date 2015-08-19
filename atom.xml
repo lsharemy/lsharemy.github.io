@@ -5,7 +5,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://lsharemy.com//"/>
-  <updated>2015-08-12T08:19:07.000Z</updated>
+  <updated>2015-08-19T08:45:53.000Z</updated>
   <id>http://lsharemy.com//</id>
   
   <author>
@@ -16,11 +16,60 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[wordpress迁移到Hexo遇到的问题]]></title>
+    <link href="http://lsharemy.com/Hexo/Migrating-from-Wordpress-to-Hexo/"/>
+    <id>http://lsharemy.com/Hexo/Migrating-from-Wordpress-to-Hexo/</id>
+    <published>2015-08-19T08:16:44.000Z</published>
+    <updated>2015-08-19T08:45:53.000Z</updated>
+    <content type="html"><![CDATA[<ol>
+<li><p>wordpress内容导出不完全<br>可能是服务器主机的内存有限？<br>最后在本地搭了个wordpress环境，并导入数据库。然后再本地的wordpress dashboard中进行导出，成功。</p>
+</li>
+<li><p>运行hexo migrate wordpress (source)出错<br>JS-YAML: can not read a block mapping entry; a multiline key may not be an implicit key at line 2, column 5:<br>date: 2012-09-30 12:58:01<br>^<br>是因为某一篇文章的title中有引号导致的，去除引号之后，搞定</p>
+</li>
+<li><p>运行hexo generate出错<br>FATAL Something’s wrong. Maybe you can find the solution here: <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">http://hexo.io/docs/troubleshooting.html</a><br>Template render error: expected variable end<br>at Error.exports.TemplateError (d:\lsharemy\node_modules\hexo\node_modules\nunjucks\src\lib.js:51:19)<br>at Object.extend.fail (d:\lsharemy\node_modules\hexo\node_modules\nunjucks\src\parser.js:64:15)<br>at Object.extend.advanceAfterVariableEnd (d:\lsharemy\node_modules\hexo\node_modules\nunjucks\src\parser.js:133:18)<br>at Object.extend.parseNodes (d:\lsharemy\node_modules\hexo\node_modules\nunjucks\src\parser.js:1159:22)<br>at Object.extend.parseAsRoot (d:\lsharemy\node_modules\hexo\node_modules\nunjucks\src\parser.js:1177:42)<br>at Object.module.exports.parse (d:\lsharemy\node_modules\hexo\node_modules\nunjucks\src\parser.js:1199:18)<br>at Object.module.exports.compile (d:\lsharemy\node_modules\hexo\node_modules\nunjucks\src\compiler.js:1118:48)<br>at Obj.extend._compile (d:\lsharemy\node_modules\hexo\node_modules\nunjucks\src\environment.js:444:35)<br>at Obj.extend.compile (d:\lsharemy\node_modules\hexo\node_modules\nunjucks\src\environment.js:433:18)<br>at null.&lt; anonymous&gt; (d:\lsharemy\node_modules\hexo\node_modules\nunjucks\src\environment.js:378:22)<br>at Object.exports.withPrettyErrors (d:\lsharemy\node_modules\hexo\node_modules\nunjucks\src\lib.js:24:16)<br>at Obj.extend.render (d:\lsharemy\node_modules\hexo\node_modules\nunjucks\src\environment.js:374:20)<br>at Obj.extend.renderString (d:\lsharemy\node_modules\hexo\node_modules\nunjucks\src\environment.js:261:21)<br>at d:\lsharemy\node_modules\hexo\lib\extend\tag.js:56:9<br>at tryCatcher (d:\lsharemy\node_modules\hexo\node_modules\bluebird\js\main\util.js:26:23)<br>at Promise._resolveFromResolver (d:\lsharemy\node_modules\hexo\node_modules\bluebird\js\main\promise.js:476:31)<br>at new Promise (d:\lsharemy\node_modules\hexo\node_modules\bluebird\js\main\promise.js:69:37)<br>at Tag.render (d:\lsharemy\node_modules\hexo\lib\extend\tag.js:55:10)<br>at Object.tagFilter [as onRenderEnd] (d:\lsharemy\node_modules\hexo\lib\hexo\post.js:253:16)<br>at Promise.then.then.then.output (d:\lsharemy\node_modules\hexo\lib\hexo\render.js:55:19)<br>at tryCatcher (d:\lsharemy\node_modules\hexo\node_modules\bluebird\js\main\util.js:26:23)<br>at Promise._settlePromiseFromHandler (d:\lsharemy\node_modules\hexo\node_modules\bluebird\js\main\promise.js:503:31)<br>at Promise._settlePromiseAt (d:\lsharemy\node_modules\hexo\node_modules\bluebird\js\main\promise.js:577:18)<br>at Promise._settlePromises (d:\lsharemy\node_modules\hexo\node_modules\bluebird\js\main\promise.js:693:14)<br>at Async._drainQueue (d:\lsharemy\node_modules\hexo\node_modules\bluebird\js\main\async.js:123:16)<br>at Async._drainQueues (d:\lsharemy\node_modules\hexo\node_modules\bluebird\js\main\async.js:133:10)<br>at Async.drainQueues (d:\lsharemy\node_modules\hexo\node_modules\bluebird\js\main\async.js:15:14)<br>at process._tickCallback (node.js:442:13)<br>删除掉部分文章后，就可以生成成功，说明应该是某些文章的解析出了问题<br>usaco-prob-party-lamps.md<br>int d[4][2] = { {1, 1}, {1, 2}, {2, 2}, {1, 3} }; 多维数组定义，背hexo认为是变量，然后出错了。<br>加两个空格搞定。</p>
+</li>
+<li><p>url不想变<br><a href="http://lsharemy.com/wordpress/index.php/lmy/20121102-20130908/">http://lsharemy.com/wordpress/index.php/lmy/20121102-20130908/</a><br>比如原来一篇文章的链接是这样的<br>后来想到可以将wordpress和index.php认为是一个类别，然后配置permalink: :category/:title来达到目的<br>不过还有个小问题，Hexo中会默认将.替换成-，也就是变成了index-php。<br>后来直接改slugize的源文件，让其不要转义.<br>\node_modules\hexo\node_modules\hexo-util\lib\slugize.js<br>post的链接算是搞定</p>
+</li>
+<li><p>某些googlg服务被墙导致的速度慢的问题<br>\themes\landscape\source\css_variables.styl<br>24行，font-mono中，删除”Source Code Pro”字体<br>\themes\landscape\layout_partial\head.ejs<br>删除&lt; link href=”//fonts.googleapis.com/css?family=Source+Code+Pro” rel=”stylesheet” type=”text/css”&gt;<br>\themes\landscape\layout_partial\after-footer.ejs<br>将&lt; script src=”//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js”&gt;&lt; /script&gt;<br>替换为<br>&lt; script src=”<a href="http://libs.baidu.com/jquery/2.0.3/jquery.min.js&quot;&gt;" target="_blank" rel="external">http://libs.baidu.com/jquery/2.0.3/jquery.min.js&quot;&gt;</a>&lt; /script&gt;<br>这样之后，访问速度快了很多  </p>
+</li>
+<li><p>部署到github<br><code>npm install hexo-deployer-git --save</code></p>
+</li>
+</ol>
+<pre><code><span class="attribute">deploy</span>: <span class="string"> </span>
+    <span class="attribute">type</span>: <span class="string">git  </span>
+    <span class="attribute">repository</span>: <span class="string">https://github.com/lsharemy/lsharemy.github.io.git</span>
+    <span class="attribute">branch</span>: <span class="string">master  </span>
+</code></pre><p>现在type是git，如果填github，会提示ERROR Deployer not found: github</p>
+<ol>
+<li><p>cname<br>npm install hexo-generator-cname –save</p>
+</li>
+<li><p>百度统计<br>将统计代码放在themes/landscape/layout/_partial/header.ejs中<br>&lt; /head &gt;标签前</p>
+</li>
+<li><p>评论<br>Disqus<br>wordpress直接可以导入<br>有个小问题就是，对于page的评论匹配不了。<br>后来发现是Hexo对于post和page的permalink的格式有点不一样<br>page的permalink的结尾有/index.html，而post没有<br>wordpress导出的xml中，是没有/index.html的<br>本来想改Hexo的代码的，后来怕改出什么问题，于是修改了wordpress导出的xml，在page的链接后面都加上了/index.html</p>
+</li>
+</ol>
+]]></content>
+    <summary type="html">
+    <![CDATA[<ol>
+<li><p>wordpress内容导出不完全<br>可能是服务器主机的内存有限？<br>最后在本地搭了个wordpress环境，并导入数据库。然后再本地的wordpress dashboard中进行导出，成功。</p>
+</li>
+<li><p>运行hexo migr]]>
+    </summary>
+    
+      <category term="Hexo" scheme="http://lsharemy.com/tags/Hexo/"/>
+    
+      <category term="Wordpress" scheme="http://lsharemy.com/tags/Wordpress/"/>
+    
+      <category term="Hexo" scheme="http://lsharemy.com/categories/Hexo/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[Hello World]]></title>
-    <link href="http://lsharemy.com/uncategorized/hello-world/"/>
-    <id>http://lsharemy.com/uncategorized/hello-world/</id>
+    <link href="http://lsharemy.com/Hexo/hello-world/"/>
+    <id>http://lsharemy.com/Hexo/hello-world/</id>
     <published>2015-08-12T08:19:07.000Z</published>
-    <updated>2015-08-12T08:19:07.000Z</updated>
+    <updated>2015-08-19T08:21:58.000Z</updated>
     <content type="html"><![CDATA[<p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
 <h2 id="Quick_Start">Quick Start</h2><h3 id="Create_a_new_post">Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
 <p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
@@ -34,6 +83,10 @@
     <summary type="html">
     <![CDATA[<p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io]]>
     </summary>
+    
+      <category term="Hexo" scheme="http://lsharemy.com/tags/Hexo/"/>
+    
+      <category term="Hexo" scheme="http://lsharemy.com/categories/Hexo/"/>
     
   </entry>
   
@@ -927,41 +980,6 @@
       <category term="index.php" scheme="http://lsharemy.com/categories/wordpress/index.php/"/>
     
       <category term="csit" scheme="http://lsharemy.com/categories/wordpress/index.php/csit/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[2012年08月20日 - 2012年08月30日 BMX]]></title>
-    <link href="http://lsharemy.com/wordpress/index.php/lmy/20120820-20120830/"/>
-    <id>http://lsharemy.com/wordpress/index.php/lmy/20120820-20120830/</id>
-    <published>2012-08-31T06:30:43.000Z</published>
-    <updated>2015-08-15T02:15:24.000Z</updated>
-    <content type="html"><![CDATA[<p>20日，大屯路，西单</p>
-<p>22日，通州</p>
-<p>26日，小d，old</p>
-<p>27日，BMX</p>
-<p>28日-30日，中期<a id="more"></a></p>
-<p>感觉这10天没干什么事额。。。</p>
-<p>不过至少中期结束了，接下来可以好好安排下了</p>
-<p>还有就是终于拥有了一辆BMX，忽忽</p>
-<p>G，20个班后见</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>20日，大屯路，西单</p>
-<p>22日，通州</p>
-<p>26日，小d，old</p>
-<p>27日，BMX</p>
-<p>28日-30日，中期]]>
-    
-    </summary>
-    
-      <category term="Diary" scheme="http://lsharemy.com/tags/Diary/"/>
-    
-      <category term="wordpress" scheme="http://lsharemy.com/categories/wordpress/"/>
-    
-      <category term="index.php" scheme="http://lsharemy.com/categories/wordpress/index.php/"/>
-    
-      <category term="lmy" scheme="http://lsharemy.com/categories/wordpress/index.php/lmy/"/>
     
   </entry>
   
