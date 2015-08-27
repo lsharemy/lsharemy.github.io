@@ -160,9 +160,9 @@ exit<span class="list">(<span class="number">0</span>)</span><span class="commen
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lsharemy.com/wordpress/index.php/csit/usaco-prob-palindromic-squares/" data-id="cidsjuzk10073esh53o6d4u0a" class="article-share-link">Share</a>
+      <a data-url="http://lsharemy.com/wordpress/index.php/csit/usaco-prob-palindromic-squares/" data-id="cidthmeg6007328h57nh27l1v" class="article-share-link">Share</a>
       
-        <a href="http://lsharemy.com/wordpress/index.php/csit/usaco-prob-palindromic-squares/#disqus_thread" class="article-comment-link">Comments</a>
+        <a href="http://lsharemy.com/wordpress/index.php/csit/usaco-prob-palindromic-squares/#disqus_thread" class="article-comment-link" onclick="toggleDisqusComments('disqus_thread');">Comments</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/USACO/">USACO</a></li></ul>
@@ -195,9 +195,7 @@ exit<span class="list">(<span class="number">0</span>)</span><span class="commen
 
 
 <section id="comments">
-  <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-  </div>
+  <div id="disqus_thread"></div>
 </section>
 </section>
         
@@ -302,9 +300,21 @@ exit<span class="list">(<span class="number">0</span>)</span><span class="commen
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
   })();
+  function toggleDisqusComments(id){
+    var commentDom = document.getElementById(id);
+    if(commentDom.children.length > 0){
+      commentDom.innerHTML = "";
+      return;
+    }
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  }
 </script>
 
 

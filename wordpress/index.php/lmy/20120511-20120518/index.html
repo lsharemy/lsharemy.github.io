@@ -118,9 +118,9 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lsharemy.com/wordpress/index.php/lmy/20120511-20120518/" data-id="cidsjv0e000txesh54l0ajxoh" class="article-share-link">Share</a>
+      <a data-url="http://lsharemy.com/wordpress/index.php/lmy/20120511-20120518/" data-id="cidthmf9w00tx28h58hapbwtr" class="article-share-link">Share</a>
       
-        <a href="http://lsharemy.com/wordpress/index.php/lmy/20120511-20120518/#disqus_thread" class="article-comment-link">Comments</a>
+        <a href="http://lsharemy.com/wordpress/index.php/lmy/20120511-20120518/#disqus_thread" class="article-comment-link" onclick="toggleDisqusComments('disqus_thread');">Comments</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Diary/">Diary</a></li></ul>
@@ -153,9 +153,7 @@
 
 
 <section id="comments">
-  <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-  </div>
+  <div id="disqus_thread"></div>
 </section>
 </section>
         
@@ -260,9 +258,21 @@
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
   })();
+  function toggleDisqusComments(id){
+    var commentDom = document.getElementById(id);
+    if(commentDom.children.length > 0){
+      commentDom.innerHTML = "";
+      return;
+    }
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  }
 </script>
 
 

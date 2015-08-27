@@ -128,9 +128,9 @@ http://easwy.com/blog/archives/advanced-vim-skills-vim-gdb-vimgdb/
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lsharemy.com/wordpress/index.php/csit/vim-vimgdb/" data-id="cidsjuza9001gesh5scrwsob1" class="article-share-link">Share</a>
+      <a data-url="http://lsharemy.com/wordpress/index.php/csit/vim-vimgdb/" data-id="cidthme75001g28h51upnl666" class="article-share-link">Share</a>
       
-        <a href="http://lsharemy.com/wordpress/index.php/csit/vim-vimgdb/#disqus_thread" class="article-comment-link">Comments</a>
+        <a href="http://lsharemy.com/wordpress/index.php/csit/vim-vimgdb/#disqus_thread" class="article-comment-link" onclick="toggleDisqusComments('disqus_thread');">Comments</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vim/">vim</a></li></ul>
@@ -163,9 +163,7 @@ http://easwy.com/blog/archives/advanced-vim-skills-vim-gdb-vimgdb/
 
 
 <section id="comments">
-  <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-  </div>
+  <div id="disqus_thread"></div>
 </section>
 </section>
         
@@ -270,9 +268,21 @@ http://easwy.com/blog/archives/advanced-vim-skills-vim-gdb-vimgdb/
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
   })();
+  function toggleDisqusComments(id){
+    var commentDom = document.getElementById(id);
+    if(commentDom.children.length > 0){
+      commentDom.innerHTML = "";
+      return;
+    }
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  }
 </script>
 
 

@@ -134,9 +134,9 @@ http://android.clients.google.com/packages/ota/google_crespo/9ZGgDXDi.zip
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lsharemy.com/wordpress/index.php/nexus-s/nexus-s-4-1-1-jelly-bean/index.html" data-id="cidsjuz9e000qesh5a0phnrme" class="article-share-link">Share</a>
+      <a data-url="http://lsharemy.com/wordpress/index.php/nexus-s/nexus-s-4-1-1-jelly-bean/index.html" data-id="cidthme61000q28h50hbcqp6g" class="article-share-link">Share</a>
       
-        <a href="http://lsharemy.com/wordpress/index.php/nexus-s/nexus-s-4-1-1-jelly-bean/index.html#disqus_thread" class="article-comment-link">Comments</a>
+        <a href="http://lsharemy.com/wordpress/index.php/nexus-s/nexus-s-4-1-1-jelly-bean/index.html#disqus_thread" class="article-comment-link" onclick="toggleDisqusComments('disqus_thread');">Comments</a>
       
       
     </footer>
@@ -148,9 +148,7 @@ http://android.clients.google.com/packages/ota/google_crespo/9ZGgDXDi.zip
 
 
 <section id="comments">
-  <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-  </div>
+  <div id="disqus_thread"></div>
 </section>
 </section>
         
@@ -255,9 +253,21 @@ http://android.clients.google.com/packages/ota/google_crespo/9ZGgDXDi.zip
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
   })();
+  function toggleDisqusComments(id){
+    var commentDom = document.getElementById(id);
+    if(commentDom.children.length > 0){
+      commentDom.innerHTML = "";
+      return;
+    }
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  }
 </script>
 
 
