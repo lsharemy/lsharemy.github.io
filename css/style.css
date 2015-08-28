@@ -959,6 +959,8 @@ a.article-title:hover {
 }
 #comments a {
   color: #258fb8;
+  text-decoration: none;
+  line-height: 22px;
 }
 .archives-wrap {
   margin: 50px 0;
