@@ -106,10 +106,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://lsharemy.com/wordpress/index.php/nexus-s/m200s-i9020t-2-3-6-and-root/index.html" data-id="cidthme66000t28h5yka5qwnm" class="article-share-link">Share</a>
-      
-        <a href="http://lsharemy.com/wordpress/index.php/nexus-s/m200s-i9020t-2-3-6-and-root/index.html#disqus_thread" class="article-comment-link" onclick="toggleDisqusComments('disqus_thread');">Comments</a>
-      
+      <a data-url="http://lsharemy.com/wordpress/index.php/nexus-s/m200s-i9020t-2-3-6-and-root/index.html" data-id="cidv6lfv2000thwh54bw1jk82" class="article-share-link">Share</a>
       
     </footer>
   </div>
@@ -120,6 +117,15 @@
 
 
 <section id="comments">
+  
+  <a href="javascript:void(0)" onclick="toggleDuoshuoComments('#ds-thread');">多说评论(<span class="ds-thread-count" data-thread-key="/wordpress/index.php/nexus-s/m200s-i9020t-2-3-6-and-root/index.html">0</span>)</a>
+  
+  <!-- 多说评论框 start -->
+  <div id="ds-thread"></div>
+  <!-- 多说评论框 end -->
+  
+  <a href="javascript:void(0)" onclick="toggleDisqusComments('disqus_thread');">Disqus评论(<span class="disqus-comment-count" data-disqus-url="http://lsharemy.com/wordpress/index.php/nexus-s/m200s-i9020t-2-3-6-and-root/index.html">0</span>)</a>
+  
   <div id="disqus_thread"></div>
 </section>
 </section>
@@ -241,6 +247,23 @@
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
   }
 </script>
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script src="http://static.duoshuo.com/embed.js"></script>
+<script type="text/javascript">
+    var duoshuoQuery = {short_name:"lsharemy"};
+    function toggleDuoshuoComments(container){
+        if(jQuery(container).has("div").length>0){
+            jQuery(container).empty();
+            return;
+        }
+        var el = document.createElement('div');//该div不需要设置class="ds-thread"
+        el.setAttribute('data-thread-key', '/wordpress/index.php/nexus-s/m200s-i9020t-2-3-6-and-root/index.html');//必选参数
+        el.setAttribute('data-url', 'http://lsharemy.com/wordpress/index.php/nexus-s/m200s-i9020t-2-3-6-and-root/index.html');//必选参数
+        DUOSHUO.EmbedThread(el);
+        jQuery(container).append(el);
+    }
+</script>
+<!-- 多说公共JS代码 end -->
 
 
 <script src="http://libs.baidu.com/jquery/2.0.3/jquery.min.js"></script>
